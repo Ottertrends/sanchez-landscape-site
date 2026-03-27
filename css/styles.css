@@ -578,7 +578,17 @@ a:hover {
   max-width: 34rem;
 }
 
-.hero__sub--es {
+.hero__established {
+  margin: 0 0 0.85rem;
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #fceabb;
+  opacity: 0.92;
+}
+
+.hero__sub--secondary {
   margin-top: 0.75rem;
   font-style: italic;
   opacity: 0.88;

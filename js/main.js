@@ -59,6 +59,13 @@
     });
   }
 
+  var quoteMobile = qs(".header__quote-mobile");
+  if (quoteMobile) {
+    quoteMobile.addEventListener("click", function () {
+      setNavOpen(false);
+    });
+  }
+
   qsa('.nav__link[href^="#"], .nav__contact-link').forEach(function (link) {
     link.addEventListener("click", function () {
       setNavOpen(false);

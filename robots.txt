@@ -1,0 +1,8 @@
+# https://sanchezlandscape512.com/
+User-agent: *
+Allow: /
+
+# Serverless API — not useful for search crawlers
+Disallow: /api/
+
+Sitemap: https://sanchezlandscape512.com/sitemap.xml

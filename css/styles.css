@@ -1176,18 +1176,75 @@ a:hover {
   list-style: none;
   margin: 1rem 0 1.5rem;
   padding: 0;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.45rem 0.6rem;
 }
 
 .area-list li {
+  position: relative;
+}
+
+.area-list__chip {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
   background: var(--color-white);
-  padding: 0.45rem 0.9rem;
+  padding: 0.45rem 0.75rem;
   border-radius: 999px;
   font-weight: 700;
-  font-size: 0.95rem;
+  font-size: 0.88rem;
   border: 2px solid rgba(27, 67, 50, 0.12);
+  cursor: default;
+  transition: border-color var(--transition), background var(--transition);
+  width: 100%;
+}
+
+.area-list__chip::before {
+  content: "📍";
+  font-size: 0.75rem;
+  flex-shrink: 0;
+}
+
+.area-list li:hover .area-list__chip {
+  border-color: var(--color-accent);
+  background: #fffdf5;
+}
+
+.area-list__tooltip {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--color-primary);
+  color: var(--color-white);
+  font-size: 0.78rem;
+  font-weight: 600;
+  padding: 0.45rem 0.75rem;
+  border-radius: 8px;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.18s ease, transform 0.18s ease;
+  transform: translateX(-50%) translateY(4px);
+  z-index: 10;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.18);
+}
+
+.area-list__tooltip::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 6px solid transparent;
+  border-top-color: var(--color-primary);
+}
+
+.area-list li:hover .area-list__tooltip,
+.area-list li:focus-within .area-list__tooltip {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
 }
 
 .area-split__cta {

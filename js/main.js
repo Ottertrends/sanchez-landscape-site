@@ -129,7 +129,7 @@
       e.preventDefault();
     });
 
-    slider.addEventListener(
+    handle.addEventListener(
       "touchstart",
       function (e) {
         if (!e.touches || !e.touches[0]) return;
@@ -383,5 +383,83 @@
   var footerYear = qs("[data-footer-year]");
   if (footerYear) {
     footerYear.textContent = String(new Date().getFullYear());
+  }
+
+  /* Cookie settings modal + Consent Mode updates */
+  var STORAGE_ANALYTICS = "sl_cmp_analytics";
+  var STORAGE_MARKETING = "sl_cmp_marketing";
+
+  function consentAnalytics(granted) {
+    if (typeof gtag !== "function") return;
+    gtag("consent", "update", {
+      analytics_storage: granted ? "granted" : "denied",
+    });
+  }
+
+  function consentMarketing(granted) {
+    if (typeof gtag !== "function") return;
+    gtag("consent", "update", {
+      ad_storage: granted ? "granted" : "denied",
+      ad_user_data: granted ? "granted" : "denied",
+      ad_personalization: granted ? "granted" : "denied",
+    });
+  }
+
+  var cookieModal = qs("[data-cookie-modal]");
+  var analyticsToggle = qs("[data-cookie-analytics]");
+  var marketingToggle = qs("[data-cookie-marketing]");
+
+  if (cookieModal && analyticsToggle && marketingToggle) {
+    var cookieOpenBtn = qs("[data-cookie-settings-open]");
+
+    function openCookieModal() {
+      cookieModal.removeAttribute("hidden");
+      document.body.style.overflow = "hidden";
+      var doneBtn = qs("[data-cookie-modal-dismiss].cookie-modal__done");
+      if (doneBtn) doneBtn.focus();
+    }
+
+    function closeCookieModal() {
+      cookieModal.setAttribute("hidden", "");
+      document.body.style.overflow = "";
+    }
+
+    var storedA = localStorage.getItem(STORAGE_ANALYTICS);
+    var storedM = localStorage.getItem(STORAGE_MARKETING);
+
+    if (storedA === "0") {
+      analyticsToggle.checked = false;
+      consentAnalytics(false);
+    }
+    if (storedM === "0") {
+      marketingToggle.checked = false;
+      consentMarketing(false);
+    }
+
+    if (cookieOpenBtn) {
+      cookieOpenBtn.addEventListener("click", openCookieModal);
+    }
+
+    qsa("[data-cookie-modal-dismiss]").forEach(function (el) {
+      el.addEventListener("click", closeCookieModal);
+    });
+
+    analyticsToggle.addEventListener("change", function () {
+      var on = analyticsToggle.checked;
+      localStorage.setItem(STORAGE_ANALYTICS, on ? "1" : "0");
+      consentAnalytics(on);
+    });
+
+    marketingToggle.addEventListener("change", function () {
+      var on = marketingToggle.checked;
+      localStorage.setItem(STORAGE_MARKETING, on ? "1" : "0");
+      consentMarketing(on);
+    });
+
+    window.addEventListener("keydown", function (e) {
+      if (e.key !== "Escape") return;
+      if (cookieModal.hasAttribute("hidden")) return;
+      closeCookieModal();
+    });
   }
 })();

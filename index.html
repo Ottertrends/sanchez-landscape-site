@@ -1,13 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=AW-18068703507"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
+    // Default state set to GRANTED for US/Texas compliance
+    gtag('consent', 'default', {
+      'ad_storage': 'granted',
+      'ad_user_data': 'granted',
+      'ad_personalization': 'granted',
+      'analytics_storage': 'granted'
+    });
+  </script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=AW-18068703507"></script>
+  <script>
     gtag('js', new Date());
-
     gtag('config', 'AW-18068703507');
   </script>
   <script>
@@ -928,8 +936,35 @@
         </a>
       </div>
     </div>
+    <nav class="footer__legal" aria-label="Legal">
+      <a href="/privacy-policy">Privacy Policy</a>
+      <button type="button" class="footer__legal-btn" data-cookie-settings-open>Cookie Settings</button>
+    </nav>
     <p class="footer__copy">© <span data-footer-year>2026</span> Sanchez Landscape · Texas</p>
   </footer>
+
+  <div class="cookie-modal" id="cookie-settings-modal" hidden data-cookie-modal>
+    <div class="cookie-modal__backdrop" data-cookie-modal-dismiss></div>
+    <div class="cookie-modal__panel" role="dialog" aria-modal="true" aria-labelledby="cookie-modal-title">
+      <h2 id="cookie-modal-title" class="cookie-modal__title">Cookie settings</h2>
+      <p class="cookie-modal__intro">Choose whether to allow analytics and marketing cookies. You can change these choices anytime.</p>
+      <div class="cookie-modal__row">
+        <label class="cookie-toggle" for="cookie-analytics">
+          <span class="cookie-toggle__label">Analytics tracking</span>
+          <input class="cookie-toggle__input" type="checkbox" id="cookie-analytics" data-cookie-analytics checked>
+          <span class="cookie-toggle__switch" aria-hidden="true"></span>
+        </label>
+      </div>
+      <div class="cookie-modal__row">
+        <label class="cookie-toggle" for="cookie-marketing">
+          <span class="cookie-toggle__label">Marketing cookies</span>
+          <input class="cookie-toggle__input" type="checkbox" id="cookie-marketing" data-cookie-marketing checked>
+          <span class="cookie-toggle__switch" aria-hidden="true"></span>
+        </label>
+      </div>
+      <button type="button" class="btn btn--accent cookie-modal__done" data-cookie-modal-dismiss>Done</button>
+    </div>
+  </div>
 
   <a class="whatsapp-bubble" href="https://wa.me/15124064698?text=Hola!%20Me%20interesa%20un%20presupuesto" target="_blank" rel="noopener noreferrer" aria-label="Chat with us on WhatsApp" data-tooltip="Chat with us on WhatsApp">
     <span class="whatsapp-bubble__pulse" aria-hidden="true"></span>

@@ -25,6 +25,7 @@
 
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 
 body {
@@ -34,6 +35,8 @@ body {
   line-height: 1.6;
   color: var(--color-text);
   background: var(--color-bg);
+  overflow-x: hidden;
+  max-width: 100%;
 }
 
 img {
@@ -684,6 +687,7 @@ a:hover {
   color: var(--color-white);
   padding: 1rem 0;
   border-block: 1px solid rgba(255, 255, 255, 0.1);
+  overflow-x: hidden;
 }
 
 .trust-bar__track {
@@ -758,6 +762,22 @@ a:hover {
 .section--thank-you .thank-you__actions {
   text-align: center;
   margin-top: 2rem;
+}
+
+.section--legal .legal-page {
+  max-width: 40rem;
+  margin-inline: auto;
+}
+
+.section--legal .legal-page__body {
+  text-align: left;
+}
+
+.section--legal .legal-page__body p {
+  margin: 0;
+  font-size: 1.1rem;
+  line-height: 1.65;
+  color: rgba(26, 26, 26, 0.88);
 }
 
 .section--services {
@@ -869,6 +889,20 @@ a:hover {
 .transformations-grid {
   display: grid;
   gap: 2rem;
+}
+
+@media (max-width: 767px) {
+  .transformations-grid {
+    gap: 3.75rem;
+  }
+
+  .transformation-card {
+    margin-bottom: 0.5rem;
+  }
+
+  .before-after-slider {
+    touch-action: pan-y;
+  }
 }
 
 @media (min-width: 768px) {
@@ -1470,6 +1504,45 @@ a:hover {
   text-decoration: none;
 }
 
+.footer__legal {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem 1.5rem;
+  margin-top: 1.75rem;
+}
+
+.footer__legal a {
+  color: rgba(255, 255, 255, 0.9);
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+.footer__legal a:hover {
+  color: var(--color-accent);
+  text-decoration: none;
+}
+
+.footer__legal-btn {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.9);
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.footer__legal-btn:hover {
+  color: var(--color-accent);
+}
+
 .footer__social {
   display: flex;
   gap: 0.75rem;
@@ -1484,11 +1557,130 @@ a:hover {
 
 .footer__copy {
   text-align: center;
-  margin: 2.5rem 0 0;
+  margin: 1.5rem 0 0;
   font-size: 0.85rem;
   opacity: 0.65;
   padding-top: 1.5rem;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Cookie consent modal */
+.cookie-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.25rem;
+}
+
+.cookie-modal[hidden] {
+  display: none !important;
+}
+
+.cookie-modal__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(15, 40, 30, 0.55);
+}
+
+.cookie-modal__panel {
+  position: relative;
+  z-index: 1;
+  width: min(26rem, 100%);
+  max-height: calc(100vh - 2.5rem);
+  overflow-y: auto;
+  padding: 1.75rem 1.5rem;
+  background: var(--color-white);
+  color: var(--color-text);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+}
+
+.cookie-modal__title {
+  font-family: var(--font-display);
+  font-size: 1.45rem;
+  margin: 0 0 0.75rem;
+  color: var(--color-primary);
+}
+
+.cookie-modal__intro {
+  margin: 0 0 1.25rem;
+  font-size: 0.95rem;
+  line-height: 1.55;
+  color: rgba(26, 26, 26, 0.82);
+}
+
+.cookie-modal__row {
+  margin-bottom: 1.15rem;
+}
+
+.cookie-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+.cookie-toggle__label {
+  flex: 1;
+}
+
+.cookie-toggle__input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.cookie-toggle__input:focus-visible + .cookie-toggle__switch {
+  outline: 3px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+.cookie-toggle__switch {
+  flex-shrink: 0;
+  position: relative;
+  width: 48px;
+  height: 28px;
+  border-radius: 999px;
+  background: #c4ccc8;
+  transition: background var(--transition);
+}
+
+.cookie-toggle__switch::after {
+  content: "";
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  top: 3px;
+  left: 4px;
+  background: var(--color-white);
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--transition);
+}
+
+.cookie-toggle__input:checked + .cookie-toggle__switch {
+  background: var(--color-primary);
+}
+
+.cookie-toggle__input:checked + .cookie-toggle__switch::after {
+  transform: translateX(18px);
+}
+
+.cookie-modal__done {
+  width: 100%;
+  margin-top: 0.5rem;
 }
 
 /* WhatsApp */

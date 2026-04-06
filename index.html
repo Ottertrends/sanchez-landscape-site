@@ -10,6 +10,22 @@
 
     gtag('config', 'AW-18068703507');
   </script>
+  <script>
+    function gtag_report_conversion(url) {
+      var callback = function () {
+        if (typeof(url) != 'undefined') {
+          window.location = url;
+        }
+      };
+      gtag('event', 'conversion', {
+          'send_to': 'AW-18068703507/yN_6COytkJccEJOS6qdD',
+          'value': 1.0,
+          'currency': 'USD',
+          'event_callback': callback
+      });
+      return false;
+    }
+  </script>
 
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -351,7 +367,7 @@
           </button>
           <ul class="nav__list" id="nav-menu" data-nav-menu>
             <li class="nav__contact">
-              <a class="nav__contact-link" href="tel:+15124064698">512-406-4698</a>
+              <a class="nav__contact-link" href="tel:5124064698" onclick="return gtag_report_conversion('tel:5124064698');">(512) 406-4698</a>
               <a class="nav__contact-link nav__contact-link--email" href="mailto:sanchezlandscape512@gmail.com">sanchezlandscape512@gmail.com</a>
             </li>
             <li><a class="nav__link" href="#services">Services</a></li>
@@ -371,7 +387,7 @@
         </nav>
       </div>
       <div class="header__actions">
-        <a class="header__phone" href="tel:+15124064698">512-406-4698</a>
+        <a class="header__phone" href="tel:5124064698" onclick="return gtag_report_conversion('tel:5124064698');">(512) 406-4698</a>
         <a class="header__cta btn btn--accent" href="#hero-form">Get a Quote</a>
       </div>
     </div>
@@ -742,7 +758,7 @@
               <span class="area-list__tooltip">Round Rock, Cedar Park, Pflugerville &amp; beyond</span>
             </li>
           </ul>
-          <p class="area-split__cta">Not sure if we serve your area? Call us: <a href="tel:+15124064698">512-406-4698</a></p>
+          <p class="area-split__cta">Not sure if we serve your area? Call us: <a href="tel:5124064698" onclick="return gtag_report_conversion('tel:5124064698');">(512) 406-4698</a></p>
         </div>
       </div>
     </section>
@@ -795,7 +811,7 @@
           </details>
           <details class="faq-item" data-animate>
             <summary class="faq-item__question">How do I get a free landscaping estimate?</summary>
-            <div class="faq-item__answer"><p>Fill out the <a href="#hero-form">quote form</a> on this page, call us at <a href="tel:+15124064698">512-406-4698</a>, or message us on <a href="https://wa.me/15124064698">WhatsApp</a>. We typically respond with a detailed quote within <strong>36 hours</strong>.</p></div>
+            <div class="faq-item__answer"><p>Fill out the <a href="#hero-form">quote form</a> on this page, call us at <a href="tel:5124064698" onclick="return gtag_report_conversion('tel:5124064698');">(512) 406-4698</a>, or message us on <a href="https://wa.me/15124064698">WhatsApp</a>. We typically respond with a detailed quote within <strong>36 hours</strong>.</p></div>
           </details>
           <details class="faq-item" data-animate>
             <summary class="faq-item__question">Do you provide commercial landscaping services?</summary>
@@ -803,7 +819,7 @@
           </details>
           <details class="faq-item" data-animate>
             <summary class="faq-item__question">What areas do you serve in Central Texas?</summary>
-            <div class="faq-item__answer"><p>We serve <strong>Kyle, Austin, Buda, Dripping Springs, Round Rock, Cedar Park, Pflugerville, Manor, Bee Cave, Wimberley, Lago Vista</strong>, and the broader Hays, Travis, and Williamson County areas. Not sure if we cover your neighborhood? <a href="tel:+15124064698">Give us a call</a>.</p></div>
+            <div class="faq-item__answer"><p>We serve <strong>Kyle, Austin, Buda, Dripping Springs, Round Rock, Cedar Park, Pflugerville, Manor, Bee Cave, Wimberley, Lago Vista</strong>, and the broader Hays, Travis, and Williamson County areas. Not sure if we cover your neighborhood? <a href="tel:5124064698" onclick="return gtag_report_conversion('tel:5124064698');">Give us a call</a>.</p></div>
           </details>
         </div>
       </div>
@@ -857,10 +873,10 @@
             </form>
           </div>
           <div class="contact-cards" data-animate>
-            <a class="contact-card" href="tel:+15124064698">
+            <a class="contact-card" href="tel:5124064698" onclick="return gtag_report_conversion('tel:5124064698');">
               <span class="contact-card__icon" aria-hidden="true">📞</span>
               <span class="contact-card__label">Phone</span>
-              <span class="contact-card__value">512-406-4698</span>
+              <span class="contact-card__value">(512) 406-4698</span>
             </a>
             <a class="contact-card" href="mailto:sanchezlandscape512@gmail.com">
               <span class="contact-card__icon" aria-hidden="true">📧</span>
@@ -894,7 +910,7 @@
       <div class="footer__brand">
         <img class="logo-img footer__logo-img" src="images/Sanchez Landscaping LOGO.png" alt="Sanchez Landscape Logo" width="220" height="70" loading="lazy">
         <p class="footer__tagline">Premium outdoor care for Central Texas homes.</p>
-        <p class="footer__tagline footer__tagline--es">Hablamos Español — Llámenos: <a href="tel:+15124064698">512-406-4698</a></p>
+        <p class="footer__tagline footer__tagline--es">Hablamos Español — Llámenos: <a href="tel:5124064698" onclick="return gtag_report_conversion('tel:5124064698');">(512) 406-4698</a></p>
       </div>
       <nav class="footer__nav" aria-label="Footer">
         <a href="#services">Services</a>

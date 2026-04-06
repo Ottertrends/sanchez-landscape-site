@@ -751,6 +751,15 @@ a:hover {
   color: rgba(26, 26, 26, 0.82);
 }
 
+.section--thank-you {
+  padding-top: calc(var(--header-height) + 3rem);
+}
+
+.section--thank-you .thank-you__actions {
+  text-align: center;
+  margin-top: 2rem;
+}
+
 .section--services {
   background: var(--color-bg);
 }

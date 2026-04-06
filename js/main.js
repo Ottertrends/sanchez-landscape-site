@@ -1,8 +1,6 @@
 (function () {
   "use strict";
 
-  var EMAIL = "sanchezlandscape512@gmail.com";
-
   function qs(sel, root) {
     return (root || document).querySelector(sel);
   }
@@ -66,7 +64,7 @@
     });
   }
 
-  qsa('.nav__link[href^="#"], .nav__contact-link').forEach(function (link) {
+  qsa(".nav__link, .nav__contact-link").forEach(function (link) {
     link.addEventListener("click", function () {
       setNavOpen(false);
     });
@@ -250,17 +248,6 @@
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(s || "").trim());
   }
 
-  function buildMailto(subject, body) {
-    return (
-      "mailto:" +
-      EMAIL +
-      "?subject=" +
-      encodeURIComponent(subject) +
-      "&body=" +
-      encodeURIComponent(body)
-    );
-  }
-
   function showFormError(el, msg) {
     if (!el) return;
     el.textContent = msg;
@@ -298,39 +285,62 @@
       return;
     }
 
-    var subject;
-    var bodyParts;
-
+    var contactMethod = "";
     if (type === "contact") {
       if (!message) {
         showFormError(errEl, "Please enter a message.");
         return;
       }
-      var method = (fd.get("contact_method") || "").toString();
-      subject = "Website inquiry — " + name;
-      bodyParts = [
-        "Name: " + name,
-        "Phone: " + phone,
-        "Email: " + email,
-        "Service: " + service,
-        "Preferred contact: " + method,
-        "",
-        message
-      ];
-    } else {
-      subject = "Quote request — " + name;
-      bodyParts = [
-        "Name: " + name,
-        "Phone: " + phone,
-        "Email: " + email,
-        "Service: " + service,
-        "",
-        message || "(No additional message)"
-      ];
+      contactMethod = (fd.get("contact_method") || "").toString();
     }
 
     showFormError(errEl, "");
-    window.location.href = buildMailto(subject, bodyParts.join("\n"));
+
+    var submitBtn = form.querySelector('[type="submit"]');
+    if (submitBtn) submitBtn.disabled = true;
+
+    fetch("/api/send-form", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        formType: type,
+        name: name,
+        phone: phone,
+        email: email,
+        service: service,
+        message: message,
+        contactMethod: contactMethod,
+      }),
+    })
+      .then(function (res) {
+        return res
+          .json()
+          .catch(function () {
+            return {};
+          })
+          .then(function (data) {
+            return { res: res, data: data };
+          });
+      })
+      .then(function (r) {
+        if (r.res.ok && r.data && r.data.ok) {
+          window.location.href = "/thank-you";
+          return;
+        }
+        var msg =
+          (r.data && r.data.error) ||
+          "Something went wrong. Please try again or call us.";
+        showFormError(errEl, msg);
+      })
+      .catch(function () {
+        showFormError(
+          errEl,
+          "Network error. Please check your connection and try again."
+        );
+      })
+      .then(function () {
+        if (submitBtn) submitBtn.disabled = false;
+      });
   }
 
   qsa("[data-mail-form]").forEach(function (form) {

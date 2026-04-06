@@ -1481,6 +1481,17 @@ a:hover {
   }
 }
 
+.footer__logo-link {
+  display: inline-block;
+  text-decoration: none;
+  color: inherit;
+}
+
+.footer__logo-link:hover {
+  text-decoration: none;
+  opacity: 0.92;
+}
+
 .footer__tagline {
   margin: 0.5rem 0 0;
   max-width: 22rem;

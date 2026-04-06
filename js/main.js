@@ -354,10 +354,16 @@
   function scrollWithOffset(hash) {
     var id = hash && hash.replace("#", "");
     if (!id) return;
+    var behavior = reduceMotion ? "auto" : "smooth";
+    /* #top lives on the fixed header — getBoundingClientRect is viewport-relative, so the offset math would only step by ~header height each click */
+    if (id === "top") {
+      window.scrollTo({ top: 0, behavior: behavior });
+      return;
+    }
     var target = document.getElementById(id);
     if (!target) return;
     var top = target.getBoundingClientRect().top + window.scrollY - 72;
-    window.scrollTo({ top: top, behavior: "smooth" });
+    window.scrollTo({ top: top, behavior: behavior });
   }
 
   if (window.location.hash) {

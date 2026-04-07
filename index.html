@@ -535,67 +535,87 @@
       <div class="container">
         <h2 class="section__title" data-animate id="services-heading">What We Do</h2>
         <p class="section__lead" data-animate>Full-service landscaping for homes and businesses in Austin &amp; Surrounding Areas.</p>
-        <div class="services-grid">
-          <article class="service-card" data-animate>
-            <span class="service-card__icon" aria-hidden="true">🌿</span>
-            <h3 class="service-card__title">Lawn Maintenance</h3>
-            <p class="service-card__text">Mowing, edging, and blowing for a crisp, healthy lawn.</p>
-          </article>
-          <article class="service-card" data-animate>
-            <span class="service-card__icon" aria-hidden="true">🌱</span>
-            <h3 class="service-card__title">Weed Control &amp; Fertilization</h3>
-            <p class="service-card__text">Targeted programs to knock back weeds and feed your turf.</p>
-          </article>
-          <article class="service-card" data-animate>
-            <span class="service-card__icon" aria-hidden="true">🟩</span>
-            <h3 class="service-card__title">Sod Installation</h3>
-            <p class="service-card__text">New lawns from scratch with professional sod work.</p>
-          </article>
-          <article class="service-card" data-animate>
-            <span class="service-card__icon" aria-hidden="true">💧</span>
-            <h3 class="service-card__title">Irrigation Installation &amp; Repairs</h3>
-            <p class="service-card__text">Efficient systems, repairs, and upgrades built for Texas heat.</p>
-          </article>
-          <article class="service-card" data-animate>
-            <span class="service-card__icon" aria-hidden="true">🌳</span>
-            <h3 class="service-card__title">Tree Services</h3>
-            <p class="service-card__text">Trim, pruning, removal, and stump grinding.</p>
-          </article>
-          <article class="service-card" data-animate>
-            <span class="service-card__icon" aria-hidden="true">🏡</span>
-            <h3 class="service-card__title">Landscape Design &amp; Full Installation</h3>
-            <p class="service-card__text">From concept to finished beds, plantings, and details.</p>
-          </article>
-          <article class="service-card" data-animate>
-            <span class="service-card__icon" aria-hidden="true">🪨</span>
-            <h3 class="service-card__title">Metal &amp; Stone Flowerbeds</h3>
-            <p class="service-card__text">Defined beds with durable metal and natural stone.</p>
-          </article>
-          <article class="service-card" data-animate>
-            <span class="service-card__icon" aria-hidden="true">🛤️</span>
-            <h3 class="service-card__title">Flagstone Walkways &amp; Patios</h3>
-            <p class="service-card__text">Natural flagstone paths and patios that last.</p>
-          </article>
-          <article class="service-card" data-animate>
-            <span class="service-card__icon" aria-hidden="true">🏜️</span>
-            <h3 class="service-card__title">Gravel &amp; Xeriscaping</h3>
-            <p class="service-card__text">Low-maintenance designs that save water and time.</p>
-          </article>
-          <article class="service-card" data-animate>
-            <span class="service-card__icon" aria-hidden="true">💡</span>
-            <h3 class="service-card__title">Outdoor Lighting</h3>
-            <p class="service-card__text">Automatic systems for safety and curb appeal after dark.</p>
-          </article>
-          <article class="service-card" data-animate>
-            <span class="service-card__icon" aria-hidden="true">🚧</span>
-            <h3 class="service-card__title">Fence Installation</h3>
-            <p class="service-card__text">Wood and metal fences installed to spec.</p>
-          </article>
-          <article class="service-card" data-animate>
-            <span class="service-card__icon" aria-hidden="true">🍂</span>
-            <h3 class="service-card__title">Yard Cleanups &amp; Seasonal Services</h3>
-            <p class="service-card__text">Cleanups, bed refresh, and seasonal tune-ups.</p>
-          </article>
+        <div class="services-categories">
+          <section class="services-category" data-animate aria-labelledby="services-cat-lawn">
+            <h3 class="services-category__title" id="services-cat-lawn">Lawn &amp; turf</h3>
+            <div class="services-grid services-grid--category">
+              <article class="service-card" tabindex="0">
+                <span class="service-card__icon" aria-hidden="true">🌿</span>
+                <h4 class="service-card__title">Lawn Maintenance</h4>
+                <p class="service-card__text">Mowing, edging, and blowing for a crisp, healthy lawn.</p>
+              </article>
+              <article class="service-card" tabindex="0">
+                <span class="service-card__icon" aria-hidden="true">🌱</span>
+                <h4 class="service-card__title">Weed Control &amp; Fertilization</h4>
+                <p class="service-card__text">Targeted programs to knock back weeds and feed your turf.</p>
+              </article>
+              <article class="service-card" tabindex="0">
+                <span class="service-card__icon" aria-hidden="true">🟩</span>
+                <h4 class="service-card__title">Sod Installation</h4>
+                <p class="service-card__text">New lawns from scratch with professional sod work.</p>
+              </article>
+            </div>
+          </section>
+          <section class="services-category" data-animate aria-labelledby="services-cat-trees">
+            <h3 class="services-category__title" id="services-cat-trees">Trees, design &amp; seasonal</h3>
+            <div class="services-grid services-grid--category">
+              <article class="service-card" tabindex="0">
+                <span class="service-card__icon" aria-hidden="true">🌳</span>
+                <h4 class="service-card__title">Tree Services</h4>
+                <p class="service-card__text">Trim, pruning, removal, and stump grinding.</p>
+              </article>
+              <article class="service-card" tabindex="0">
+                <span class="service-card__icon" aria-hidden="true">🏡</span>
+                <h4 class="service-card__title">Landscape Design &amp; Full Installation</h4>
+                <p class="service-card__text">From concept to finished beds, plantings, and details.</p>
+              </article>
+              <article class="service-card" tabindex="0">
+                <span class="service-card__icon" aria-hidden="true">🍂</span>
+                <h4 class="service-card__title">Yard Cleanups &amp; Seasonal Services</h4>
+                <p class="service-card__text">Cleanups, bed refresh, and seasonal tune-ups.</p>
+              </article>
+            </div>
+          </section>
+          <section class="services-category" data-animate aria-labelledby="services-cat-hardscape">
+            <h3 class="services-category__title" id="services-cat-hardscape">Hardscape &amp; structures</h3>
+            <div class="services-grid services-grid--category">
+              <article class="service-card" tabindex="0">
+                <span class="service-card__icon" aria-hidden="true">🪨</span>
+                <h4 class="service-card__title">Metal &amp; Stone Flowerbeds</h4>
+                <p class="service-card__text">Defined beds with durable metal and natural stone.</p>
+              </article>
+              <article class="service-card" tabindex="0">
+                <span class="service-card__icon" aria-hidden="true">🛤️</span>
+                <h4 class="service-card__title">Flagstone Walkways &amp; Patios</h4>
+                <p class="service-card__text">Natural flagstone paths and patios that last.</p>
+              </article>
+              <article class="service-card" tabindex="0">
+                <span class="service-card__icon" aria-hidden="true">🏜️</span>
+                <h4 class="service-card__title">Gravel &amp; Xeriscaping</h4>
+                <p class="service-card__text">Low-maintenance designs that save water and time.</p>
+              </article>
+              <article class="service-card" tabindex="0">
+                <span class="service-card__icon" aria-hidden="true">🚧</span>
+                <h4 class="service-card__title">Fence Installation</h4>
+                <p class="service-card__text">Wood and metal fences installed to spec.</p>
+              </article>
+            </div>
+          </section>
+          <section class="services-category" data-animate aria-labelledby="services-cat-systems">
+            <h3 class="services-category__title" id="services-cat-systems">Irrigation &amp; lighting</h3>
+            <div class="services-grid services-grid--category services-grid--category--pair">
+              <article class="service-card" tabindex="0">
+                <span class="service-card__icon" aria-hidden="true">💧</span>
+                <h4 class="service-card__title">Irrigation Installation &amp; Repairs</h4>
+                <p class="service-card__text">Efficient systems, repairs, and upgrades built for Texas heat.</p>
+              </article>
+              <article class="service-card" tabindex="0">
+                <span class="service-card__icon" aria-hidden="true">💡</span>
+                <h4 class="service-card__title">Outdoor Lighting</h4>
+                <p class="service-card__text">Automatic systems for safety and curb appeal after dark.</p>
+              </article>
+            </div>
+          </section>
         </div>
       </div>
     </section>

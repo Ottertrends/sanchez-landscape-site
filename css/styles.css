@@ -786,55 +786,128 @@ a:hover {
   background: var(--color-bg);
 }
 
+.services-categories {
+  display: flex;
+  flex-direction: column;
+  gap: 2.25rem;
+}
+
+@media (min-width: 900px) {
+  .services-categories {
+    gap: 2.75rem;
+  }
+}
+
+.services-category__title {
+  font-family: var(--font-display);
+  font-size: clamp(1.2rem, 2.8vw, 1.45rem);
+  font-weight: 600;
+  color: var(--color-primary);
+  margin: 0 0 1rem;
+  padding-bottom: 0.45rem;
+  border-bottom: 2px solid rgba(212, 160, 23, 0.35);
+}
+
 .services-grid {
   display: grid;
   gap: 1.25rem;
 }
 
+.services-grid--category {
+  gap: 1rem;
+}
+
 @media (min-width: 600px) {
-  .services-grid {
+  .services-grid--category {
     grid-template-columns: repeat(2, 1fr);
   }
 }
 
 @media (min-width: 900px) {
-  .services-grid {
+  .services-grid--category {
     grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 900px) {
+  .services-grid--category--pair {
+    grid-template-columns: repeat(2, 1fr);
+    max-width: 52rem;
   }
 }
 
 .service-card {
   background: var(--color-white);
-  padding: 1.5rem;
+  padding: 1rem 1.15rem;
   border-radius: var(--radius);
   border: 2px solid transparent;
   box-shadow: var(--shadow-sm);
   transition: transform var(--transition), border-color var(--transition), box-shadow var(--transition);
+  outline: none;
 }
 
 .service-card:hover {
-  transform: translateY(-4px);
+  transform: translateY(-3px);
   border-color: var(--color-accent);
   box-shadow: var(--shadow-md);
 }
 
+.service-card:focus-visible {
+  border-color: var(--color-accent);
+  box-shadow: var(--shadow-md), 0 0 0 3px rgba(212, 160, 23, 0.35);
+}
+
 .service-card__icon {
-  font-size: 1.75rem;
+  font-size: 1.45rem;
   display: block;
-  margin-bottom: 0.75rem;
+  margin-bottom: 0.5rem;
+  line-height: 1;
 }
 
 .service-card__title {
   font-family: var(--font-display);
-  font-size: 1.2rem;
-  margin: 0 0 0.5rem;
+  font-size: 1.05rem;
+  font-weight: 600;
+  margin: 0;
+  line-height: 1.25;
   color: var(--color-primary);
 }
 
 .service-card__text {
   margin: 0;
-  font-size: 0.95rem;
-  color: rgba(26, 26, 26, 0.8);
+  margin-top: 0.4rem;
+  font-size: 0.88rem;
+  line-height: 1.45;
+  color: rgba(26, 26, 26, 0.78);
+}
+
+@media (hover: hover) and (pointer: fine) and (min-width: 700px) {
+  @media (prefers-reduced-motion: no-preference) {
+    .service-card__text {
+      max-height: 0;
+      opacity: 0;
+      margin-top: 0;
+      overflow: hidden;
+      transition: max-height 0.32s ease, opacity 0.22s ease, margin-top 0.22s ease;
+    }
+
+    .service-card:hover .service-card__text,
+    .service-card:focus-within .service-card__text {
+      max-height: 7rem;
+      opacity: 1;
+      margin-top: 0.45rem;
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .service-card {
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  .service-card:hover {
+    transform: none;
+  }
 }
 
 /* Why split */

@@ -556,10 +556,12 @@ a:hover {
   background: rgba(212, 160, 23, 0.25);
   border: 1px solid rgba(212, 160, 23, 0.5);
   border-radius: 999px;
-  font-size: 0.8rem;
+  font-size: clamp(0.72rem, 2.4vw, 0.85rem);
   font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
+  text-transform: none;
+  letter-spacing: 0.04em;
+  line-height: 1.35;
+  max-width: 100%;
   margin-bottom: 1rem;
   color: #fceabb;
 }

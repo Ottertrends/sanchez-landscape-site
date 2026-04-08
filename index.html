@@ -512,9 +512,6 @@
                 <label class="form__label" for="quote-message">Message</label>
                 <textarea class="form__input form__textarea" id="quote-message" name="message" rows="3" placeholder="Tell us about your project"></textarea>
               </div>
-              <div class="form__recaptcha" data-recaptcha-mount>
-                <p class="form__recaptcha-wait" data-recaptcha-wait>Loading security check…</p>
-              </div>
               <p class="form__error" id="quote-error" role="alert" hidden></p>
               <button type="submit" class="btn btn--accent btn--block">Get My Free Quote →</button>
             </form>
@@ -995,9 +992,6 @@
                 <label class="form__label" for="contact-message">Message</label>
                 <textarea class="form__input form__textarea" id="contact-message" name="message" rows="4" required aria-required="true"></textarea>
               </div>
-              <div class="form__recaptcha" data-recaptcha-mount>
-                <p class="form__recaptcha-wait" data-recaptcha-wait>Loading security check…</p>
-              </div>
               <p class="form__error" id="contact-error" role="alert" hidden></p>
               <button type="submit" class="btn btn--accent btn--block">Send Message</button>
             </form>
@@ -1100,13 +1094,6 @@
     <img class="lightbox__img" src="" alt="" data-lightbox-img>
   </div>
 
-  <script>
-    window.slRecaptchaApiReady = false;
-    function slRecaptchaApiLoad() {
-      window.slRecaptchaApiReady = true;
-    }
-  </script>
-  <script src="https://www.google.com/recaptcha/api.js?onload=slRecaptchaApiLoad&amp;render=explicit" async defer></script>
   <script src="js/main.js" defer></script>
 </body>
 </html>

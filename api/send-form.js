@@ -22,7 +22,7 @@ function normalizeQuotedEnv(raw) {
   return v;
 }
 
-async function verifyRecaptchaToken(token, remoteip) {
+async function verifyRecaptchaToken(token, remoteip, expectedAction) {
   const secret = normalizeQuotedEnv(process.env.RECAPTCHA_SECRET_KEY);
   if (!secret) {
     return {
@@ -51,13 +51,37 @@ async function verifyRecaptchaToken(token, remoteip) {
       error: "Could not verify reCAPTCHA. Try again in a moment.",
     };
   }
-  if (data && data.success === true) {
-    return { ok: true };
+  if (!data || data.success !== true) {
+    return {
+      ok: false,
+      error: "reCAPTCHA verification failed. Please try again.",
+    };
   }
-  return {
-    ok: false,
-    error: "reCAPTCHA verification failed. Please try again.",
-  };
+
+  if (typeof data.score === "number") {
+    const minRaw = normalizeQuotedEnv(process.env.RECAPTCHA_MIN_SCORE);
+    const min = minRaw ? parseFloat(minRaw) : 0.5;
+    const threshold = Number.isFinite(min) ? min : 0.5;
+    if (data.score < threshold) {
+      return {
+        ok: false,
+        error: "Unable to verify submission. Please try again or call us.",
+      };
+    }
+  }
+
+  if (expectedAction) {
+    const exp = String(expectedAction).trim();
+    const got = data.action ? String(data.action).trim() : "";
+    if (got && got !== exp) {
+      return {
+        ok: false,
+        error: "reCAPTCHA verification failed. Please try again.",
+      };
+    }
+  }
+
+  return { ok: true };
 }
 
 function digitsPhone(s) {
@@ -130,10 +154,30 @@ module.exports = async function handler(req, res) {
   const body =
     typeof rawBody === "object" && rawBody !== null ? rawBody : {};
   const recaptchaToken = String(body.recaptchaToken || "").trim();
+  const rawAction = String(body.recaptchaAction || "").trim();
+  const allowedActions = { contact_form: true, quote_form: true };
+  const recaptchaExpected = allowedActions[rawAction] ? rawAction : "";
+  if (!recaptchaExpected) {
+    return res.status(400).json({
+      ok: false,
+      error: "Invalid request. Refresh the page and try again.",
+    });
+  }
+
+  const formTypeEarly = body.formType === "contact" ? "contact" : "quote";
+  const actionForForm =
+    formTypeEarly === "contact" ? "contact_form" : "quote_form";
+  if (recaptchaExpected !== actionForForm) {
+    return res.status(400).json({
+      ok: false,
+      error: "Invalid request. Refresh the page and try again.",
+    });
+  }
 
   const captcha = await verifyRecaptchaToken(
     recaptchaToken,
-    clientIp(req)
+    clientIp(req),
+    recaptchaExpected
   );
   if (!captcha.ok) {
     const status =
@@ -144,7 +188,7 @@ module.exports = async function handler(req, res) {
     return res.status(status).json({ ok: false, error: captcha.error });
   }
 
-  const formType = body.formType === "contact" ? "contact" : "quote";
+  const formType = formTypeEarly;
   const name = String(body.name || "").trim();
   const phone = String(body.phone || "").trim();
   const email = String(body.email || "").trim();

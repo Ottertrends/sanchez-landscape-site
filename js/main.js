@@ -255,34 +255,20 @@
   }
 
   var recaptchaLoadState = "loading";
+  var recaptchaSiteKey = "";
 
   function showRecaptchaFailure(msg) {
-    qsa("[data-recaptcha-mount]").forEach(function (mount) {
-      mount.innerHTML = "";
-      var p = document.createElement("p");
-      p.className = "form__recaptcha-wait form__recaptcha-wait--error";
-      p.setAttribute("role", "alert");
-      p.textContent = msg;
-      mount.appendChild(p);
+    qsa("[data-mail-form]").forEach(function (mailForm) {
+      var t = mailForm.getAttribute("data-form-type");
+      var errEl =
+        t === "contact"
+          ? document.getElementById("contact-error")
+          : document.getElementById("quote-error");
+      showFormError(errEl, msg);
     });
   }
 
-  function resetRecaptchaForForm(form) {
-    var widAttr = form.getAttribute("data-recaptcha-widget-id");
-    if (
-      widAttr === null ||
-      widAttr === "" ||
-      typeof grecaptcha === "undefined" ||
-      !grecaptcha.reset
-    ) {
-      return;
-    }
-    var wid = parseInt(widAttr, 10);
-    if (!isNaN(wid)) grecaptcha.reset(wid);
-  }
-
   function initMailFormRecaptcha() {
-    var recaptchaSiteKey = "";
     fetch("/api/recaptcha-config")
       .then(function (r) {
         return r.json();
@@ -297,53 +283,27 @@
           );
           return;
         }
-        var attempts = 0;
-        function tryRender() {
-          if (
-            typeof grecaptcha === "undefined" ||
-            !grecaptcha.render ||
-            typeof grecaptcha.ready !== "function"
-          ) {
-            attempts += 1;
-            if (attempts > 200) {
-              recaptchaLoadState = "missing";
-              showRecaptchaFailure(
-                "Could not load the security check. Try turning off ad blockers, check your connection, or refresh the page."
-              );
-              return;
-            }
-            window.setTimeout(tryRender, 50);
-            return;
-          }
-          grecaptcha.ready(function () {
-            try {
-              qsa("[data-mail-form]").forEach(function (mailForm) {
-                var mount = qs("[data-recaptcha-mount]", mailForm);
-                if (!mount) return;
-                mount.innerHTML = "";
-                var id = grecaptcha.render(mount, {
-                  sitekey: recaptchaSiteKey,
-                  theme: "light",
-                });
-                mailForm.setAttribute("data-recaptcha-widget-id", String(id));
-              });
-              recaptchaLoadState = "ready";
-            } catch (e) {
-              console.error("reCAPTCHA render error:", e);
-              recaptchaLoadState = "missing";
-              var detail =
-                e && e.message
-                  ? String(e.message)
-                  : "Unknown error (see browser console).";
-              showRecaptchaFailure(
-                "Security check failed to start: " +
-                  detail +
-                  " If this persists, confirm domains in reCAPTCHA admin and refresh."
-              );
-            }
-          });
+        if (document.querySelector("script[data-recaptcha-v3]")) {
+          recaptchaLoadState = "ready";
+          return;
         }
-        tryRender();
+        var s = document.createElement("script");
+        s.src =
+          "https://www.google.com/recaptcha/api.js?render=" +
+          encodeURIComponent(recaptchaSiteKey);
+        s.async = true;
+        s.defer = true;
+        s.setAttribute("data-recaptcha-v3", "true");
+        s.onload = function () {
+          recaptchaLoadState = "ready";
+        };
+        s.onerror = function () {
+          recaptchaLoadState = "missing";
+          showRecaptchaFailure(
+            "Could not load form security. Check your connection or turn off strict blockers, then refresh."
+          );
+        };
+        document.head.appendChild(s);
       })
       .catch(function () {
         recaptchaLoadState = "missing";
@@ -412,22 +372,14 @@
       return;
     }
 
-    var widAttr = form.getAttribute("data-recaptcha-widget-id");
-    var recaptchaToken = "";
-    if (widAttr !== null && widAttr !== "") {
-      var wid = parseInt(widAttr, 10);
-      if (
-        typeof grecaptcha !== "undefined" &&
-        grecaptcha.getResponse &&
-        !isNaN(wid)
-      ) {
-        recaptchaToken = grecaptcha.getResponse(wid) || "";
-      }
-    }
-    if (!recaptchaToken) {
+    if (
+      typeof grecaptcha === "undefined" ||
+      typeof grecaptcha.ready !== "function" ||
+      typeof grecaptcha.execute !== "function"
+    ) {
       showFormError(
         errEl,
-        'Please check the "I\'m not a robot" box.'
+        "Form security is still loading. Wait a moment and try again."
       );
       return;
     }
@@ -435,51 +387,79 @@
     var submitBtn = form.querySelector('[type="submit"]');
     if (submitBtn) submitBtn.disabled = true;
 
-    fetch("/api/send-form", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        formType: type,
-        name: name,
-        phone: phone,
-        email: email,
-        service: service,
-        message: message,
-        contactMethod: contactMethod,
-        recaptchaToken: recaptchaToken,
-      }),
-    })
-      .then(function (res) {
-        return res
-          .json()
-          .catch(function () {
-            return {};
-          })
-          .then(function (data) {
-            return { res: res, data: data };
-          });
+    var recaptchaAction =
+      type === "contact" ? "contact_form" : "quote_form";
+
+    function finishSubmit(recaptchaToken) {
+      fetch("/api/send-form", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          formType: type,
+          name: name,
+          phone: phone,
+          email: email,
+          service: service,
+          message: message,
+          contactMethod: contactMethod,
+          recaptchaToken: recaptchaToken,
+          recaptchaAction: recaptchaAction,
+        }),
       })
-      .then(function (r) {
-        if (r.res.ok && r.data && r.data.ok) {
-          window.location.href = "/thank-you";
-          return;
-        }
-        var msg =
-          (r.data && r.data.error) ||
-          "Something went wrong. Please try again or call us.";
-        showFormError(errEl, msg);
-        resetRecaptchaForForm(form);
-      })
-      .catch(function () {
-        showFormError(
-          errEl,
-          "Network error. Please check your connection and try again."
-        );
-        resetRecaptchaForForm(form);
-      })
-      .then(function () {
-        if (submitBtn) submitBtn.disabled = false;
-      });
+        .then(function (res) {
+          return res
+            .json()
+            .catch(function () {
+              return {};
+            })
+            .then(function (data) {
+              return { res: res, data: data };
+            });
+        })
+        .then(function (r) {
+          if (r.res.ok && r.data && r.data.ok) {
+            window.location.href = "/thank-you";
+            return;
+          }
+          var msg =
+            (r.data && r.data.error) ||
+            "Something went wrong. Please try again or call us.";
+          showFormError(errEl, msg);
+        })
+        .catch(function () {
+          showFormError(
+            errEl,
+            "Network error. Please check your connection and try again."
+          );
+        })
+        .then(function () {
+          if (submitBtn) submitBtn.disabled = false;
+        });
+    }
+
+    grecaptcha.ready(function () {
+      grecaptcha
+        .execute(recaptchaSiteKey, { action: recaptchaAction })
+        .then(function (token) {
+          if (!token) {
+            showFormError(
+              errEl,
+              "Could not verify submission. Please try again."
+            );
+            if (submitBtn) submitBtn.disabled = false;
+            return;
+          }
+          finishSubmit(token);
+        })
+        .catch(function (e) {
+          console.error("reCAPTCHA execute error:", e);
+          showFormError(
+            errEl,
+            "Could not verify submission. Please try again."
+          );
+          if (submitBtn) submitBtn.disabled = false;
+        });
+    });
   }
 
   qsa("[data-mail-form]").forEach(function (form) {

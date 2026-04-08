@@ -1,7 +1,8 @@
 const { Resend } = require("resend");
 
 const DEFAULT_TO = "sanchezlandscape512@gmail.com";
-const SITE_VERIFY = "https://www.google.com/recaptcha/api/siteverify";
+const DEFAULT_RECAPTCHA_PROJECT_ID = "sanchez-landscape-492713";
+const ENTERPRISE_ACTION = "submit";
 
 function clientIp(req) {
   const xff = req.headers["x-forwarded-for"];
@@ -22,63 +23,120 @@ function normalizeQuotedEnv(raw) {
   return v;
 }
 
-async function verifyRecaptchaToken(token, remoteip, expectedAction) {
-  const secret = normalizeQuotedEnv(process.env.RECAPTCHA_SECRET_KEY);
-  if (!secret) {
+function normalizeSiteKey(raw) {
+  let v = String(raw || "").trim();
+  if (
+    (v.charAt(0) === '"' && v.charAt(v.length - 1) === '"') ||
+    (v.charAt(0) === "'" && v.charAt(v.length - 1) === "'")
+  ) {
+    v = v.slice(1, -1).trim();
+  }
+  return v || "";
+}
+
+function minRiskScoreThreshold() {
+  const minRaw = normalizeQuotedEnv(process.env.RECAPTCHA_MIN_SCORE);
+  const min = minRaw ? parseFloat(minRaw) : 0.5;
+  return Number.isFinite(min) ? min : 0.5;
+}
+
+/**
+ * reCAPTCHA Enterprise: projects.assessments
+ * https://cloud.google.com/recaptcha-enterprise/docs/create-assessment
+ */
+async function verifyRecaptchaEnterprise(token, remoteip) {
+  const googleApiKey = normalizeQuotedEnv(process.env.RECAPTCHA_API_KEY);
+  const projectId = normalizeQuotedEnv(
+    process.env.RECAPTCHA_PROJECT_ID || DEFAULT_RECAPTCHA_PROJECT_ID
+  );
+  const siteKey = normalizeSiteKey(
+    process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || process.env.RECAPTCHA_SITE_KEY
+  );
+
+  if (!googleApiKey) {
     return {
       ok: false,
-      error: "Server is not configured. Add RECAPTCHA_SECRET_KEY.",
+      error: "Server is not configured. Add RECAPTCHA_API_KEY.",
+    };
+  }
+  if (!siteKey) {
+    return {
+      ok: false,
+      error: "Server is not configured. Add NEXT_PUBLIC_RECAPTCHA_SITE_KEY.",
     };
   }
   if (!token) {
-    return { ok: false, error: "Please complete the reCAPTCHA." };
+    return { ok: false, error: "Missing security token. Please try again." };
   }
-  const params = new URLSearchParams();
-  params.set("secret", secret);
-  params.set("response", token.trim());
-  if (remoteip) params.set("remoteip", remoteip);
+
+  const url =
+    "https://recaptchaenterprise.googleapis.com/v1/projects/" +
+    encodeURIComponent(projectId) +
+    "/assessments?key=" +
+    encodeURIComponent(googleApiKey);
+
+  const event = {
+    token: token.trim(),
+    siteKey: siteKey,
+    expectedAction: ENTERPRISE_ACTION,
+  };
+  if (remoteip) {
+    event.userIpAddress = remoteip;
+  }
+
   let data;
   try {
-    const r = await fetch(SITE_VERIFY, {
+    const r = await fetch(url, {
       method: "POST",
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: params.toString(),
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ event: event }),
     });
     data = await r.json();
+    if (!r.ok) {
+      const apiMsg =
+        data &&
+        data.error &&
+        data.error.message
+          ? String(data.error.message)
+          : "Assessment request failed";
+      console.error("reCAPTCHA Enterprise API error:", r.status, apiMsg);
+      return {
+        ok: false,
+        error: "Could not verify submission. Try again in a moment.",
+      };
+    }
   } catch (e) {
+    console.error("reCAPTCHA Enterprise fetch error:", e);
     return {
       ok: false,
-      error: "Could not verify reCAPTCHA. Try again in a moment.",
+      error: "Could not verify submission. Try again in a moment.",
     };
   }
-  if (!data || data.success !== true) {
+
+  const props = data.tokenProperties;
+  if (!props || props.valid !== true) {
+    return {
+      ok: false,
+      error: "reCAPTCHA verification failed. Please try again.",
+    };
+  }
+  if (props.action && String(props.action) !== ENTERPRISE_ACTION) {
     return {
       ok: false,
       error: "reCAPTCHA verification failed. Please try again.",
     };
   }
 
-  if (typeof data.score === "number") {
-    const minRaw = normalizeQuotedEnv(process.env.RECAPTCHA_MIN_SCORE);
-    const min = minRaw ? parseFloat(minRaw) : 0.5;
-    const threshold = Number.isFinite(min) ? min : 0.5;
-    if (data.score < threshold) {
-      return {
-        ok: false,
-        error: "Unable to verify submission. Please try again or call us.",
-      };
-    }
-  }
-
-  if (expectedAction) {
-    const exp = String(expectedAction).trim();
-    const got = data.action ? String(data.action).trim() : "";
-    if (got && got !== exp) {
-      return {
-        ok: false,
-        error: "reCAPTCHA verification failed. Please try again.",
-      };
-    }
+  const score =
+    data.riskAnalysis && typeof data.riskAnalysis.score === "number"
+      ? data.riskAnalysis.score
+      : null;
+  const threshold = minRiskScoreThreshold();
+  if (score === null || score <= threshold) {
+    return {
+      ok: false,
+      error: "Unable to verify submission. Please try again or call us.",
+    };
   }
 
   return { ok: true };
@@ -154,30 +212,12 @@ module.exports = async function handler(req, res) {
   const body =
     typeof rawBody === "object" && rawBody !== null ? rawBody : {};
   const recaptchaToken = String(body.recaptchaToken || "").trim();
-  const rawAction = String(body.recaptchaAction || "").trim();
-  const allowedActions = { contact_form: true, quote_form: true };
-  const recaptchaExpected = allowedActions[rawAction] ? rawAction : "";
-  if (!recaptchaExpected) {
-    return res.status(400).json({
-      ok: false,
-      error: "Invalid request. Refresh the page and try again.",
-    });
-  }
 
   const formTypeEarly = body.formType === "contact" ? "contact" : "quote";
-  const actionForForm =
-    formTypeEarly === "contact" ? "contact_form" : "quote_form";
-  if (recaptchaExpected !== actionForForm) {
-    return res.status(400).json({
-      ok: false,
-      error: "Invalid request. Refresh the page and try again.",
-    });
-  }
 
-  const captcha = await verifyRecaptchaToken(
+  const captcha = await verifyRecaptchaEnterprise(
     recaptchaToken,
-    clientIp(req),
-    recaptchaExpected
+    clientIp(req)
   );
   if (!captcha.ok) {
     const status =

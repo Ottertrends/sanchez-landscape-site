@@ -279,21 +279,21 @@
         if (!recaptchaSiteKey) {
           recaptchaLoadState = "missing";
           showRecaptchaFailure(
-            "Form protection is missing on the server (RECAPTCHA_SITE_KEY)."
+            "Form protection is missing on the server (NEXT_PUBLIC_RECAPTCHA_SITE_KEY)."
           );
           return;
         }
-        if (document.querySelector("script[data-recaptcha-v3]")) {
+        if (document.querySelector("script[data-recaptcha-enterprise]")) {
           recaptchaLoadState = "ready";
           return;
         }
         var s = document.createElement("script");
         s.src =
-          "https://www.google.com/recaptcha/api.js?render=" +
+          "https://www.google.com/recaptcha/enterprise.js?render=" +
           encodeURIComponent(recaptchaSiteKey);
         s.async = true;
         s.defer = true;
-        s.setAttribute("data-recaptcha-v3", "true");
+        s.setAttribute("data-recaptcha-enterprise", "true");
         s.onload = function () {
           recaptchaLoadState = "ready";
         };
@@ -374,8 +374,9 @@
 
     if (
       typeof grecaptcha === "undefined" ||
-      typeof grecaptcha.ready !== "function" ||
-      typeof grecaptcha.execute !== "function"
+      !grecaptcha.enterprise ||
+      typeof grecaptcha.enterprise.ready !== "function" ||
+      typeof grecaptcha.enterprise.execute !== "function"
     ) {
       showFormError(
         errEl,
@@ -386,9 +387,6 @@
 
     var submitBtn = form.querySelector('[type="submit"]');
     if (submitBtn) submitBtn.disabled = true;
-
-    var recaptchaAction =
-      type === "contact" ? "contact_form" : "quote_form";
 
     function finishSubmit(recaptchaToken) {
       fetch("/api/send-form", {
@@ -403,7 +401,6 @@
           message: message,
           contactMethod: contactMethod,
           recaptchaToken: recaptchaToken,
-          recaptchaAction: recaptchaAction,
         }),
       })
         .then(function (res) {
@@ -437,9 +434,9 @@
         });
     }
 
-    grecaptcha.ready(function () {
-      grecaptcha
-        .execute(recaptchaSiteKey, { action: recaptchaAction })
+    grecaptcha.enterprise.ready(function () {
+      grecaptcha.enterprise
+        .execute(recaptchaSiteKey, { action: "submit" })
         .then(function (token) {
           if (!token) {
             showFormError(
@@ -452,7 +449,7 @@
           finishSubmit(token);
         })
         .catch(function (e) {
-          console.error("reCAPTCHA execute error:", e);
+          console.error("reCAPTCHA Enterprise execute error:", e);
           showFormError(
             errEl,
             "Could not verify submission. Please try again."

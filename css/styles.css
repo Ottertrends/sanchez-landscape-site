@@ -1195,21 +1195,59 @@ a:hover {
   color: var(--color-white);
 }
 
+.testimonials__carousel {
+  display: flex;
+  align-items: stretch;
+  gap: 0.65rem;
+  margin: 0 -0.35rem;
+}
+
+@media (min-width: 640px) {
+  .testimonials__carousel {
+    gap: 1rem;
+    margin: 0;
+  }
+}
+
+.testimonials__nav {
+  flex: 0 0 auto;
+  align-self: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--color-white);
+  font-size: 1.25rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.testimonials__nav:hover {
+  background: rgba(255, 255, 255, 0.18);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+.testimonials__nav:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+}
+
+.testimonials__nav:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
 .testimonials__viewport {
+  flex: 1;
+  min-width: 0;
   overflow-x: auto;
   scroll-snap-type: x mandatory;
   scrollbar-width: thin;
-  margin: 0 -1rem;
-  padding: 0 1rem 0.5rem;
+  padding: 0 0.15rem 0.5rem;
   -webkit-overflow-scrolling: touch;
-}
-
-@media (min-width: 900px) {
-  .testimonials__viewport {
-    overflow: visible;
-    margin: 0;
-    padding: 0;
-  }
+  scroll-behavior: smooth;
 }
 
 .testimonials__track {
@@ -1219,14 +1257,12 @@ a:hover {
 
 @media (min-width: 900px) {
   .testimonials__track {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
     gap: 1.5rem;
   }
 }
 
 .testimonial-card {
-  flex: 0 0 min(100%, 320px);
+  flex: 0 0 min(100%, 340px);
   scroll-snap-align: start;
   background: rgba(255, 255, 255, 0.08);
   border: 1px solid rgba(255, 255, 255, 0.18);
@@ -1236,7 +1272,8 @@ a:hover {
 
 @media (min-width: 900px) {
   .testimonial-card {
-    flex: none;
+    flex: 0 0 calc((100% - 2 * 1.5rem) / 3);
+    max-width: 22rem;
   }
 }
 

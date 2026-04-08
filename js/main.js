@@ -176,6 +176,68 @@
 
   qsa("[data-ba-slider]").forEach(initBaSlider);
 
+  /* Testimonials carousel (horizontal snap + prev/next) */
+  qsa("[data-testimonials-carousel]").forEach(function (wrap) {
+    var viewport = qs("[data-carousel-viewport]", wrap);
+    var prevBtn = qs("[data-carousel-prev]", wrap);
+    var nextBtn = qs("[data-carousel-next]", wrap);
+    var track = viewport && qs(".testimonials__track", viewport);
+    if (!viewport || !track || !prevBtn || !nextBtn) return;
+
+    function cards() {
+      return qsa(".testimonial-card", track);
+    }
+
+    function currentIndex() {
+      var list = cards();
+      if (list.length === 0) return 0;
+      var x = viewport.scrollLeft + 2;
+      for (var i = list.length - 1; i >= 0; i--) {
+        if (list[i].offsetLeft <= x) return i;
+      }
+      return 0;
+    }
+
+    function scrollToIndex(idx) {
+      var list = cards();
+      if (!list[idx]) return;
+      viewport.scrollTo({ left: list[idx].offsetLeft, behavior: "smooth" });
+    }
+
+    function updateNavDisabled() {
+      var list = cards();
+      var max = Math.max(0, viewport.scrollWidth - viewport.clientWidth - 1);
+      var x = viewport.scrollLeft;
+      var i = currentIndex();
+      prevBtn.disabled = list.length === 0 || i <= 0;
+      nextBtn.disabled = list.length === 0 || i >= list.length - 1;
+      if (list.length && x >= max) nextBtn.disabled = true;
+    }
+
+    prevBtn.addEventListener("click", function () {
+      scrollToIndex(currentIndex() - 1);
+    });
+    nextBtn.addEventListener("click", function () {
+      scrollToIndex(currentIndex() + 1);
+    });
+
+    viewport.addEventListener("scroll", function () {
+      window.requestAnimationFrame(updateNavDisabled);
+    });
+
+    window.addEventListener(
+      "resize",
+      function () {
+        var max = Math.max(0, viewport.scrollWidth - viewport.clientWidth);
+        if (viewport.scrollLeft > max) viewport.scrollLeft = max;
+        updateNavDisabled();
+      },
+      { passive: true }
+    );
+
+    updateNavDisabled();
+  });
+
   /* Gallery: load more (reveals items beyond 12) */
   var galleryLoadMore = qs("[data-gallery-load-more]");
   if (galleryLoadMore) {

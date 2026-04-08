@@ -99,13 +99,14 @@
         "description": "Austin-area landscaping and lawn care since 2012. Mowing, irrigation, design, sod, trees, hardscapes, and cleanups. Family-owned, bilingual English/Spanish. Free estimates.",
         "isPartOf": { "@id": "https://sanchezlandscape512.com/#website" },
         "about": { "@id": "https://sanchezlandscape512.com/#business" },
+        "breadcrumb": { "@id": "https://sanchezlandscape512.com/#breadcrumb" },
         "primaryImageOfPage": {
           "@type": "ImageObject",
           "url": "https://sanchezlandscape512.com/images/Sanchez%20Landscaping%2010.jpg"
         }
       },
       {
-        "@type": "LandscapingBusiness",
+        "@type": ["LandscapingBusiness", "HomeAndConstructionBusiness", "LocalBusiness"],
         "@id": "https://sanchezlandscape512.com/#business",
         "name": "Sanchez Landscape",
         "alternateName": "Sanchez Landscape 512",
@@ -162,7 +163,7 @@
         "slogan": "We Make Your Yard Look Amazing — Guaranteed",
         "aggregateRating": {
           "@type": "AggregateRating",
-          "ratingValue": "5.0",
+          "ratingValue": "5",
           "bestRating": "5",
           "worstRating": "1",
           "ratingCount": "48",
@@ -171,27 +172,47 @@
         "review": [
           {
             "@type": "Review",
-            "author": { "@type": "Person", "name": "Maria G." },
+            "author": { "@type": "Person", "name": "FCH" },
+            "itemReviewed": { "@id": "https://sanchezlandscape512.com/#business" },
             "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" },
-            "reviewBody": "Our yard has never looked better. The crew was on time, professional, and cleaned up perfectly. Highly recommend for anyone in Kyle.",
-            "datePublished": "2025-09-14"
+            "reviewBody": "We are so impressed with the work Sanchez Landscape did on our front yard. They installed custom pavers and a new walkway that completely transformed the look of our home. The precision on the edging and the stone work is top-tier.",
+            "datePublished": "2024-08-12"
           },
           {
             "@type": "Review",
-            "author": { "@type": "Person", "name": "James T." },
+            "author": { "@type": "Person", "name": "Robert Brewer" },
+            "itemReviewed": { "@id": "https://sanchezlandscape512.com/#business" },
             "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" },
-            "reviewBody": "Fair pricing and they explained everything in Spanish and English. Irrigation repair was done the same week we called.",
-            "datePublished": "2025-10-02"
+            "reviewBody": "We had purchased a new build and our yard had started to erode. Sanchez Landscape fixed the uneven dips and inclines and handled the difficult soil conditions perfectly.",
+            "datePublished": "2024-11-03"
           },
           {
             "@type": "Review",
-            "author": { "@type": "Person", "name": "Elena R." },
+            "author": { "@type": "Person", "name": "Suzanna Wilson" },
+            "itemReviewed": { "@id": "https://sanchezlandscape512.com/#business" },
             "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" },
-            "reviewBody": "From design to mulch and planting, Sanchez Landscape transformed our backyard into a space we actually use.",
-            "datePublished": "2025-11-18"
+            "reviewBody": "Ramiro was very quick to respond. He and his team did an incredible job on the stone work and provided a very reasonably priced quote.",
+            "datePublished": "2025-01-21"
+          },
+          {
+            "@type": "Review",
+            "author": { "@type": "Person", "name": "Electra Stone" },
+            "itemReviewed": { "@id": "https://sanchezlandscape512.com/#business" },
+            "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" },
+            "reviewBody": "We have worked with them for a while for monthly maintenance, but they also did an amazing job expanding our backyard and tree planting.",
+            "datePublished": "2025-04-09"
+          },
+          {
+            "@type": "Review",
+            "author": { "@type": "Person", "name": "Eric Galton" },
+            "itemReviewed": { "@id": "https://sanchezlandscape512.com/#business" },
+            "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" },
+            "reviewBody": "Prompt, fair, and friendly bid. The crew arrived on time and did a fantastic job exactly what we agreed upon. Highly recommend.",
+            "datePublished": "2025-09-30"
           }
         ],
         "sameAs": [
+          "https://www.google.com/maps/search/?api=1\u0026query=Sanchez%20Landscape%20512%2C%20Austin%2C%20TX",
           "https://www.instagram.com/landscapesanchez/",
           "https://www.facebook.com/landscape.sanchez.2025/"
         ],
@@ -313,13 +334,9 @@
       },
       {
         "@type": "BreadcrumbList",
+        "@id": "https://sanchezlandscape512.com/#breadcrumb",
         "itemListElement": [
-          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://sanchezlandscape512.com/" },
-          { "@type": "ListItem", "position": 2, "name": "Services", "item": "https://sanchezlandscape512.com/#services" },
-          { "@type": "ListItem", "position": 3, "name": "Gallery", "item": "https://sanchezlandscape512.com/#our-work" },
-          { "@type": "ListItem", "position": 4, "name": "About", "item": "https://sanchezlandscape512.com/#about" },
-          { "@type": "ListItem", "position": 5, "name": "Contact", "item": "https://sanchezlandscape512.com/#contact" },
-          { "@type": "ListItem", "position": 6, "name": "FAQ", "item": "https://sanchezlandscape512.com/#faq" }
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://sanchezlandscape512.com/" }
         ]
       },
       {
@@ -789,24 +806,38 @@
     <section class="section section--testimonials" id="testimonials" aria-labelledby="testimonials-heading">
       <div class="container">
         <h2 class="section__title section__title--on-dark" data-animate id="testimonials-heading">What Our Clients Say</h2>
-        <div class="testimonials__viewport" data-carousel>
-          <div class="testimonials__track">
-            <article class="testimonial-card" data-animate>
-              <p class="testimonial-card__stars" aria-label="5 out of 5 stars">★★★★★</p>
-              <p class="testimonial-card__text">&ldquo;Our yard has never looked better. The crew was on time, professional, and cleaned up perfectly. Highly recommend for anyone in Kyle.&rdquo;</p>
-              <p class="testimonial-card__meta"><strong>Maria G.</strong> · Kyle, TX</p>
-            </article>
-            <article class="testimonial-card" data-animate>
-              <p class="testimonial-card__stars" aria-label="5 out of 5 stars">★★★★★</p>
-              <p class="testimonial-card__text">&ldquo;Fair pricing and they explained everything in Spanish and English. Irrigation repair was done the same week we called.&rdquo;</p>
-              <p class="testimonial-card__meta"><strong>James T.</strong> · Buda, TX</p>
-            </article>
-            <article class="testimonial-card" data-animate>
-              <p class="testimonial-card__stars" aria-label="5 out of 5 stars">★★★★★</p>
-              <p class="testimonial-card__text">&ldquo;From design to mulch and planting, Sanchez Landscape transformed our backyard into a space we actually use.&rdquo;</p>
-              <p class="testimonial-card__meta"><strong>Elena R.</strong> · Austin, TX</p>
-            </article>
+        <div class="testimonials__carousel" data-testimonials-carousel>
+          <button type="button" class="testimonials__nav testimonials__nav--prev" data-carousel-prev aria-label="Show previous testimonials">&larr;</button>
+          <div class="testimonials__viewport" data-carousel-viewport>
+            <div class="testimonials__track">
+              <article class="testimonial-card" data-animate>
+                <p class="testimonial-card__stars" aria-label="5 out of 5 stars">★★★★★</p>
+                <p class="testimonial-card__text">&ldquo;We are so impressed with the work Sanchez Landscape did on our front yard. They installed custom pavers and a new walkway that completely transformed the look of our home. The precision on the edging and the stone work is top-tier.&rdquo;</p>
+                <p class="testimonial-card__meta"><strong>FCH</strong> · Google review</p>
+              </article>
+              <article class="testimonial-card" data-animate>
+                <p class="testimonial-card__stars" aria-label="5 out of 5 stars">★★★★★</p>
+                <p class="testimonial-card__text">&ldquo;We had purchased a new build and our yard had started to erode. Sanchez Landscape fixed the uneven dips and inclines and handled the difficult soil conditions perfectly.&rdquo;</p>
+                <p class="testimonial-card__meta"><strong>Robert Brewer</strong> · Google review</p>
+              </article>
+              <article class="testimonial-card" data-animate>
+                <p class="testimonial-card__stars" aria-label="5 out of 5 stars">★★★★★</p>
+                <p class="testimonial-card__text">&ldquo;Ramiro was very quick to respond. He and his team did an incredible job on the stone work and provided a very reasonably priced quote.&rdquo;</p>
+                <p class="testimonial-card__meta"><strong>Suzanna Wilson</strong> · Google review</p>
+              </article>
+              <article class="testimonial-card" data-animate>
+                <p class="testimonial-card__stars" aria-label="5 out of 5 stars">★★★★★</p>
+                <p class="testimonial-card__text">&ldquo;We have worked with them for a while for monthly maintenance, but they also did an amazing job expanding our backyard and tree planting.&rdquo;</p>
+                <p class="testimonial-card__meta"><strong>Electra Stone</strong> · Google review</p>
+              </article>
+              <article class="testimonial-card" data-animate>
+                <p class="testimonial-card__stars" aria-label="5 out of 5 stars">★★★★★</p>
+                <p class="testimonial-card__text">&ldquo;Prompt, fair, and friendly bid. The crew arrived on time and did a fantastic job exactly what we agreed upon. Highly recommend.&rdquo;</p>
+                <p class="testimonial-card__meta"><strong>Eric Galton</strong> · Google review</p>
+              </article>
+            </div>
           </div>
+          <button type="button" class="testimonials__nav testimonials__nav--next" data-carousel-next aria-label="Show next testimonials">&rarr;</button>
         </div>
       </div>
     </section>

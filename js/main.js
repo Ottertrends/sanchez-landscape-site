@@ -299,7 +299,11 @@
         }
         var attempts = 0;
         function tryRender() {
-          if (typeof grecaptcha === "undefined" || !grecaptcha.render) {
+          if (
+            typeof grecaptcha === "undefined" ||
+            !grecaptcha.render ||
+            typeof grecaptcha.ready !== "function"
+          ) {
             attempts += 1;
             if (attempts > 200) {
               recaptchaLoadState = "missing";
@@ -311,23 +315,32 @@
             window.setTimeout(tryRender, 50);
             return;
           }
-          try {
-            qsa("[data-mail-form]").forEach(function (mailForm) {
-              var mount = qs("[data-recaptcha-mount]", mailForm);
-              if (!mount) return;
-              var id = grecaptcha.render(mount, {
-                sitekey: recaptchaSiteKey,
-                theme: "light",
+          grecaptcha.ready(function () {
+            try {
+              qsa("[data-mail-form]").forEach(function (mailForm) {
+                var mount = qs("[data-recaptcha-mount]", mailForm);
+                if (!mount) return;
+                var id = grecaptcha.render(mount, {
+                  sitekey: recaptchaSiteKey,
+                  theme: "light",
+                });
+                mailForm.setAttribute("data-recaptcha-widget-id", String(id));
               });
-              mailForm.setAttribute("data-recaptcha-widget-id", String(id));
-            });
-            recaptchaLoadState = "ready";
-          } catch (e) {
-            recaptchaLoadState = "missing";
-            showRecaptchaFailure(
-              "Security check failed to start. Confirm this domain is listed in your reCAPTCHA key settings, then refresh."
-            );
-          }
+              recaptchaLoadState = "ready";
+            } catch (e) {
+              console.error("reCAPTCHA render error:", e);
+              recaptchaLoadState = "missing";
+              var detail =
+                e && e.message
+                  ? String(e.message)
+                  : "Unknown error (see browser console).";
+              showRecaptchaFailure(
+                "Security check failed to start: " +
+                  detail +
+                  " If this persists, confirm domains in reCAPTCHA admin and refresh."
+              );
+            }
+          });
         }
         tryRender();
       })

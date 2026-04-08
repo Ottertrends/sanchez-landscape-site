@@ -11,8 +11,19 @@ function clientIp(req) {
   return "";
 }
 
+function normalizeQuotedEnv(raw) {
+  let v = String(raw || "").trim();
+  if (
+    (v.charAt(0) === '"' && v.charAt(v.length - 1) === '"') ||
+    (v.charAt(0) === "'" && v.charAt(v.length - 1) === "'")
+  ) {
+    v = v.slice(1, -1).trim();
+  }
+  return v;
+}
+
 async function verifyRecaptchaToken(token, remoteip) {
-  const secret = String(process.env.RECAPTCHA_SECRET_KEY || "").trim();
+  const secret = normalizeQuotedEnv(process.env.RECAPTCHA_SECRET_KEY);
   if (!secret) {
     return {
       ok: false,

@@ -320,6 +320,7 @@
               qsa("[data-mail-form]").forEach(function (mailForm) {
                 var mount = qs("[data-recaptcha-mount]", mailForm);
                 if (!mount) return;
+                mount.innerHTML = "";
                 var id = grecaptcha.render(mount, {
                   sitekey: recaptchaSiteKey,
                   theme: "light",

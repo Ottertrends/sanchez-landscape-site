@@ -1,6 +1,53 @@
 const { Resend } = require("resend");
 
 const DEFAULT_TO = "sanchezlandscape512@gmail.com";
+const SITE_VERIFY = "https://www.google.com/recaptcha/api/siteverify";
+
+function clientIp(req) {
+  const xff = req.headers["x-forwarded-for"];
+  if (typeof xff === "string" && xff.length) {
+    return xff.split(",")[0].trim();
+  }
+  return "";
+}
+
+async function verifyRecaptchaToken(token, remoteip) {
+  const secret = String(process.env.RECAPTCHA_SECRET_KEY || "").trim();
+  if (!secret) {
+    return {
+      ok: false,
+      error: "Server is not configured. Add RECAPTCHA_SECRET_KEY.",
+    };
+  }
+  if (!token) {
+    return { ok: false, error: "Please complete the reCAPTCHA." };
+  }
+  const params = new URLSearchParams();
+  params.set("secret", secret);
+  params.set("response", token.trim());
+  if (remoteip) params.set("remoteip", remoteip);
+  let data;
+  try {
+    const r = await fetch(SITE_VERIFY, {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: params.toString(),
+    });
+    data = await r.json();
+  } catch (e) {
+    return {
+      ok: false,
+      error: "Could not verify reCAPTCHA. Try again in a moment.",
+    };
+  }
+  if (data && data.success === true) {
+    return { ok: true };
+  }
+  return {
+    ok: false,
+    error: "reCAPTCHA verification failed. Please try again.",
+  };
+}
 
 function digitsPhone(s) {
   return String(s || "").replace(/\D/g, "");
@@ -71,6 +118,21 @@ module.exports = async function handler(req, res) {
   }
   const body =
     typeof rawBody === "object" && rawBody !== null ? rawBody : {};
+  const recaptchaToken = String(body.recaptchaToken || "").trim();
+
+  const captcha = await verifyRecaptchaToken(
+    recaptchaToken,
+    clientIp(req)
+  );
+  if (!captcha.ok) {
+    const status =
+      captcha.error &&
+      captcha.error.indexOf("Server is not configured") === 0
+        ? 500
+        : 400;
+    return res.status(status).json({ ok: false, error: captcha.error });
+  }
+
   const formType = body.formType === "contact" ? "contact" : "quote";
   const name = String(body.name || "").trim();
   const phone = String(body.phone || "").trim();

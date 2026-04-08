@@ -254,6 +254,93 @@
     el.hidden = !msg;
   }
 
+  var recaptchaLoadState = "loading";
+
+  function showRecaptchaFailure(msg) {
+    qsa("[data-recaptcha-mount]").forEach(function (mount) {
+      mount.innerHTML = "";
+      var p = document.createElement("p");
+      p.className = "form__recaptcha-wait form__recaptcha-wait--error";
+      p.setAttribute("role", "alert");
+      p.textContent = msg;
+      mount.appendChild(p);
+    });
+  }
+
+  function resetRecaptchaForForm(form) {
+    var widAttr = form.getAttribute("data-recaptcha-widget-id");
+    if (
+      widAttr === null ||
+      widAttr === "" ||
+      typeof grecaptcha === "undefined" ||
+      !grecaptcha.reset
+    ) {
+      return;
+    }
+    var wid = parseInt(widAttr, 10);
+    if (!isNaN(wid)) grecaptcha.reset(wid);
+  }
+
+  function initMailFormRecaptcha() {
+    var recaptchaSiteKey = "";
+    fetch("/api/recaptcha-config")
+      .then(function (r) {
+        return r.json();
+      })
+      .then(function (cfg) {
+        recaptchaSiteKey =
+          cfg && cfg.siteKey ? String(cfg.siteKey).trim() : "";
+        if (!recaptchaSiteKey) {
+          recaptchaLoadState = "missing";
+          showRecaptchaFailure(
+            "Form protection is missing on the server (RECAPTCHA_SITE_KEY)."
+          );
+          return;
+        }
+        var attempts = 0;
+        function tryRender() {
+          if (typeof grecaptcha === "undefined" || !grecaptcha.render) {
+            attempts += 1;
+            if (attempts > 200) {
+              recaptchaLoadState = "missing";
+              showRecaptchaFailure(
+                "Could not load the security check. Try turning off ad blockers, check your connection, or refresh the page."
+              );
+              return;
+            }
+            window.setTimeout(tryRender, 50);
+            return;
+          }
+          try {
+            qsa("[data-mail-form]").forEach(function (mailForm) {
+              var mount = qs("[data-recaptcha-mount]", mailForm);
+              if (!mount) return;
+              var id = grecaptcha.render(mount, {
+                sitekey: recaptchaSiteKey,
+                theme: "light",
+              });
+              mailForm.setAttribute("data-recaptcha-widget-id", String(id));
+            });
+            recaptchaLoadState = "ready";
+          } catch (e) {
+            recaptchaLoadState = "missing";
+            showRecaptchaFailure(
+              "Security check failed to start. Confirm this domain is listed in your reCAPTCHA key settings, then refresh."
+            );
+          }
+        }
+        tryRender();
+      })
+      .catch(function () {
+        recaptchaLoadState = "missing";
+        showRecaptchaFailure(
+          "Could not load form protection. Refresh the page or call us."
+        );
+      });
+  }
+
+  initMailFormRecaptcha();
+
   function handleMailForm(form) {
     var type = form.getAttribute("data-form-type");
     var errEl =
@@ -296,6 +383,41 @@
 
     showFormError(errEl, "");
 
+    if (recaptchaLoadState === "loading") {
+      showFormError(
+        errEl,
+        "One moment — loading form security. Please try again."
+      );
+      return;
+    }
+    if (recaptchaLoadState === "missing") {
+      showFormError(
+        errEl,
+        "Form security could not load. Please refresh the page or call us."
+      );
+      return;
+    }
+
+    var widAttr = form.getAttribute("data-recaptcha-widget-id");
+    var recaptchaToken = "";
+    if (widAttr !== null && widAttr !== "") {
+      var wid = parseInt(widAttr, 10);
+      if (
+        typeof grecaptcha !== "undefined" &&
+        grecaptcha.getResponse &&
+        !isNaN(wid)
+      ) {
+        recaptchaToken = grecaptcha.getResponse(wid) || "";
+      }
+    }
+    if (!recaptchaToken) {
+      showFormError(
+        errEl,
+        'Please check the "I\'m not a robot" box.'
+      );
+      return;
+    }
+
     var submitBtn = form.querySelector('[type="submit"]');
     if (submitBtn) submitBtn.disabled = true;
 
@@ -310,6 +432,7 @@
         service: service,
         message: message,
         contactMethod: contactMethod,
+        recaptchaToken: recaptchaToken,
       }),
     })
       .then(function (res) {
@@ -331,12 +454,14 @@
           (r.data && r.data.error) ||
           "Something went wrong. Please try again or call us.";
         showFormError(errEl, msg);
+        resetRecaptchaForForm(form);
       })
       .catch(function () {
         showFormError(
           errEl,
           "Network error. Please check your connection and try again."
         );
+        resetRecaptchaForForm(form);
       })
       .then(function () {
         if (submitBtn) submitBtn.disabled = false;

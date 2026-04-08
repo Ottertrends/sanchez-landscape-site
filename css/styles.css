@@ -495,7 +495,8 @@ a:hover {
   align-items: center;
   padding-top: calc(var(--header-height) + 2rem);
   padding-bottom: 3rem;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: visible;
 }
 
 .hero-video {
@@ -659,6 +660,31 @@ a:hover {
 .form__textarea {
   resize: vertical;
   min-height: 80px;
+}
+
+.form__recaptcha {
+  margin: 0.35rem 0 0.75rem;
+  min-height: 78px;
+  position: relative;
+  z-index: 1;
+}
+
+.form__recaptcha-wait {
+  margin: 0;
+  padding: 0.5rem 0;
+  font-size: 0.88rem;
+  color: rgba(26, 26, 26, 0.55);
+  font-weight: 600;
+}
+
+.form__recaptcha-wait--error {
+  color: #8a1538;
+  line-height: 1.4;
+}
+
+.form__recaptcha > div {
+  display: flex;
+  justify-content: flex-start;
 }
 
 .form__error {

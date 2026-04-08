@@ -17,6 +17,8 @@ module.exports = async function handler(req, res) {
     return res.status(405).json({ siteKey: null });
   }
 
-  const siteKey = normalizeSiteKey(process.env.RECAPTCHA_SITE_KEY);
+  const siteKey = normalizeSiteKey(
+    process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || process.env.RECAPTCHA_SITE_KEY
+  );
   return res.status(200).json({ siteKey: siteKey || null });
 };

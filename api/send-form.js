@@ -44,8 +44,8 @@ function minRiskScoreThreshold() {
 function recaptchaMode() {
   const hasEnterprise = !!normalizeQuotedEnv(process.env.RECAPTCHA_API_KEY);
   const hasV3 = !!normalizeQuotedEnv(process.env.RECAPTCHA_SECRET_KEY);
-  if (hasEnterprise) return "enterprise";
   if (hasV3) return "v3";
+  if (hasEnterprise) return "enterprise";
   return "none";
 }
 
@@ -286,11 +286,8 @@ module.exports = async function handler(req, res) {
   const recaptchaToken = String(body.recaptchaToken || "").trim();
 
   const mode = recaptchaMode();
-  if (mode === "enterprise") {
-    const captcha = await verifyRecaptchaEnterprise(
-      recaptchaToken,
-      clientIp(req)
-    );
+  if (mode === "v3") {
+    const captcha = await verifyRecaptchaV3(recaptchaToken, clientIp(req));
     if (!captcha.ok) {
       const status =
         captcha.error &&
@@ -299,8 +296,11 @@ module.exports = async function handler(req, res) {
           : 400;
       return res.status(status).json({ ok: false, error: captcha.error });
     }
-  } else if (mode === "v3") {
-    const captcha = await verifyRecaptchaV3(recaptchaToken, clientIp(req));
+  } else if (mode === "enterprise") {
+    const captcha = await verifyRecaptchaEnterprise(
+      recaptchaToken,
+      clientIp(req)
+    );
     if (!captcha.ok) {
       const status =
         captcha.error &&

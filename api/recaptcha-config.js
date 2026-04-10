@@ -1,7 +1,9 @@
 /**
  * Tells the browser which reCAPTCHA loader to use and exposes the public site key.
- * - Enterprise: RECAPTCHA_API_KEY + NEXT_PUBLIC_RECAPTCHA_SITE_KEY (or RECAPTCHA_SITE_KEY)
- * - Classic v3: RECAPTCHA_SECRET_KEY + site key (same public key as in Google admin)
+ * Precedence (when site key is set):
+ * 1) Classic v3 — RECAPTCHA_SECRET_KEY (api.js + siteverify; simpler)
+ * 2) Enterprise — RECAPTCHA_API_KEY (enterprise.js + Create Assessment)
+ * If you only want v3, you can delete RECAPTCHA_API_KEY from Vercel to avoid confusion.
  */
 module.exports = async function handler(req, res) {
   res.setHeader("Content-Type", "application/json");
@@ -21,10 +23,10 @@ module.exports = async function handler(req, res) {
   const hasV3Secret = !!trimEnv("RECAPTCHA_SECRET_KEY");
 
   let mode = "none";
-  if (siteKey && hasEnterprise) {
-    mode = "enterprise";
-  } else if (siteKey && hasV3Secret) {
+  if (siteKey && hasV3Secret) {
     mode = "v3";
+  } else if (siteKey && hasEnterprise) {
+    mode = "enterprise";
   }
 
   return res.status(200).json({

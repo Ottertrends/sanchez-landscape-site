@@ -2,6 +2,6 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "installCommand": "npm install",
   "rewrites": [
-    { "source": "/favicon.ico", "destination": "/images/favicon.png" }
+    { "source": "/favicon.ico", "destination": "/images/favicon/favicon.ico" }
   ]
 }

@@ -61,46 +61,43 @@
     });
   }
 
-  /* Animated stats bar */
-  var statsBar = qs("[data-stats-bar]");
-  if (statsBar) {
-    function setStatFinal() {
-      qsa("[data-stat-target]", statsBar).forEach(function (el) {
-        var t = el.getAttribute("data-stat-target") || "0";
-        var suf = el.getAttribute("data-stat-suffix") || "";
-        el.textContent = t + suf;
-      });
+  /* Typewriter tagline */
+  var twEl = qs("[data-typewriter]");
+  if (twEl) {
+    var twText = "Landscaping you can trust.";
+    var twIndex = 0;
+    var twStarted = false;
+
+    function runTypewriter() {
+      if (twStarted) return;
+      twStarted = true;
+      var twInterval = setInterval(function () {
+        twIndex++;
+        twEl.textContent = twText.slice(0, twIndex);
+        if (twIndex >= twText.length) {
+          clearInterval(twInterval);
+          setTimeout(function () {
+            twEl.classList.add("typewriter-done");
+          }, 1500);
+        }
+      }, 55);
     }
-    if (!reduceMotion && "IntersectionObserver" in window) {
-      var statsDone = false;
-      var statsIo = new IntersectionObserver(
-        function (entries) {
-          entries.forEach(function (entry) {
-            if (!entry.isIntersecting || statsDone) return;
-            statsDone = true;
-            statsIo.disconnect();
-            qsa("[data-stat-target]", statsBar).forEach(function (el) {
-              var target = parseInt(el.getAttribute("data-stat-target"), 10) || 0;
-              var suffix = el.getAttribute("data-stat-suffix") || "";
-              var start = performance.now();
-              var dur = 1100;
-              function tick(now) {
-                var p = Math.min(1, (now - start) / dur);
-                var eased = 1 - Math.pow(1 - p, 3);
-                var val = Math.round(eased * target);
-                el.textContent = val + suffix;
-                if (p < 1) requestAnimationFrame(tick);
-                else el.textContent = target + suffix;
-              }
-              requestAnimationFrame(tick);
-            });
-          });
-        },
-        { threshold: 0.15 }
-      );
-      statsIo.observe(statsBar);
+
+    if (reduceMotion) {
+      twEl.textContent = twText;
+      twEl.classList.add("typewriter-done");
+    } else if ("IntersectionObserver" in window) {
+      var twIo = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            twIo.disconnect();
+            runTypewriter();
+          }
+        });
+      }, { threshold: 0.3 });
+      twIo.observe(twEl);
     } else {
-      setStatFinal();
+      runTypewriter();
     }
   }
 
@@ -182,86 +179,6 @@
       el.classList.add("is-visible");
     });
   }
-
-  /* Before / after sliders (transformations) */
-  function setBaSlider(slider, pct) {
-    var mask = qs("[data-ba-mask]", slider);
-    var handle = qs("[data-ba-handle]", slider);
-    if (!mask || !handle) return;
-    var p = Math.max(5, Math.min(95, pct));
-    mask.style.width = p + "%";
-    handle.style.left = p + "%";
-    handle.style.transform = "translateX(-50%)";
-    handle.setAttribute("aria-valuenow", String(Math.round(p)));
-  }
-
-  function initBaSlider(slider) {
-    var handle = qs("[data-ba-handle]", slider);
-    if (!handle) return;
-
-    function pctFromClientX(clientX) {
-      var r = slider.getBoundingClientRect();
-      return ((clientX - r.left) / r.width) * 100;
-    }
-
-    var dragging = false;
-
-    function onMove(clientX) {
-      setBaSlider(slider, pctFromClientX(clientX));
-    }
-
-    slider.addEventListener("mousedown", function (e) {
-      dragging = true;
-      onMove(e.clientX);
-      e.preventDefault();
-    });
-
-    handle.addEventListener(
-      "touchstart",
-      function (e) {
-        if (!e.touches || !e.touches[0]) return;
-        dragging = true;
-        onMove(e.touches[0].clientX);
-      },
-      { passive: true }
-    );
-
-    window.addEventListener("mousemove", function (e) {
-      if (!dragging) return;
-      onMove(e.clientX);
-    });
-
-    window.addEventListener(
-      "touchmove",
-      function (e) {
-        if (!dragging || !e.touches || !e.touches[0]) return;
-        onMove(e.touches[0].clientX);
-      },
-      { passive: true }
-    );
-
-    function endDrag() {
-      dragging = false;
-    }
-    window.addEventListener("mouseup", endDrag);
-    window.addEventListener("touchend", endDrag);
-
-    handle.addEventListener("keydown", function (e) {
-      var cur = parseFloat(handle.getAttribute("aria-valuenow") || "50");
-      var step = e.shiftKey ? 10 : 5;
-      if (e.key === "ArrowLeft") {
-        setBaSlider(slider, cur - step);
-        e.preventDefault();
-      } else if (e.key === "ArrowRight") {
-        setBaSlider(slider, cur + step);
-        e.preventDefault();
-      }
-    });
-
-    setBaSlider(slider, 50);
-  }
-
-  qsa("[data-ba-slider]").forEach(initBaSlider);
 
   /* Testimonials carousel (horizontal snap + prev/next) */
   qsa("[data-testimonials-carousel]").forEach(function (wrap) {
@@ -405,6 +322,7 @@
 
   var recaptchaLoadState = "loading";
   var recaptchaSiteKey = "";
+  var recaptchaMode = "none";
 
   function showRecaptchaFailure(msg) {
     qsa("[data-mail-form]").forEach(function (mailForm) {
@@ -420,29 +338,53 @@
   function initMailFormRecaptcha() {
     fetch("/api/recaptcha-config")
       .then(function (r) {
+        if (r.status === 404) {
+          recaptchaLoadState = "ready";
+          recaptchaMode = "none";
+          return null;
+        }
+        if (!r.ok) {
+          recaptchaLoadState = "missing";
+          showRecaptchaFailure(
+            "Could not load form protection. Refresh the page or call us."
+          );
+          return null;
+        }
         return r.json();
       })
       .then(function (cfg) {
+        if (!cfg) return;
+        recaptchaMode = cfg.mode ? String(cfg.mode) : "none";
         recaptchaSiteKey =
           cfg && cfg.siteKey ? String(cfg.siteKey).trim() : "";
-        if (!recaptchaSiteKey) {
-          recaptchaLoadState = "missing";
-          showRecaptchaFailure(
-            "Form protection is missing on the server (NEXT_PUBLIC_RECAPTCHA_SITE_KEY)."
-          );
-          return;
-        }
-        if (document.querySelector("script[data-recaptcha-enterprise]")) {
+
+        if (recaptchaMode === "none" || !recaptchaSiteKey) {
           recaptchaLoadState = "ready";
           return;
         }
+
+        var scriptUrl =
+          recaptchaMode === "enterprise"
+            ? "https://www.google.com/recaptcha/enterprise.js?render=" +
+              encodeURIComponent(recaptchaSiteKey)
+            : "https://www.google.com/recaptcha/api.js?render=" +
+              encodeURIComponent(recaptchaSiteKey);
+
+        var attr =
+          recaptchaMode === "enterprise"
+            ? "data-recaptcha-enterprise"
+            : "data-recaptcha-v3";
+
+        if (document.querySelector("script[" + attr + "]")) {
+          recaptchaLoadState = "ready";
+          return;
+        }
+
         var s = document.createElement("script");
-        s.src =
-          "https://www.google.com/recaptcha/enterprise.js?render=" +
-          encodeURIComponent(recaptchaSiteKey);
+        s.src = scriptUrl;
         s.async = true;
         s.defer = true;
-        s.setAttribute("data-recaptcha-enterprise", "true");
+        s.setAttribute(attr, "true");
         s.onload = function () {
           recaptchaLoadState = "ready";
         };
@@ -455,10 +397,8 @@
         document.head.appendChild(s);
       })
       .catch(function () {
-        recaptchaLoadState = "missing";
-        showRecaptchaFailure(
-          "Could not load form protection. Refresh the page or call us."
-        );
+        recaptchaLoadState = "ready";
+        recaptchaMode = "none";
       });
   }
 
@@ -506,32 +446,47 @@
 
     showFormError(errEl, "");
 
-    if (recaptchaLoadState === "loading") {
-      showFormError(
-        errEl,
-        "One moment — loading form security. Please try again."
-      );
-      return;
-    }
-    if (recaptchaLoadState === "missing") {
-      showFormError(
-        errEl,
-        "Form security could not load. Please refresh the page or call us."
-      );
-      return;
-    }
-
-    if (
-      typeof grecaptcha === "undefined" ||
-      !grecaptcha.enterprise ||
-      typeof grecaptcha.enterprise.ready !== "function" ||
-      typeof grecaptcha.enterprise.execute !== "function"
-    ) {
-      showFormError(
-        errEl,
-        "Form security is still loading. Wait a moment and try again."
-      );
-      return;
+    if (recaptchaMode !== "none") {
+      if (recaptchaLoadState === "loading") {
+        showFormError(
+          errEl,
+          "One moment — loading form security. Please try again."
+        );
+        return;
+      }
+      if (recaptchaLoadState === "missing") {
+        showFormError(
+          errEl,
+          "Form security could not load. Please refresh the page or call us."
+        );
+        return;
+      }
+      if (recaptchaMode === "enterprise") {
+        if (
+          typeof grecaptcha === "undefined" ||
+          !grecaptcha.enterprise ||
+          typeof grecaptcha.enterprise.ready !== "function" ||
+          typeof grecaptcha.enterprise.execute !== "function"
+        ) {
+          showFormError(
+            errEl,
+            "Form security is still loading. Wait a moment and try again."
+          );
+          return;
+        }
+      } else {
+        if (
+          typeof grecaptcha === "undefined" ||
+          typeof grecaptcha.ready !== "function" ||
+          typeof grecaptcha.execute !== "function"
+        ) {
+          showFormError(
+            errEl,
+            "Form security is still loading. Wait a moment and try again."
+          );
+          return;
+        }
+      }
     }
 
     var submitBtn = form.querySelector('[type="submit"]');
@@ -549,7 +504,7 @@
           service: service,
           message: message,
           contactMethod: contactMethod,
-          recaptchaToken: recaptchaToken,
+          recaptchaToken: recaptchaToken || "",
         }),
       })
         .then(function (res) {
@@ -583,29 +538,60 @@
         });
     }
 
-    grecaptcha.enterprise.ready(function () {
-      grecaptcha.enterprise
-        .execute(recaptchaSiteKey, { action: "submit" })
-        .then(function (token) {
-          if (!token) {
+    if (recaptchaMode === "none") {
+      finishSubmit("");
+      return;
+    }
+
+    if (recaptchaMode === "enterprise") {
+      grecaptcha.enterprise.ready(function () {
+        grecaptcha.enterprise
+          .execute(recaptchaSiteKey, { action: "submit" })
+          .then(function (token) {
+            if (!token) {
+              showFormError(
+                errEl,
+                "Could not verify submission. Please try again."
+              );
+              if (submitBtn) submitBtn.disabled = false;
+              return;
+            }
+            finishSubmit(token);
+          })
+          .catch(function (e) {
+            console.error("reCAPTCHA Enterprise execute error:", e);
             showFormError(
               errEl,
               "Could not verify submission. Please try again."
             );
             if (submitBtn) submitBtn.disabled = false;
-            return;
-          }
-          finishSubmit(token);
-        })
-        .catch(function (e) {
-          console.error("reCAPTCHA Enterprise execute error:", e);
-          showFormError(
-            errEl,
-            "Could not verify submission. Please try again."
-          );
-          if (submitBtn) submitBtn.disabled = false;
-        });
-    });
+          });
+      });
+    } else {
+      grecaptcha.ready(function () {
+        grecaptcha
+          .execute(recaptchaSiteKey, { action: "submit" })
+          .then(function (token) {
+            if (!token) {
+              showFormError(
+                errEl,
+                "Could not verify submission. Please try again."
+              );
+              if (submitBtn) submitBtn.disabled = false;
+              return;
+            }
+            finishSubmit(token);
+          })
+          .catch(function (e) {
+            console.error("reCAPTCHA v3 execute error:", e);
+            showFormError(
+              errEl,
+              "Could not verify submission. Please try again."
+            );
+            if (submitBtn) submitBtn.disabled = false;
+          });
+      });
+    }
   }
 
   qsa("[data-mail-form]").forEach(function (form) {

@@ -3,6 +3,7 @@ const { Resend } = require("resend");
 const DEFAULT_TO = "sanchezlandscape512@gmail.com";
 const DEFAULT_RECAPTCHA_PROJECT_ID = "sanchez-landscape-492713";
 const ENTERPRISE_ACTION = "submit";
+const V3_ACTION = "submit";
 
 function clientIp(req) {
   const xff = req.headers["x-forwarded-for"];
@@ -40,8 +41,16 @@ function minRiskScoreThreshold() {
   return Number.isFinite(min) ? min : 0.5;
 }
 
+function recaptchaMode() {
+  const hasEnterprise = !!normalizeQuotedEnv(process.env.RECAPTCHA_API_KEY);
+  const hasV3 = !!normalizeQuotedEnv(process.env.RECAPTCHA_SECRET_KEY);
+  if (hasEnterprise) return "enterprise";
+  if (hasV3) return "v3";
+  return "none";
+}
+
 /**
- * reCAPTCHA Enterprise: projects.assessments
+ * reCAPTCHA Enterprise — Create Assessment
  * https://cloud.google.com/recaptcha-enterprise/docs/create-assessment
  */
 async function verifyRecaptchaEnterprise(token, remoteip) {
@@ -142,6 +151,69 @@ async function verifyRecaptchaEnterprise(token, remoteip) {
   return { ok: true };
 }
 
+/**
+ * Classic reCAPTCHA v3 — siteverify
+ * https://developers.google.com/recaptcha/docs/verify
+ */
+async function verifyRecaptchaV3(token, remoteip) {
+  const secret = normalizeQuotedEnv(process.env.RECAPTCHA_SECRET_KEY);
+  if (!secret) {
+    return {
+      ok: false,
+      error: "Server is not configured. Add RECAPTCHA_SECRET_KEY.",
+    };
+  }
+  if (!token) {
+    return { ok: false, error: "Missing security token. Please try again." };
+  }
+
+  const params = new URLSearchParams();
+  params.set("secret", secret);
+  params.set("response", token);
+  if (remoteip) params.set("remoteip", remoteip);
+
+  let data;
+  try {
+    const r = await fetch("https://www.google.com/recaptcha/api/siteverify", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: params.toString(),
+    });
+    data = await r.json();
+  } catch (e) {
+    console.error("reCAPTCHA v3 siteverify error:", e);
+    return {
+      ok: false,
+      error: "Could not verify submission. Try again in a moment.",
+    };
+  }
+
+  if (!data || data.success !== true) {
+    return {
+      ok: false,
+      error: "reCAPTCHA verification failed. Please try again.",
+    };
+  }
+
+  if (data.action && String(data.action) !== V3_ACTION) {
+    return {
+      ok: false,
+      error: "reCAPTCHA verification failed. Please try again.",
+    };
+  }
+
+  const score = typeof data.score === "number" ? data.score : null;
+  const threshold = minRiskScoreThreshold();
+  if (score === null || score <= threshold) {
+    return {
+      ok: false,
+      error: "Unable to verify submission. Please try again or call us.",
+    };
+  }
+
+  return { ok: true };
+}
+
 function digitsPhone(s) {
   return String(s || "").replace(/\D/g, "");
 }
@@ -213,22 +285,33 @@ module.exports = async function handler(req, res) {
     typeof rawBody === "object" && rawBody !== null ? rawBody : {};
   const recaptchaToken = String(body.recaptchaToken || "").trim();
 
-  const formTypeEarly = body.formType === "contact" ? "contact" : "quote";
-
-  const captcha = await verifyRecaptchaEnterprise(
-    recaptchaToken,
-    clientIp(req)
-  );
-  if (!captcha.ok) {
-    const status =
-      captcha.error &&
-      captcha.error.indexOf("Server is not configured") === 0
-        ? 500
-        : 400;
-    return res.status(status).json({ ok: false, error: captcha.error });
+  const mode = recaptchaMode();
+  if (mode === "enterprise") {
+    const captcha = await verifyRecaptchaEnterprise(
+      recaptchaToken,
+      clientIp(req)
+    );
+    if (!captcha.ok) {
+      const status =
+        captcha.error &&
+        captcha.error.indexOf("Server is not configured") === 0
+          ? 500
+          : 400;
+      return res.status(status).json({ ok: false, error: captcha.error });
+    }
+  } else if (mode === "v3") {
+    const captcha = await verifyRecaptchaV3(recaptchaToken, clientIp(req));
+    if (!captcha.ok) {
+      const status =
+        captcha.error &&
+        captcha.error.indexOf("Server is not configured") === 0
+          ? 500
+          : 400;
+      return res.status(status).json({ ok: false, error: captcha.error });
+    }
   }
 
-  const formType = formTypeEarly;
+  const formType = body.formType === "contact" ? "contact" : "quote";
   const name = String(body.name || "").trim();
   const phone = String(body.phone || "").trim();
   const email = String(body.email || "").trim();

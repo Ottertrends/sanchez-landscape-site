@@ -3,7 +3,7 @@
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://sanchezlandscape512.com/</loc>
-    <lastmod>2026-04-08</lastmod>
+    <lastmod>2026-04-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
     <image:image>
@@ -21,6 +21,14 @@
     <image:image>
       <image:loc>https://sanchezlandscape512.com/images/Sanchez%20Landscaping%20picture%20of%20owner.jpg</image:loc>
       <image:title>Sanchez Landscape owner — family-owned landscaping in Austin &amp; Surrounding Areas</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://sanchezlandscape512.com/images/Tree%20Design%20and%20Seasonal.jpg</image:loc>
+      <image:title>Tree services, landscape design, and seasonal work — Sanchez Landscape</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://sanchezlandscape512.com/images/Irrigation.jpg</image:loc>
+      <image:title>Irrigation and outdoor lighting — Sanchez Landscape, Austin area</image:title>
     </image:image>
   </url>
   <url>

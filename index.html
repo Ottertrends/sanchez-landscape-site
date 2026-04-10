@@ -36,7 +36,8 @@
   </script>
 
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#1b4332">
   <link rel="icon" type="image/png" href="/images/favicon.png">
   <link rel="apple-touch-icon" href="/images/favicon.png">
   <title>Sanchez Landscape 512 | Austin, TX Landscaping, Lawn Care &amp; Irrigation</title>
@@ -116,7 +117,9 @@
         "email": "sanchezlandscape512@gmail.com",
         "image": [
           "https://sanchezlandscape512.com/images/Sanchez%20Landscaping%20LOGO.png",
-          "https://sanchezlandscape512.com/images/Sanchez%20Landscaping%2010.jpg"
+          "https://sanchezlandscape512.com/images/Sanchez%20Landscaping%2010.jpg",
+          "https://sanchezlandscape512.com/images/Tree%20Design%20and%20Seasonal.jpg",
+          "https://sanchezlandscape512.com/images/Irrigation.jpg"
         ],
         "logo": {
           "@type": "ImageObject",
@@ -140,7 +143,10 @@
           "telephone": "+1-512-406-4698",
           "email": "sanchezlandscape512@gmail.com",
           "contactType": "customer service",
-          "areaServed": "US",
+          "areaServed": [
+            { "@type": "City", "name": "Austin", "containedInPlace": { "@type": "State", "name": "Texas" } },
+            { "@type": "City", "name": "Kyle", "containedInPlace": { "@type": "State", "name": "Texas" } }
+          ],
           "availableLanguage": ["English", "Spanish"]
         },
         "areaServed": [
@@ -226,6 +232,7 @@
                 "@type": "Service",
                 "name": "Lawn Maintenance",
                 "description": "Mowing, edging, and blowing for a neat, healthy lawn year-round.",
+                "url": "https://sanchezlandscape512.com/#services-cat-lawn",
                 "provider": { "@id": "https://sanchezlandscape512.com/#business" },
                 "areaServed": { "@type": "State", "name": "Texas" }
               }
@@ -236,6 +243,7 @@
                 "@type": "Service",
                 "name": "Weed Control & Fertilization",
                 "description": "Targeted weed control and fertilization programs for Texas turf.",
+                "url": "https://sanchezlandscape512.com/#services-cat-lawn",
                 "provider": { "@id": "https://sanchezlandscape512.com/#business" }
               }
             },
@@ -245,6 +253,7 @@
                 "@type": "Service",
                 "name": "Sod Installation",
                 "description": "New lawns from scratch with professional sod installation.",
+                "url": "https://sanchezlandscape512.com/#services-cat-lawn",
                 "provider": { "@id": "https://sanchezlandscape512.com/#business" }
               }
             },
@@ -254,6 +263,7 @@
                 "@type": "Service",
                 "name": "Irrigation Installation & Repairs",
                 "description": "Irrigation system installation, repairs, and efficient upgrades.",
+                "url": "https://sanchezlandscape512.com/#services-cat-systems",
                 "provider": { "@id": "https://sanchezlandscape512.com/#business" }
               }
             },
@@ -263,6 +273,7 @@
                 "@type": "Service",
                 "name": "Tree Services",
                 "description": "Trimming, pruning, removal, and stump grinding.",
+                "url": "https://sanchezlandscape512.com/#services-cat-trees",
                 "provider": { "@id": "https://sanchezlandscape512.com/#business" }
               }
             },
@@ -272,6 +283,7 @@
                 "@type": "Service",
                 "name": "Landscape Design & Full Installation",
                 "description": "Complete landscape design through installation.",
+                "url": "https://sanchezlandscape512.com/#services-cat-trees",
                 "provider": { "@id": "https://sanchezlandscape512.com/#business" }
               }
             },
@@ -281,6 +293,7 @@
                 "@type": "Service",
                 "name": "Metal & Stone Flowerbeds",
                 "description": "Durable metal and stone flowerbed borders and features.",
+                "url": "https://sanchezlandscape512.com/#services-cat-hardscape",
                 "provider": { "@id": "https://sanchezlandscape512.com/#business" }
               }
             },
@@ -290,6 +303,7 @@
                 "@type": "Service",
                 "name": "Flagstone Walkways & Patios",
                 "description": "Natural flagstone walkways and patio installations.",
+                "url": "https://sanchezlandscape512.com/#services-cat-hardscape",
                 "provider": { "@id": "https://sanchezlandscape512.com/#business" }
               }
             },
@@ -299,6 +313,7 @@
                 "@type": "Service",
                 "name": "Gravel & Xeriscaping",
                 "description": "Low-maintenance gravel and xeriscape landscape designs.",
+                "url": "https://sanchezlandscape512.com/#services-cat-hardscape",
                 "provider": { "@id": "https://sanchezlandscape512.com/#business" }
               }
             },
@@ -308,6 +323,7 @@
                 "@type": "Service",
                 "name": "Outdoor Lighting",
                 "description": "Automatic outdoor lighting systems.",
+                "url": "https://sanchezlandscape512.com/#services-cat-systems",
                 "provider": { "@id": "https://sanchezlandscape512.com/#business" }
               }
             },
@@ -317,6 +333,7 @@
                 "@type": "Service",
                 "name": "Fence Installation",
                 "description": "Wood and metal fence installation.",
+                "url": "https://sanchezlandscape512.com/#services-cat-hardscape",
                 "provider": { "@id": "https://sanchezlandscape512.com/#business" }
               }
             },
@@ -326,6 +343,7 @@
                 "@type": "Service",
                 "name": "Yard Cleanups & Seasonal Services",
                 "description": "Yard cleanups and seasonal maintenance.",
+                "url": "https://sanchezlandscape512.com/#services-cat-trees",
                 "provider": { "@id": "https://sanchezlandscape512.com/#business" }
               }
             }
@@ -506,31 +524,16 @@
           <li class="trust-bar__item"><span class="trust-bar__icon" aria-hidden="true">✓</span> Licensed &amp; Insured</li>
           <li class="trust-bar__item"><span class="trust-bar__icon" aria-hidden="true">⭐</span> 5-Star Rated</li>
           <li class="trust-bar__item"><span class="trust-bar__icon" aria-hidden="true">🌿</span> 14+ Years Experience</li>
-          <li class="trust-bar__item"><span class="trust-bar__icon" aria-hidden="true">📍</span> Locally Owned</li>
+          <li class="trust-bar__item"><span class="trust-bar__icon" aria-hidden="true">🔨</span> 500+ Projects</li>
         </ul>
       </div>
     </div>
 
-    <section class="stats-bar" aria-label="Company highlights" data-stats-bar>
-      <div class="container stats-bar__grid">
-        <div class="stats-bar__item" data-animate>
-          <span class="stats-bar__value"><span class="stats-bar__num" data-stat-target="14" data-stat-suffix="+">0</span></span>
-          <span class="stats-bar__label">Years of Experience</span>
-        </div>
-        <div class="stats-bar__item" data-animate>
-          <span class="stats-bar__value"><span class="stats-bar__num" data-stat-target="500" data-stat-suffix="+">0</span></span>
-          <span class="stats-bar__label">Projects Completed</span>
-        </div>
-        <div class="stats-bar__item" data-animate>
-          <span class="stats-bar__value"><span class="stats-bar__num" data-stat-target="5" data-stat-suffix="">0</span></span>
-          <span class="stats-bar__label">Star Google Rating</span>
-        </div>
-        <div class="stats-bar__item" data-animate>
-          <span class="stats-bar__value"><span class="stats-bar__num" data-stat-target="2" data-stat-suffix="">0</span></span>
-          <span class="stats-bar__label">Languages We Speak</span>
-        </div>
+    <div class="tagline-bar" data-tagline-bar>
+      <div class="container tagline-bar__inner">
+        <p class="tagline-bar__text" data-typewriter aria-label="Landscaping you can trust."></p>
       </div>
-    </section>
+    </div>
 
     <div class="city-ticker" aria-hidden="true">
       <div class="city-ticker__track">
@@ -569,91 +572,59 @@
       <div class="container">
         <h2 class="section__title" data-animate id="services-heading">What We Do</h2>
         <p class="section__lead" data-animate>Full-service landscaping for homes and businesses in Austin &amp; Surrounding Areas.</p>
-        <div class="services-categories">
-          <section class="services-category" data-animate aria-labelledby="services-cat-lawn">
-            <h3 class="services-category__title" id="services-cat-lawn">Lawn &amp; turf</h3>
-            <p class="services-category__intro">Healthy turf, crisp edges, and new lawns built for Central Texas heat.</p>
-            <div class="services-grid services-grid--category">
-              <article class="service-card" tabindex="0">
-                <span class="service-card__icon" aria-hidden="true">🌿</span>
-                <h4 class="service-card__title">Lawn Maintenance</h4>
-                <p class="service-card__text">Mowing, edging, and blowing for a crisp, healthy lawn.</p>
-              </article>
-              <article class="service-card" tabindex="0">
-                <span class="service-card__icon" aria-hidden="true">🌱</span>
-                <h4 class="service-card__title">Weed Control &amp; Fertilization</h4>
-                <p class="service-card__text">Targeted programs to knock back weeds and feed your turf.</p>
-              </article>
-              <article class="service-card" tabindex="0">
-                <span class="service-card__icon" aria-hidden="true">🟩</span>
-                <h4 class="service-card__title">Sod Installation</h4>
-                <p class="service-card__text">New lawns from scratch with professional sod work.</p>
-              </article>
+        <div class="service-cat-grid">
+          <article class="service-cat-card" id="services-cat-lawn" data-animate>
+            <div class="service-cat-card__img-wrap">
+              <img src="images/Sanchez landscape Use 1.jpg" alt="Lawn care and turf maintenance in Austin TX" width="800" height="500" loading="lazy">
+              <div class="service-cat-card__overlay">
+                <h3 class="service-cat-card__title">Lawn &amp; Turf</h3>
+              </div>
             </div>
-          </section>
-          <section class="services-category" data-animate aria-labelledby="services-cat-trees">
-            <h3 class="services-category__title" id="services-cat-trees">Trees, design &amp; seasonal</h3>
-            <p class="services-category__intro">Trees, full landscape installs, and seasonal cleanups to keep your property sharp year-round.</p>
-            <div class="services-grid services-grid--category">
-              <article class="service-card" tabindex="0">
-                <span class="service-card__icon" aria-hidden="true">🌳</span>
-                <h4 class="service-card__title">Tree Services</h4>
-                <p class="service-card__text">Trim, pruning, removal, and stump grinding.</p>
-              </article>
-              <article class="service-card" tabindex="0">
-                <span class="service-card__icon" aria-hidden="true">🏡</span>
-                <h4 class="service-card__title">Landscape Design &amp; Full Installation</h4>
-                <p class="service-card__text">From concept to finished beds, plantings, and details.</p>
-              </article>
-              <article class="service-card" tabindex="0">
-                <span class="service-card__icon" aria-hidden="true">🍂</span>
-                <h4 class="service-card__title">Yard Cleanups &amp; Seasonal Services</h4>
-                <p class="service-card__text">Cleanups, bed refresh, and seasonal tune-ups.</p>
-              </article>
+            <div class="service-cat-card__chips">
+              <span class="service-chip">Lawn Maintenance</span>
+              <span class="service-chip">Weed Control &amp; Fertilization</span>
+              <span class="service-chip">Sod Installation</span>
             </div>
-          </section>
-          <section class="services-category" data-animate aria-labelledby="services-cat-hardscape">
-            <h3 class="services-category__title" id="services-cat-hardscape">Hardscape &amp; structures</h3>
-            <p class="services-category__intro">Stone, metal beds, patios, xeriscape, and fencing that stand up to Texas weather.</p>
-            <div class="services-grid services-grid--category">
-              <article class="service-card" tabindex="0">
-                <span class="service-card__icon" aria-hidden="true">🪨</span>
-                <h4 class="service-card__title">Metal &amp; Stone Flowerbeds</h4>
-                <p class="service-card__text">Defined beds with durable metal and natural stone.</p>
-              </article>
-              <article class="service-card" tabindex="0">
-                <span class="service-card__icon" aria-hidden="true">🛤️</span>
-                <h4 class="service-card__title">Flagstone Walkways &amp; Patios</h4>
-                <p class="service-card__text">Natural flagstone paths and patios that last.</p>
-              </article>
-              <article class="service-card" tabindex="0">
-                <span class="service-card__icon" aria-hidden="true">🏜️</span>
-                <h4 class="service-card__title">Gravel &amp; Xeriscaping</h4>
-                <p class="service-card__text">Low-maintenance designs that save water and time.</p>
-              </article>
-              <article class="service-card" tabindex="0">
-                <span class="service-card__icon" aria-hidden="true">🚧</span>
-                <h4 class="service-card__title">Fence Installation</h4>
-                <p class="service-card__text">Wood and metal fences installed to spec.</p>
-              </article>
+          </article>
+          <article class="service-cat-card" id="services-cat-trees" data-animate>
+            <div class="service-cat-card__img-wrap">
+              <img src="images/Tree Design and Seasonal.jpg" alt="Tree services, landscape design, and seasonal work in Central Texas" width="800" height="500" loading="lazy">
+              <div class="service-cat-card__overlay">
+                <h3 class="service-cat-card__title">Trees, Design &amp; Seasonal</h3>
+              </div>
             </div>
-          </section>
-          <section class="services-category" data-animate aria-labelledby="services-cat-systems">
-            <h3 class="services-category__title" id="services-cat-systems">Irrigation &amp; lighting</h3>
-            <p class="services-category__intro">Efficient irrigation repairs and installs, plus outdoor lighting for safety and curb appeal.</p>
-            <div class="services-grid services-grid--category services-grid--category--pair">
-              <article class="service-card" tabindex="0">
-                <span class="service-card__icon" aria-hidden="true">💧</span>
-                <h4 class="service-card__title">Irrigation Installation &amp; Repairs</h4>
-                <p class="service-card__text">Efficient systems, repairs, and upgrades built for Texas heat.</p>
-              </article>
-              <article class="service-card" tabindex="0">
-                <span class="service-card__icon" aria-hidden="true">💡</span>
-                <h4 class="service-card__title">Outdoor Lighting</h4>
-                <p class="service-card__text">Automatic systems for safety and curb appeal after dark.</p>
-              </article>
+            <div class="service-cat-card__chips">
+              <span class="service-chip">Tree Services</span>
+              <span class="service-chip">Landscape Design &amp; Installation</span>
+              <span class="service-chip">Yard Cleanups &amp; Seasonal</span>
             </div>
-          </section>
+          </article>
+          <article class="service-cat-card" id="services-cat-hardscape" data-animate>
+            <div class="service-cat-card__img-wrap">
+              <img src="images/Sanchez landscape Use 4.jpg" alt="Hardscape patios and stonework by Sanchez Landscape" width="800" height="500" loading="lazy">
+              <div class="service-cat-card__overlay">
+                <h3 class="service-cat-card__title">Hardscape &amp; Structures</h3>
+              </div>
+            </div>
+            <div class="service-cat-card__chips">
+              <span class="service-chip">Metal &amp; Stone Flowerbeds</span>
+              <span class="service-chip">Flagstone Walkways &amp; Patios</span>
+              <span class="service-chip">Gravel &amp; Xeriscaping</span>
+              <span class="service-chip">Fence Installation</span>
+            </div>
+          </article>
+          <article class="service-cat-card" id="services-cat-systems" data-animate>
+            <div class="service-cat-card__img-wrap">
+              <img src="images/Irrigation.jpg" alt="Irrigation systems and outdoor lighting in Austin TX" width="800" height="500" loading="lazy">
+              <div class="service-cat-card__overlay">
+                <h3 class="service-cat-card__title">Irrigation &amp; Lighting</h3>
+              </div>
+            </div>
+            <div class="service-cat-card__chips">
+              <span class="service-chip">Irrigation Installation &amp; Repairs</span>
+              <span class="service-chip">Outdoor Lighting</span>
+            </div>
+          </article>
         </div>
       </div>
     </section>
@@ -743,95 +714,6 @@
             <p class="process-step__text">Our crew handles everything from start to cleanup. Satisfaction guaranteed.</p>
           </li>
         </ol>
-      </div>
-    </section>
-
-    <section class="section section--transformations" id="transformations" aria-labelledby="b4a-heading">
-      <div class="container">
-        <h2 class="section__title" data-animate id="b4a-heading">Our Transformations</h2>
-        <p class="section__lead" data-animate>Drag the handle to compare before and after</p>
-        <div class="transformations-grid">
-          <figure class="transformation-card" data-animate>
-            <div class="before-after-slider" data-ba-slider>
-              <div class="after-base">
-                <img src="images/sanchez landscaping after 1.jpg" alt="After landscaping project — Sanchez Landscape, Austin &amp; Surrounding Areas" width="900" height="600" loading="lazy">
-                <span class="label">AFTER</span>
-              </div>
-              <div class="before-mask" data-ba-mask style="width:50%">
-                <img src="images/sanchez landscaping before 1.jpg" alt="Before landscaping project — Sanchez Landscape, Austin &amp; Surrounding Areas" width="900" height="600" loading="lazy">
-                <span class="label">BEFORE</span>
-              </div>
-              <div class="slider-handle" data-ba-handle style="left:50%" role="slider" aria-valuemin="5" aria-valuemax="95" aria-valuenow="50" aria-label="Compare before and after, project 1" tabindex="0">
-                <div class="slider-line" aria-hidden="true"></div>
-                <div class="slider-circle" aria-hidden="true">⟺</div>
-              </div>
-            </div>
-          </figure>
-          <figure class="transformation-card" data-animate>
-            <div class="before-after-slider" data-ba-slider>
-              <div class="after-base">
-                <img src="images/Sanchez landscaping after 2.jpg" alt="After landscaping — Sanchez Landscape, Austin &amp; Surrounding Areas" width="900" height="600" loading="lazy">
-                <span class="label">AFTER</span>
-              </div>
-              <div class="before-mask" data-ba-mask style="width:50%">
-                <img src="images/Sanchez landscaping before 2.jpg" alt="Before landscaping — Sanchez Landscape, Austin &amp; Surrounding Areas" width="900" height="600" loading="lazy">
-                <span class="label">BEFORE</span>
-              </div>
-              <div class="slider-handle" data-ba-handle style="left:50%" role="slider" aria-valuemin="5" aria-valuemax="95" aria-valuenow="50" aria-label="Compare before and after, project 2" tabindex="0">
-                <div class="slider-line" aria-hidden="true"></div>
-                <div class="slider-circle" aria-hidden="true">⟺</div>
-              </div>
-            </div>
-          </figure>
-          <figure class="transformation-card" data-animate>
-            <div class="before-after-slider" data-ba-slider>
-              <div class="after-base">
-                <img src="images/Sanchez landscaping after 3.jpg" alt="After yard transformation — Sanchez Landscape, Austin &amp; Surrounding Areas" width="900" height="600" loading="lazy">
-                <span class="label">AFTER</span>
-              </div>
-              <div class="before-mask" data-ba-mask style="width:50%">
-                <img src="images/Sanchez landscaping before 3.jpg" alt="Before yard transformation — Sanchez Landscape, Austin &amp; Surrounding Areas" width="900" height="600" loading="lazy">
-                <span class="label">BEFORE</span>
-              </div>
-              <div class="slider-handle" data-ba-handle style="left:50%" role="slider" aria-valuemin="5" aria-valuemax="95" aria-valuenow="50" aria-label="Compare before and after, project 3" tabindex="0">
-                <div class="slider-line" aria-hidden="true"></div>
-                <div class="slider-circle" aria-hidden="true">⟺</div>
-              </div>
-            </div>
-          </figure>
-          <figure class="transformation-card" data-animate>
-            <div class="before-after-slider" data-ba-slider>
-              <div class="after-base">
-                <img src="images/Sanchez landscaping after 4.jpg" alt="After outdoor makeover — Sanchez Landscape, Austin &amp; Surrounding Areas" width="900" height="600" loading="lazy">
-                <span class="label">AFTER</span>
-              </div>
-              <div class="before-mask" data-ba-mask style="width:50%">
-                <img src="images/Sanchez landscaping before 4.jpg" alt="Before outdoor makeover — Sanchez Landscape, Austin &amp; Surrounding Areas" width="900" height="600" loading="lazy">
-                <span class="label">BEFORE</span>
-              </div>
-              <div class="slider-handle" data-ba-handle style="left:50%" role="slider" aria-valuemin="5" aria-valuemax="95" aria-valuenow="50" aria-label="Compare before and after, project 4" tabindex="0">
-                <div class="slider-line" aria-hidden="true"></div>
-                <div class="slider-circle" aria-hidden="true">⟺</div>
-              </div>
-            </div>
-          </figure>
-          <figure class="transformation-card" data-animate>
-            <div class="before-after-slider" data-ba-slider>
-              <div class="after-base">
-                <img src="images/Lanchez landscaping after 5.jpg" alt="After landscaping work — Sanchez Landscape, Austin &amp; Surrounding Areas" width="900" height="600" loading="lazy">
-                <span class="label">AFTER</span>
-              </div>
-              <div class="before-mask" data-ba-mask style="width:50%">
-                <img src="images/Lanchez landscaping before 5.jpg" alt="Before landscaping work — Sanchez Landscape, Austin &amp; Surrounding Areas" width="900" height="600" loading="lazy">
-                <span class="label">BEFORE</span>
-              </div>
-              <div class="slider-handle" data-ba-handle style="left:50%" role="slider" aria-valuemin="5" aria-valuemax="95" aria-valuenow="50" aria-label="Compare before and after, project 5" tabindex="0">
-                <div class="slider-line" aria-hidden="true"></div>
-                <div class="slider-circle" aria-hidden="true">⟺</div>
-              </div>
-            </div>
-          </figure>
-        </div>
       </div>
     </section>
 

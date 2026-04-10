@@ -110,7 +110,7 @@
         "@id": "https://sanchezlandscape512.com/#business",
         "name": "Sanchez Landscape",
         "alternateName": "Sanchez Landscape 512",
-        "description": "Family-owned landscaping company serving Austin & Surrounding Areas since 2012. Lawn maintenance, weed control and fertilization, sod installation, irrigation installation and repairs, tree services, landscape design and full installation, metal and stone flowerbeds, flagstone walkways and patios, gravel and xeriscaping, outdoor lighting, fence installation, yard cleanups and seasonal services. Licensed and insured. Bilingual English and Spanish.",
+        "description": "Family-owned landscaping company serving Austin \u0026 Surrounding Areas since 2012. Lawn maintenance, weed control and fertilization, sod installation, irrigation installation and repairs, tree services, landscape design and full installation, metal and stone flowerbeds, flagstone walkways and patios, gravel and xeriscaping, outdoor lighting, fence installation, yard cleanups and seasonal services. Licensed and insured. Bilingual English and Spanish.",
         "url": "https://sanchezlandscape512.com/",
         "telephone": "+1-512-406-4698",
         "email": "sanchezlandscape512@gmail.com",
@@ -345,7 +345,7 @@
         "mainEntity": [
           {
             "@type": "Question",
-            "name": "What are the best grass types for Austin & Surrounding Areas?",
+            "name": "What are the best grass types for Austin \u0026 Surrounding Areas?",
             "acceptedAnswer": {
               "@type": "Answer",
               "text": "The top grass varieties for Central Texas are Bermuda (excellent drought and heat tolerance), St. Augustine (thrives in shade, lush appearance), Zoysia (handles foot traffic and partial shade), and Buffalo grass (native, extremely low-water). Our team can recommend the best fit based on your yard's sun exposure, soil type, and usage."
@@ -353,10 +353,10 @@
           },
           {
             "@type": "Question",
-            "name": "How much does landscaping cost in Austin & Surrounding Areas?",
+            "name": "How much does landscaping cost in Austin \u0026 Surrounding Areas?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Basic lawn mowing in Austin & Surrounding Areas typically starts around $45–$75 per visit, depending on lot size. Full landscape design and installation projects range from a few hundred dollars for small bed installations to several thousand for complete yard redesigns. We provide free, no-obligation estimates so you know the exact cost before any work begins."
+              "text": "Basic lawn mowing in Austin \u0026 Surrounding Areas typically starts around $45–$75 per visit, depending on lot size. Full landscape design and installation projects range from a few hundred dollars for small bed installations to several thousand for complete yard redesigns. We provide free, no-obligation estimates so you know the exact cost before any work begins."
             }
           },
           {
@@ -396,7 +396,7 @@
             "name": "What does a new-home landscaping project include?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "For newly built homes in Austin & Surrounding Areas, a typical project includes grading and soil prep, sod or seed installation, an irrigation system, mulch beds, foundation plantings, and sometimes walkways or edging. We handle everything from design through final cleanup so your property feels finished and livable."
+              "text": "For newly built homes in Austin \u0026 Surrounding Areas, a typical project includes grading and soil prep, sod or seed installation, an irrigation system, mulch beds, foundation plantings, and sometimes walkways or edging. We handle everything from design through final cleanup so your property feels finished and livable."
             }
           },
           {
@@ -412,7 +412,7 @@
             "name": "Do you provide commercial landscaping services?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Yes. We serve small businesses, HOA communities, and commercial properties throughout Austin & Surrounding Areas with recurring maintenance plans, seasonal cleanups, irrigation management, and full landscape installations designed to keep properties looking professional year-round."
+              "text": "Yes. We serve small businesses, HOA communities, and commercial properties throughout Austin \u0026 Surrounding Areas with recurring maintenance plans, seasonal cleanups, irrigation management, and full landscape installations designed to keep properties looking professional year-round."
             }
           },
           {
@@ -420,7 +420,7 @@
             "name": "What areas do you serve?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "We serve Austin & Surrounding Areas. For the full list of neighborhoods and counties we cover, see the Areas We Serve section on our website. Not sure if we cover your property? Call us at 512-406-4698."
+              "text": "We serve Austin \u0026 Surrounding Areas. For the full list of neighborhoods and counties we cover, see the Areas We Serve section on our website. Not sure if we cover your property? Call us at 512-406-4698."
             }
           }
         ]
@@ -438,7 +438,7 @@
         <img class="logo-img" src="images/Sanchez Landscaping LOGO.png" alt="Sanchez Landscape Logo" width="200" height="60" loading="eager">
       </a>
       <div class="header__mobile-tools">
-        <a class="header__quote-mobile btn btn--accent" href="#hero-form">Get Quote</a>
+        <button type="button" class="header__quote-mobile btn btn--accent" data-open-quote-modal>Get Quote</button>
         <nav class="nav" aria-label="Primary">
           <button type="button" class="nav__toggle" aria-expanded="false" aria-controls="nav-menu" data-nav-toggle>
             <span class="nav__toggle-bar" aria-hidden="true"></span>
@@ -453,6 +453,7 @@
             </li>
             <li><a class="nav__link" href="#services">Services</a></li>
             <li><a class="nav__link" href="#our-work">Gallery</a></li>
+            <li><a class="nav__link" href="#our-process">Process</a></li>
             <li><a class="nav__link" href="#about">About</a></li>
             <li><a class="nav__link" href="#faq">FAQ</a></li>
             <li><a class="nav__link" href="#contact">Contact</a></li>
@@ -469,7 +470,7 @@
       </div>
       <div class="header__actions">
         <a class="header__phone" href="tel:5124064698" onclick="return gtag_report_conversion('tel:5124064698');">(512) 406-4698</a>
-        <a class="header__cta btn btn--accent" href="#hero-form">Get a Quote</a>
+        <button type="button" class="header__cta btn btn--accent" data-open-quote-modal>Get a Quote</button>
       </div>
     </div>
     <div class="nav__overlay" data-nav-overlay hidden></div>
@@ -484,57 +485,17 @@
       <div class="hero-overlay" aria-hidden="true"></div>
       <div class="hero__grain" aria-hidden="true"></div>
       <div class="container hero__grid hero__grid--foreground">
-        <div class="hero__content" data-animate>
+        <div class="hero__content hero__content--centered" data-animate>
           <p class="hero__badge">Sanchez Landscape | Austin, TX</p>
           <p class="hero__established">Serving since 2012</p>
           <h1 class="hero__title" id="hero-heading">We Make Your Yard Look Amazing — Guaranteed</h1>
-          <p class="hero__sub">Professional landscaping, lawn care &amp; design in Austin &amp; Surrounding Areas</p>
-          <p class="hero__sub hero__sub--secondary">We transform your yard with passion and professionalism.</p>
-        </div>
-        <div class="hero__form-wrap" data-animate data-animate-delay="1">
-          <div class="card card--quote" id="hero-form">
-            <h2 class="card__title">Request a Free Quote</h2>
-            <p class="card__quote-promise"><strong>We quote in less than 36 hours</strong></p>
-            <form class="form form--quote" id="form-quote" action="#" method="post" data-mail-form data-form-type="quote" novalidate>
-              <div class="form__row">
-                <label class="form__label" for="quote-name">Full Name</label>
-                <input class="form__input" type="text" id="quote-name" name="name" required autocomplete="name" aria-required="true">
-              </div>
-              <div class="form__row">
-                <label class="form__label" for="quote-phone">Phone Number</label>
-                <input class="form__input" type="tel" id="quote-phone" name="phone" required autocomplete="tel" inputmode="tel" aria-required="true">
-              </div>
-              <div class="form__row">
-                <label class="form__label" for="quote-email">Email</label>
-                <input class="form__input" type="email" id="quote-email" name="email" required autocomplete="email" aria-required="true">
-              </div>
-              <div class="form__row">
-                <label class="form__label" for="quote-service">Service Type</label>
-                <select class="form__input form__select" id="quote-service" name="service" required aria-required="true">
-                  <option value="">Select a service</option>
-                  <option>Lawn Maintenance (Mowing, Edging, Blowing)</option>
-                  <option>Weed Control &amp; Fertilization</option>
-                  <option>Sod Installation (New Lawns from Scratch)</option>
-                  <option>Irrigation Installation &amp; Repairs</option>
-                  <option>Tree Services (Trim, Pruning, Removal, Stump Grinding)</option>
-                  <option>Landscape Design &amp; Full Installation</option>
-                  <option>Metal &amp; Stone Flowerbeds</option>
-                  <option>Flagstone Walkways &amp; Patios</option>
-                  <option>Gravel &amp; Xeriscaping (Low Maintenance Designs)</option>
-                  <option>Outdoor Lighting (Automatic Systems)</option>
-                  <option>Fence Installation (Wood &amp; Metal)</option>
-                  <option>Yard Cleanups &amp; Seasonal Services</option>
-                  <option>Other / Not sure</option>
-                </select>
-              </div>
-              <div class="form__row">
-                <label class="form__label" for="quote-message">Message</label>
-                <textarea class="form__input form__textarea" id="quote-message" name="message" rows="3" placeholder="Tell us about your project"></textarea>
-              </div>
-              <p class="form__error" id="quote-error" role="alert" hidden></p>
-              <button type="submit" class="btn btn--accent btn--block">Get My Free Quote →</button>
-            </form>
+          <p class="hero__sub hero__sub--center">Professional landscaping, lawn care &amp; design in Austin &amp; Surrounding Areas</p>
+          <p class="hero__sub hero__sub--secondary hero__sub--center">We transform your yard with passion and professionalism.</p>
+          <div class="hero__actions">
+            <button type="button" class="btn btn--accent btn--hero-lg" data-open-quote-modal>Get a Free Quote</button>
+            <a class="btn btn--outline btn--on-dark btn--hero-lg" href="tel:5124064698" onclick="return gtag_report_conversion('tel:5124064698');">Call Now: (512) 406-4698</a>
           </div>
+          <p class="hero__promise"><strong>We quote in less than 36 hours</strong></p>
         </div>
       </div>
     </section>
@@ -550,6 +511,60 @@
       </div>
     </div>
 
+    <section class="stats-bar" aria-label="Company highlights" data-stats-bar>
+      <div class="container stats-bar__grid">
+        <div class="stats-bar__item" data-animate>
+          <span class="stats-bar__value"><span class="stats-bar__num" data-stat-target="14" data-stat-suffix="+">0</span></span>
+          <span class="stats-bar__label">Years of Experience</span>
+        </div>
+        <div class="stats-bar__item" data-animate>
+          <span class="stats-bar__value"><span class="stats-bar__num" data-stat-target="500" data-stat-suffix="+">0</span></span>
+          <span class="stats-bar__label">Projects Completed</span>
+        </div>
+        <div class="stats-bar__item" data-animate>
+          <span class="stats-bar__value"><span class="stats-bar__num" data-stat-target="5" data-stat-suffix="">0</span></span>
+          <span class="stats-bar__label">Star Google Rating</span>
+        </div>
+        <div class="stats-bar__item" data-animate>
+          <span class="stats-bar__value"><span class="stats-bar__num" data-stat-target="2" data-stat-suffix="">0</span></span>
+          <span class="stats-bar__label">Languages We Speak</span>
+        </div>
+      </div>
+    </section>
+
+    <div class="city-ticker" aria-hidden="true">
+      <div class="city-ticker__track">
+        <span class="city-ticker__item">Kyle, TX</span>
+        <span class="city-ticker__item">Austin, TX</span>
+        <span class="city-ticker__item">Buda, TX</span>
+        <span class="city-ticker__item">Dripping Springs, TX</span>
+        <span class="city-ticker__item">Round Rock, TX</span>
+        <span class="city-ticker__item">Cedar Park, TX</span>
+        <span class="city-ticker__item">Lago Vista, TX</span>
+        <span class="city-ticker__item">Pflugerville, TX</span>
+        <span class="city-ticker__item">Manor, TX</span>
+        <span class="city-ticker__item">Bee Cave, TX</span>
+        <span class="city-ticker__item">Wimberley, TX</span>
+        <span class="city-ticker__item">Hays County</span>
+        <span class="city-ticker__item">Travis County</span>
+        <span class="city-ticker__item">Williamson County</span>
+        <span class="city-ticker__item">Kyle, TX</span>
+        <span class="city-ticker__item">Austin, TX</span>
+        <span class="city-ticker__item">Buda, TX</span>
+        <span class="city-ticker__item">Dripping Springs, TX</span>
+        <span class="city-ticker__item">Round Rock, TX</span>
+        <span class="city-ticker__item">Cedar Park, TX</span>
+        <span class="city-ticker__item">Lago Vista, TX</span>
+        <span class="city-ticker__item">Pflugerville, TX</span>
+        <span class="city-ticker__item">Manor, TX</span>
+        <span class="city-ticker__item">Bee Cave, TX</span>
+        <span class="city-ticker__item">Wimberley, TX</span>
+        <span class="city-ticker__item">Hays County</span>
+        <span class="city-ticker__item">Travis County</span>
+        <span class="city-ticker__item">Williamson County</span>
+      </div>
+    </div>
+
     <section class="section section--services" id="services" aria-labelledby="services-heading">
       <div class="container">
         <h2 class="section__title" data-animate id="services-heading">What We Do</h2>
@@ -557,6 +572,7 @@
         <div class="services-categories">
           <section class="services-category" data-animate aria-labelledby="services-cat-lawn">
             <h3 class="services-category__title" id="services-cat-lawn">Lawn &amp; turf</h3>
+            <p class="services-category__intro">Healthy turf, crisp edges, and new lawns built for Central Texas heat.</p>
             <div class="services-grid services-grid--category">
               <article class="service-card" tabindex="0">
                 <span class="service-card__icon" aria-hidden="true">🌿</span>
@@ -577,6 +593,7 @@
           </section>
           <section class="services-category" data-animate aria-labelledby="services-cat-trees">
             <h3 class="services-category__title" id="services-cat-trees">Trees, design &amp; seasonal</h3>
+            <p class="services-category__intro">Trees, full landscape installs, and seasonal cleanups to keep your property sharp year-round.</p>
             <div class="services-grid services-grid--category">
               <article class="service-card" tabindex="0">
                 <span class="service-card__icon" aria-hidden="true">🌳</span>
@@ -597,6 +614,7 @@
           </section>
           <section class="services-category" data-animate aria-labelledby="services-cat-hardscape">
             <h3 class="services-category__title" id="services-cat-hardscape">Hardscape &amp; structures</h3>
+            <p class="services-category__intro">Stone, metal beds, patios, xeriscape, and fencing that stand up to Texas weather.</p>
             <div class="services-grid services-grid--category">
               <article class="service-card" tabindex="0">
                 <span class="service-card__icon" aria-hidden="true">🪨</span>
@@ -622,6 +640,7 @@
           </section>
           <section class="services-category" data-animate aria-labelledby="services-cat-systems">
             <h3 class="services-category__title" id="services-cat-systems">Irrigation &amp; lighting</h3>
+            <p class="services-category__intro">Efficient irrigation repairs and installs, plus outdoor lighting for safety and curb appeal.</p>
             <div class="services-grid services-grid--category services-grid--category--pair">
               <article class="service-card" tabindex="0">
                 <span class="service-card__icon" aria-hidden="true">💧</span>
@@ -639,21 +658,91 @@
       </div>
     </section>
 
+    <aside class="cta-strip" aria-label="Call to action">
+      <div class="container cta-strip__inner">
+        <p class="cta-strip__text">Ready to transform your yard?</p>
+        <button type="button" class="btn btn--accent cta-strip__btn" data-open-quote-modal>Get a Free Quote</button>
+      </div>
+    </aside>
+
     <section class="section section--why" id="why" aria-labelledby="why-heading">
-      <div class="container why-split">
+      <div class="container why-split why-split--badges">
         <div class="why-split__media" data-animate>
           <img class="why-split__img" src="images/Sanchez Landcaping main truck.jpg" alt="Sanchez Landscape service truck — professional landscaping in Austin &amp; Surrounding Areas" width="800" height="600" loading="lazy">
         </div>
         <div class="why-split__content" data-animate>
           <h2 class="section__title section__title--left" id="why-heading">Why Homeowners Trust Sanchez Landscape</h2>
-          <ul class="checklist">
-            <li class="checklist__item"><span class="checklist__mark" aria-hidden="true">✓</span> Bilingual team (English &amp; Spanish)</li>
-            <li class="checklist__item"><span class="checklist__mark" aria-hidden="true">✓</span> Free estimates — no obligation</li>
-            <li class="checklist__item"><span class="checklist__mark" aria-hidden="true">✓</span> Serving since 2012 — Austin &amp; Surrounding Areas</li>
-            <li class="checklist__item"><span class="checklist__mark" aria-hidden="true">✓</span> Satisfaction guaranteed on every job</li>
+          <p class="why-split__lead">We treat every home like our own — dependable scheduling, honest estimates, and craftsmanship you can see from the curb.</p>
+          <ul class="trust-badges" aria-label="Why choose us">
+            <li class="trust-badge">
+              <span class="trust-badge__icon" aria-hidden="true">🛡️</span>
+              <span class="trust-badge__body">
+                <strong class="trust-badge__title">Licensed &amp; Insured</strong>
+                <span class="trust-badge__text">Professional coverage on every job.</span>
+              </span>
+            </li>
+            <li class="trust-badge">
+              <span class="trust-badge__icon" aria-hidden="true">🏷️</span>
+              <span class="trust-badge__body">
+                <strong class="trust-badge__title">Free Estimates</strong>
+                <span class="trust-badge__text">No obligation — we explain every line.</span>
+              </span>
+            </li>
+            <li class="trust-badge">
+              <span class="trust-badge__icon" aria-hidden="true">💬</span>
+              <span class="trust-badge__body">
+                <strong class="trust-badge__title">Bilingual Team</strong>
+                <span class="trust-badge__text">English and Spanish, your way.</span>
+              </span>
+            </li>
+            <li class="trust-badge">
+              <span class="trust-badge__icon" aria-hidden="true">📅</span>
+              <span class="trust-badge__body">
+                <strong class="trust-badge__title">14+ Years Experience</strong>
+                <span class="trust-badge__text">Serving Austin &amp; Surrounding Areas since 2012.</span>
+              </span>
+            </li>
+            <li class="trust-badge">
+              <span class="trust-badge__icon" aria-hidden="true">👍</span>
+              <span class="trust-badge__body">
+                <strong class="trust-badge__title">Satisfaction Guaranteed</strong>
+                <span class="trust-badge__text">We stand behind every project.</span>
+              </span>
+            </li>
+            <li class="trust-badge">
+              <span class="trust-badge__icon" aria-hidden="true">⭐</span>
+              <span class="trust-badge__body">
+                <strong class="trust-badge__title">5-Star Rated</strong>
+                <span class="trust-badge__text">Loved by neighbors on Google.</span>
+              </span>
+            </li>
           </ul>
-          <a class="btn btn--accent" href="#hero-form">Request a Free Estimate</a>
+          <button type="button" class="btn btn--accent" data-open-quote-modal>Get a Free Quote</button>
         </div>
+      </div>
+    </section>
+
+    <section class="section section--process" id="our-process" aria-labelledby="process-heading">
+      <div class="container">
+        <h2 class="section__title" data-animate id="process-heading">Our Process</h2>
+        <p class="section__lead" data-animate>Simple steps from first message to a yard you are proud of.</p>
+        <ol class="process-steps" data-animate>
+          <li class="process-step">
+            <span class="process-step__num" aria-hidden="true">1</span>
+            <h3 class="process-step__title">Request a Quote</h3>
+            <p class="process-step__text">Fill out our form, call, or WhatsApp us. We respond with a detailed estimate within 36 hours.</p>
+          </li>
+          <li class="process-step">
+            <span class="process-step__num" aria-hidden="true">2</span>
+            <h3 class="process-step__title">Design &amp; Plan</h3>
+            <p class="process-step__text">We visit your property, discuss your vision, and create a custom plan that fits your budget.</p>
+          </li>
+          <li class="process-step">
+            <span class="process-step__num" aria-hidden="true">3</span>
+            <h3 class="process-step__title">We Transform Your Yard</h3>
+            <p class="process-step__text">Our crew handles everything from start to cleanup. Satisfaction guaranteed.</p>
+          </li>
+        </ol>
       </div>
     </section>
 
@@ -751,47 +840,47 @@
         <h2 class="section__title" data-animate id="gallery-heading">Our Work</h2>
         <p class="section__lead" data-animate>Recent projects across Austin &amp; Surrounding Areas.</p>
         <div class="gallery-grid" data-gallery-grid>
-          <button type="button" class="gallery-item" data-lightbox-src="images/Sanchez landscape Use 1.jpg" data-lightbox-alt="Sanchez Landscape project — Austin &amp; Surrounding Areas" aria-label="Open gallery photo full size">
-            <img src="images/Sanchez landscape Use 1.jpg" alt="Sanchez Landscape project — Austin &amp; Surrounding Areas" width="800" height="600" loading="lazy">
+          <button type="button" class="gallery-item" data-lightbox-src="images/Sanchez landscape Use 1.jpg" data-lightbox-alt="Lawn care and mowing project by Sanchez Landscape, Kyle TX" aria-label="Open gallery photo full size">
+            <img src="images/Sanchez landscape Use 1.jpg" alt="Lawn care and mowing project by Sanchez Landscape, Kyle TX" width="800" height="600" loading="lazy">
           </button>
-          <button type="button" class="gallery-item" data-lightbox-src="images/Sanchez landscape Use 2.avif" data-lightbox-alt="Landscaping project — Austin &amp; Surrounding Areas" aria-label="Open gallery photo full size">
-            <img src="images/Sanchez landscape Use 2.avif" alt="Landscaping project — Austin &amp; Surrounding Areas" width="800" height="600" loading="lazy">
+          <button type="button" class="gallery-item" data-lightbox-src="images/Sanchez landscape Use 2.avif" data-lightbox-alt="Landscape bed planting and mulch installation, Austin area" aria-label="Open gallery photo full size">
+            <img src="images/Sanchez landscape Use 2.avif" alt="Landscape bed planting and mulch installation, Austin area" width="800" height="600" loading="lazy">
           </button>
-          <button type="button" class="gallery-item" data-lightbox-src="images/Sanchez landscape Use 3.avif" data-lightbox-alt="Landscape installation — Austin &amp; Surrounding Areas" aria-label="Open gallery photo full size">
-            <img src="images/Sanchez landscape Use 3.avif" alt="Landscape installation — Austin &amp; Surrounding Areas" width="800" height="600" loading="lazy">
+          <button type="button" class="gallery-item" data-lightbox-src="images/Sanchez landscape Use 3.avif" data-lightbox-alt="Sod installation and new lawn work, Central Texas" aria-label="Open gallery photo full size">
+            <img src="images/Sanchez landscape Use 3.avif" alt="Sod installation and new lawn work, Central Texas" width="800" height="600" loading="lazy">
           </button>
-          <button type="button" class="gallery-item" data-lightbox-src="images/Sanchez landscape Use 4.jpg" data-lightbox-alt="Outdoor living — Austin &amp; Surrounding Areas" aria-label="Open gallery photo full size">
-            <img src="images/Sanchez landscape Use 4.jpg" alt="Outdoor living — Austin &amp; Surrounding Areas" width="800" height="600" loading="lazy">
+          <button type="button" class="gallery-item" data-lightbox-src="images/Sanchez landscape Use 4.jpg" data-lightbox-alt="Flagstone patio and outdoor living space, Sanchez Landscape" aria-label="Open gallery photo full size">
+            <img src="images/Sanchez landscape Use 4.jpg" alt="Flagstone patio and outdoor living space, Sanchez Landscape" width="800" height="600" loading="lazy">
           </button>
-          <button type="button" class="gallery-item" data-lightbox-src="images/Sanchez landscape Use 5.jpg" data-lightbox-alt="Residential landscaping — Austin &amp; Surrounding Areas" aria-label="Open gallery photo full size">
-            <img src="images/Sanchez landscape Use 5.jpg" alt="Residential landscaping — Austin &amp; Surrounding Areas" width="800" height="600" loading="lazy">
+          <button type="button" class="gallery-item" data-lightbox-src="images/Sanchez landscape Use 5.jpg" data-lightbox-alt="Residential front yard landscaping and design, Hays County" aria-label="Open gallery photo full size">
+            <img src="images/Sanchez landscape Use 5.jpg" alt="Residential front yard landscaping and design, Hays County" width="800" height="600" loading="lazy">
           </button>
-          <button type="button" class="gallery-item" data-lightbox-src="images/Sanchez landscape Use 6.jpg" data-lightbox-alt="Yard and garden beds — Austin &amp; Surrounding Areas" aria-label="Open gallery photo full size">
-            <img src="images/Sanchez landscape Use 6.jpg" alt="Yard and garden beds — Austin &amp; Surrounding Areas" width="800" height="600" loading="lazy">
+          <button type="button" class="gallery-item" data-lightbox-src="images/Sanchez landscape Use 6.jpg" data-lightbox-alt="Garden beds, shrubs, and seasonal cleanup by Sanchez Landscape" aria-label="Open gallery photo full size">
+            <img src="images/Sanchez landscape Use 6.jpg" alt="Garden beds, shrubs, and seasonal cleanup by Sanchez Landscape" width="800" height="600" loading="lazy">
           </button>
-          <button type="button" class="gallery-item" data-lightbox-src="images/Sanchez landscape Use 7.jpg" data-lightbox-alt="Professional landscaping — Austin &amp; Surrounding Areas" aria-label="Open gallery photo full size">
-            <img src="images/Sanchez landscape Use 7.jpg" alt="Professional landscaping — Austin &amp; Surrounding Areas" width="800" height="600" loading="lazy">
+          <button type="button" class="gallery-item" data-lightbox-src="images/Sanchez landscape Use 7.jpg" data-lightbox-alt="Irrigation and sprinkler system landscaping project, Austin TX" aria-label="Open gallery photo full size">
+            <img src="images/Sanchez landscape Use 7.jpg" alt="Irrigation and sprinkler system landscaping project, Austin TX" width="800" height="600" loading="lazy">
           </button>
-          <button type="button" class="gallery-item" data-lightbox-src="images/Sanchez landscape Use 8.jpg" data-lightbox-alt="Landscape design — Austin &amp; Surrounding Areas" aria-label="Open gallery photo full size">
-            <img src="images/Sanchez landscape Use 8.jpg" alt="Landscape design — Austin &amp; Surrounding Areas" width="800" height="600" loading="lazy">
+          <button type="button" class="gallery-item" data-lightbox-src="images/Sanchez landscape Use 8.jpg" data-lightbox-alt="Custom landscape design and installation, Travis County" aria-label="Open gallery photo full size">
+            <img src="images/Sanchez landscape Use 8.jpg" alt="Custom landscape design and installation, Travis County" width="800" height="600" loading="lazy">
           </button>
-          <button type="button" class="gallery-item" data-lightbox-src="images/Sanchez landscape Use 9.jpg" data-lightbox-alt="Sanchez Landscape outdoor work — Austin &amp; Surrounding Areas" aria-label="Open gallery photo full size">
-            <img src="images/Sanchez landscape Use 9.jpg" alt="Sanchez Landscape outdoor work — Austin &amp; Surrounding Areas" width="800" height="600" loading="lazy">
+          <button type="button" class="gallery-item" data-lightbox-src="images/Sanchez landscape Use 9.jpg" data-lightbox-alt="Tree work and yard maintenance by Sanchez Landscape 512" aria-label="Open gallery photo full size">
+            <img src="images/Sanchez landscape Use 9.jpg" alt="Tree work and yard maintenance by Sanchez Landscape 512" width="800" height="600" loading="lazy">
           </button>
-          <button type="button" class="gallery-item" data-lightbox-src="images/Sanchez landscape Use 10.jpg" data-lightbox-alt="Residential landscaping project — Austin &amp; Surrounding Areas" aria-label="Open gallery photo full size">
-            <img src="images/Sanchez landscape Use 10.jpg" alt="Residential landscaping project — Austin &amp; Surrounding Areas" width="800" height="600" loading="lazy">
+          <button type="button" class="gallery-item" data-lightbox-src="images/Sanchez landscape Use 10.jpg" data-lightbox-alt="Full yard renovation and hardscape details, Kyle TX" aria-label="Open gallery photo full size">
+            <img src="images/Sanchez landscape Use 10.jpg" alt="Full yard renovation and hardscape details, Kyle TX" width="800" height="600" loading="lazy">
           </button>
-          <button type="button" class="gallery-item" data-lightbox-src="images/Sanchez landscape Use 11.jpg" data-lightbox-alt="Garden and lawn — Austin &amp; Surrounding Areas" aria-label="Open gallery photo full size">
-            <img src="images/Sanchez landscape Use 11.jpg" alt="Garden and lawn — Austin &amp; Surrounding Areas" width="800" height="600" loading="lazy">
+          <button type="button" class="gallery-item" data-lightbox-src="images/Sanchez landscape Use 11.jpg" data-lightbox-alt="Lawn and garden maintenance, Williamson County" aria-label="Open gallery photo full size">
+            <img src="images/Sanchez landscape Use 11.jpg" alt="Lawn and garden maintenance, Williamson County" width="800" height="600" loading="lazy">
           </button>
-          <button type="button" class="gallery-item" data-lightbox-src="images/Sanchez landscape Use 12.jpg" data-lightbox-alt="Finished landscape — Austin &amp; Surrounding Areas" aria-label="Open gallery photo full size">
-            <img src="images/Sanchez landscape Use 12.jpg" alt="Finished landscape — Austin &amp; Surrounding Areas" width="800" height="600" loading="lazy">
+          <button type="button" class="gallery-item" data-lightbox-src="images/Sanchez landscape Use 12.jpg" data-lightbox-alt="Completed landscape installation with flowerbeds and lighting" aria-label="Open gallery photo full size">
+            <img src="images/Sanchez landscape Use 12.jpg" alt="Completed landscape installation with flowerbeds and lighting" width="800" height="600" loading="lazy">
           </button>
-          <button type="button" class="gallery-item gallery-item--collapsed" data-lightbox-src="images/Sanchez landscape Use 13.avif" data-lightbox-alt="Sanchez Landscape project — Austin &amp; Surrounding Areas" aria-label="Open gallery photo full size">
-            <img src="images/Sanchez landscape Use 13.avif" alt="Sanchez Landscape project — Austin &amp; Surrounding Areas" width="800" height="600" loading="lazy">
+          <button type="button" class="gallery-item gallery-item--collapsed" data-lightbox-src="images/Sanchez landscape Use 13.avif" data-lightbox-alt="Xeriscape gravel and stone landscaping, Central Texas" aria-label="Open gallery photo full size">
+            <img src="images/Sanchez landscape Use 13.avif" alt="Xeriscape gravel and stone landscaping, Central Texas" width="800" height="600" loading="lazy">
           </button>
-          <button type="button" class="gallery-item gallery-item--collapsed" data-lightbox-src="images/Sanchez landscape Use 14.jpg" data-lightbox-alt="Outdoor transformation — Austin &amp; Surrounding Areas" aria-label="Open gallery photo full size">
-            <img src="images/Sanchez landscape Use 14.jpg" alt="Outdoor transformation — Austin &amp; Surrounding Areas" width="800" height="600" loading="lazy">
+          <button type="button" class="gallery-item gallery-item--collapsed" data-lightbox-src="images/Sanchez landscape Use 14.jpg" data-lightbox-alt="Backyard transformation and fence-friendly landscaping" aria-label="Open gallery photo full size">
+            <img src="images/Sanchez landscape Use 14.jpg" alt="Backyard transformation and fence-friendly landscaping" width="800" height="600" loading="lazy">
           </button>
         </div>
         <div class="gallery-load-more-wrap">
@@ -803,9 +892,22 @@
       </div>
     </section>
 
+    <aside class="cta-strip" aria-label="Call to action">
+      <div class="container cta-strip__inner">
+        <p class="cta-strip__text">See what we can do for you.</p>
+        <button type="button" class="btn btn--accent cta-strip__btn" data-open-quote-modal>Get a Free Quote</button>
+      </div>
+    </aside>
+
     <section class="section section--testimonials" id="testimonials" aria-labelledby="testimonials-heading">
       <div class="container">
         <h2 class="section__title section__title--on-dark" data-animate id="testimonials-heading">What Our Clients Say</h2>
+        <p class="testimonials__rating-badge" data-animate>
+          <a class="rating-badge" href="https://g.page/r/CcJ7yRLqw1bjEBM/review" target="_blank" rel="noopener noreferrer">
+            <span class="rating-badge__stars" aria-hidden="true">★★★★★</span>
+            <span class="rating-badge__text"><strong>5.0</strong> from <strong>5</strong> Google reviews</span>
+          </a>
+        </p>
         <div class="testimonials__carousel" data-testimonials-carousel>
           <button type="button" class="testimonials__nav testimonials__nav--prev" data-carousel-prev aria-label="Show previous testimonials">&larr;</button>
           <div class="testimonials__viewport" data-carousel-viewport>
@@ -838,6 +940,32 @@
             </div>
           </div>
           <button type="button" class="testimonials__nav testimonials__nav--next" data-carousel-next aria-label="Show next testimonials">&rarr;</button>
+        </div>
+      </div>
+    </section>
+
+    <aside class="cta-strip" aria-label="Call to action">
+      <div class="container cta-strip__inner">
+        <p class="cta-strip__text">Join our happy clients.</p>
+        <button type="button" class="btn btn--accent cta-strip__btn" data-open-quote-modal>Get a Free Quote</button>
+      </div>
+    </aside>
+
+    <section class="section section--about" id="about" aria-labelledby="about-heading">
+      <div class="container about-split">
+        <div class="about-split__content" data-animate>
+          <h2 class="section__title section__title--left" id="about-heading">Family-Owned, Community-Focused</h2>
+          <p class="about-split__text">Sanchez Landscape began with a simple promise: treat every home like our own. Today we serve neighbors throughout Austin &amp; Surrounding Areas with dependable scheduling, honest estimates, and craftsmanship you can see from the curb.</p>
+          <p class="about-split__text">Whether you need weekly maintenance or a full redesign, we bring the same attention to detail and bilingual communication your family deserves.</p>
+          <ul class="about-stats" aria-label="Highlights">
+            <li class="about-stats__item"><span class="about-stats__num">14+</span> <span class="about-stats__lbl">Years</span></li>
+            <li class="about-stats__item"><span class="about-stats__num">500+</span> <span class="about-stats__lbl">Projects</span></li>
+            <li class="about-stats__item"><span class="about-stats__num">5</span> <span class="about-stats__lbl">Star rating</span></li>
+            <li class="about-stats__item"><span class="about-stats__num">2</span> <span class="about-stats__lbl">Languages</span></li>
+          </ul>
+        </div>
+        <div class="about-split__media" data-animate>
+          <img class="about-split__img" src="images/about-landscaping-nurture.jpg" alt="Hands holding soil and a young seedling — nurturing growth, symbolizing our family-owned, community-rooted landscaping work" width="560" height="640" loading="lazy">
         </div>
       </div>
     </section>
@@ -914,19 +1042,6 @@
       </div>
     </section>
 
-    <section class="section section--about" id="about" aria-labelledby="about-heading">
-      <div class="container about-split">
-        <div class="about-split__content" data-animate>
-          <h2 class="section__title section__title--left" id="about-heading">Family-Owned, Community-Focused</h2>
-          <p class="about-split__text">Sanchez Landscape began with a simple promise: treat every home like our own. Today we serve neighbors throughout Austin &amp; Surrounding Areas with dependable scheduling, honest estimates, and craftsmanship you can see from the curb.</p>
-          <p class="about-split__text">Whether you need weekly maintenance or a full redesign, we bring the same attention to detail and bilingual communication your family deserves.</p>
-        </div>
-        <div class="about-split__media" data-animate>
-          <img class="about-split__img" src="images/about-landscaping-nurture.jpg" alt="Hands holding soil and a young seedling — nurturing growth, symbolizing our family-owned, community-rooted landscaping work" width="560" height="640" loading="lazy">
-        </div>
-      </div>
-    </section>
-
     <section class="section section--faq" id="faq" aria-labelledby="faq-heading">
       <div class="container">
         <h2 class="section__title" data-animate id="faq-heading">Frequently Asked Questions</h2>
@@ -938,7 +1053,7 @@
           </details>
           <details class="faq-item" data-animate>
             <summary class="faq-item__question">How much does landscaping cost in Austin &amp; Surrounding Areas?</summary>
-            <div class="faq-item__answer"><p>Basic lawn mowing in Austin &amp; Surrounding Areas typically starts around $45–$75 per visit, depending on lot size. Full landscape design and installation projects range from a few hundred dollars for small bed installations to several thousand for complete yard redesigns. We provide <strong>free, no-obligation estimates</strong> so you know the exact cost before any work begins.</p></div>
+            <div class="faq-item__answer"><p>Basic lawn mowing in Austin &amp; Surrounding Areas typically starts around $45–$75 per visit, depending on lot size. Full landscape design and installation projects range from a few hundred dollars for small bed installations to several thousand for complete yard redesigns. We provide <strong>free, no-obligation estimates</strong> so you know the exact cost before any work begins. Browse <a href="#services">our services</a> or <a href="#contact">get in touch</a>.</p></div>
           </details>
           <details class="faq-item" data-animate>
             <summary class="faq-item__question">Do you offer bilingual service in Spanish and English?</summary>
@@ -946,11 +1061,11 @@
           </details>
           <details class="faq-item" data-animate>
             <summary class="faq-item__question">How often should I water my lawn during a Texas drought?</summary>
-            <div class="faq-item__answer"><p>During drought conditions, most Central Texas municipalities allow watering once or twice a week. Water deeply (about 1 inch per session) in the early morning to reduce evaporation. We can install <strong>smart irrigation systems</strong> with soil-moisture sensors that adjust automatically and help you stay compliant with local watering restrictions.</p></div>
+            <div class="faq-item__answer"><p>During drought conditions, most Central Texas municipalities allow watering once or twice a week. Water deeply (about 1 inch per session) in the early morning to reduce evaporation. We can install <strong>smart irrigation systems</strong> with soil-moisture sensors that adjust automatically and help you stay compliant with local watering restrictions. Learn more under <a href="#services-cat-systems">Irrigation &amp; lighting</a> in our services.</p></div>
           </details>
           <details class="faq-item" data-animate>
             <summary class="faq-item__question">When is the best time to trim trees and shrubs in Texas?</summary>
-            <div class="faq-item__answer"><p>Late winter (<strong>February–March</strong>) is generally the best time for most trees and shrubs in Central Texas, just before the spring growth flush. Avoid heavy pruning in late summer or fall. We assess each species individually — some flowering shrubs are pruned right after blooming.</p></div>
+            <div class="faq-item__answer"><p>Late winter (<strong>February–March</strong>) is generally the best time for most trees and shrubs in Central Texas, just before the spring growth flush. Avoid heavy pruning in late summer or fall. We assess each species individually — some flowering shrubs are pruned right after blooming. See <a href="#services-cat-trees">Trees, design &amp; seasonal</a> for how we can help.</p></div>
           </details>
           <details class="faq-item" data-animate>
             <summary class="faq-item__question">Should I use mulch or rock for my landscape beds?</summary>
@@ -958,7 +1073,7 @@
           </details>
           <details class="faq-item" data-animate>
             <summary class="faq-item__question">What does a new-home landscaping project include?</summary>
-            <div class="faq-item__answer"><p>For newly built homes in Austin &amp; Surrounding Areas, a typical project includes grading and soil prep, sod or seed installation, an irrigation system, mulch beds, foundation plantings, and sometimes walkways or edging. We handle everything from design through final cleanup.</p></div>
+            <div class="faq-item__answer"><p>For newly built homes in Austin &amp; Surrounding Areas, a typical project includes grading and soil prep, <a href="#services-cat-lawn">sod installation</a>, an <a href="#services-cat-systems">irrigation system</a>, mulch beds, foundation plantings, and sometimes walkways or edging. We handle everything from design through final cleanup.</p></div>
           </details>
           <details class="faq-item" data-animate>
             <summary class="faq-item__question">How do I get a free landscaping estimate?</summary>
@@ -966,7 +1081,7 @@
           </details>
           <details class="faq-item" data-animate>
             <summary class="faq-item__question">Do you provide commercial landscaping services?</summary>
-            <div class="faq-item__answer"><p>Yes. We serve small businesses, HOA communities, and commercial properties throughout Austin &amp; Surrounding Areas with recurring maintenance plans, seasonal cleanups, irrigation management, and full landscape installations.</p></div>
+            <div class="faq-item__answer"><p>Yes. We serve small businesses, HOA communities, and commercial properties throughout Austin &amp; Surrounding Areas with recurring maintenance plans, seasonal cleanups, irrigation management, and full landscape installations. Explore <a href="#services">all services we offer</a>.</p></div>
           </details>
           <details class="faq-item" data-animate>
             <summary class="faq-item__question">What areas do you serve?</summary>
@@ -1074,6 +1189,7 @@
       <nav class="footer__nav" aria-label="Footer">
         <a href="#services">Services</a>
         <a href="#our-work">Gallery</a>
+        <a href="#our-process">Process</a>
         <a href="#about">About</a>
         <a href="#faq">FAQ</a>
         <a href="#contact">Contact</a>
@@ -1121,6 +1237,56 @@
     <span class="whatsapp-bubble__pulse" aria-hidden="true"></span>
     <svg class="whatsapp-bubble__icon" width="28" height="28" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.435 9.884-9.881 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
   </a>
+
+  <div class="quote-modal" id="quote-modal" hidden data-quote-modal>
+    <div class="quote-modal__backdrop" data-quote-modal-dismiss tabindex="-1"></div>
+    <div class="quote-modal__dialog" role="dialog" aria-modal="true" aria-labelledby="quote-modal-title">
+      <button type="button" class="quote-modal__close" data-quote-modal-dismiss aria-label="Close quote form">&times;</button>
+      <div class="card card--quote" id="hero-form">
+        <h2 class="card__title" id="quote-modal-title">Request a Free Quote</h2>
+        <p class="card__quote-promise"><strong>We quote in less than 36 hours</strong></p>
+        <form class="form form--quote" id="form-quote" action="#" method="post" data-mail-form data-form-type="quote" novalidate>
+          <div class="form__row">
+            <label class="form__label" for="quote-name">Full Name</label>
+            <input class="form__input" type="text" id="quote-name" name="name" required autocomplete="name" aria-required="true">
+          </div>
+          <div class="form__row">
+            <label class="form__label" for="quote-phone">Phone Number</label>
+            <input class="form__input" type="tel" id="quote-phone" name="phone" required autocomplete="tel" inputmode="tel" aria-required="true">
+          </div>
+          <div class="form__row">
+            <label class="form__label" for="quote-email">Email</label>
+            <input class="form__input" type="email" id="quote-email" name="email" required autocomplete="email" aria-required="true">
+          </div>
+          <div class="form__row">
+            <label class="form__label" for="quote-service">Service Type</label>
+            <select class="form__input form__select" id="quote-service" name="service" required aria-required="true">
+              <option value="">Select a service</option>
+              <option>Lawn Maintenance (Mowing, Edging, Blowing)</option>
+              <option>Weed Control &amp; Fertilization</option>
+              <option>Sod Installation (New Lawns from Scratch)</option>
+              <option>Irrigation Installation &amp; Repairs</option>
+              <option>Tree Services (Trim, Pruning, Removal, Stump Grinding)</option>
+              <option>Landscape Design &amp; Full Installation</option>
+              <option>Metal &amp; Stone Flowerbeds</option>
+              <option>Flagstone Walkways &amp; Patios</option>
+              <option>Gravel &amp; Xeriscaping (Low Maintenance Designs)</option>
+              <option>Outdoor Lighting (Automatic Systems)</option>
+              <option>Fence Installation (Wood &amp; Metal)</option>
+              <option>Yard Cleanups &amp; Seasonal Services</option>
+              <option>Other / Not sure</option>
+            </select>
+          </div>
+          <div class="form__row">
+            <label class="form__label" for="quote-message">Message</label>
+            <textarea class="form__input form__textarea" id="quote-message" name="message" rows="3" placeholder="Tell us about your project"></textarea>
+          </div>
+          <p class="form__error" id="quote-error" role="alert" hidden></p>
+          <button type="submit" class="btn btn--accent btn--block">Get My Free Quote →</button>
+        </form>
+      </div>
+    </div>
+  </div>
 
   <div class="lightbox" id="lightbox" hidden data-lightbox>
     <button type="button" class="lightbox__close" data-lightbox-close aria-label="Close image">&times;</button>

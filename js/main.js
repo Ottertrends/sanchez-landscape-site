@@ -22,6 +22,88 @@
 
   var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
+  /* Quote request modal */
+  var quoteModal = qs("[data-quote-modal]");
+  var lastQuoteFocus = null;
+
+  function openQuoteModal() {
+    if (!quoteModal) return;
+    lastQuoteFocus = document.activeElement;
+    quoteModal.removeAttribute("hidden");
+    document.body.style.overflow = "hidden";
+    var firstInput = qs("#quote-name", quoteModal);
+    window.setTimeout(function () {
+      if (firstInput) firstInput.focus();
+    }, 50);
+  }
+
+  function closeQuoteModal() {
+    if (!quoteModal || quoteModal.hasAttribute("hidden")) return;
+    quoteModal.setAttribute("hidden", "");
+    document.body.style.overflow = "";
+    if (lastQuoteFocus && typeof lastQuoteFocus.focus === "function") {
+      lastQuoteFocus.focus();
+    }
+    lastQuoteFocus = null;
+  }
+
+  qsa("[data-open-quote-modal]").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      openQuoteModal();
+    });
+  });
+
+  if (quoteModal) {
+    qsa("[data-quote-modal-dismiss]", quoteModal).forEach(function (el) {
+      el.addEventListener("click", function () {
+        closeQuoteModal();
+      });
+    });
+  }
+
+  /* Animated stats bar */
+  var statsBar = qs("[data-stats-bar]");
+  if (statsBar) {
+    function setStatFinal() {
+      qsa("[data-stat-target]", statsBar).forEach(function (el) {
+        var t = el.getAttribute("data-stat-target") || "0";
+        var suf = el.getAttribute("data-stat-suffix") || "";
+        el.textContent = t + suf;
+      });
+    }
+    if (!reduceMotion && "IntersectionObserver" in window) {
+      var statsDone = false;
+      var statsIo = new IntersectionObserver(
+        function (entries) {
+          entries.forEach(function (entry) {
+            if (!entry.isIntersecting || statsDone) return;
+            statsDone = true;
+            statsIo.disconnect();
+            qsa("[data-stat-target]", statsBar).forEach(function (el) {
+              var target = parseInt(el.getAttribute("data-stat-target"), 10) || 0;
+              var suffix = el.getAttribute("data-stat-suffix") || "";
+              var start = performance.now();
+              var dur = 1100;
+              function tick(now) {
+                var p = Math.min(1, (now - start) / dur);
+                var eased = 1 - Math.pow(1 - p, 3);
+                var val = Math.round(eased * target);
+                el.textContent = val + suffix;
+                if (p < 1) requestAnimationFrame(tick);
+                else el.textContent = target + suffix;
+              }
+              requestAnimationFrame(tick);
+            });
+          });
+        },
+        { threshold: 0.15 }
+      );
+      statsIo.observe(statsBar);
+    } else {
+      setStatFinal();
+    }
+  }
+
   var heroVideo = qs(".hero-video");
   if (heroVideo && reduceMotion) {
     heroVideo.removeAttribute("autoplay");
@@ -71,7 +153,12 @@
   });
 
   window.addEventListener("keydown", function (e) {
-    if (e.key === "Escape") setNavOpen(false);
+    if (e.key !== "Escape") return;
+    if (quoteModal && !quoteModal.hasAttribute("hidden")) {
+      closeQuoteModal();
+      return;
+    }
+    setNavOpen(false);
   });
 
   /* Intersection Observer — scroll reveals */
@@ -546,6 +633,15 @@
 
   if (window.location.hash) {
     window.requestAnimationFrame(function () {
+      if (window.location.hash === "#hero-form") {
+        openQuoteModal();
+        history.replaceState(
+          null,
+          "",
+          window.location.pathname + window.location.search
+        );
+        return;
+      }
       scrollWithOffset(window.location.hash);
     });
   }
@@ -555,6 +651,11 @@
     if (href.length > 1 && href !== "#") {
       a.addEventListener("click", function (e) {
         var id = href.slice(1);
+        if (id === "hero-form") {
+          e.preventDefault();
+          openQuoteModal();
+          return;
+        }
         if (document.getElementById(id)) {
           e.preventDefault();
           history.pushState(null, "", href);

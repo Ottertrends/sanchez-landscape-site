@@ -590,16 +590,29 @@
         })
         .then(function (r) {
           if (r.res.ok && r.data && r.data.ok) {
-            if (visitScheduled === "yes") {
-              form.reset();
-              var details = qs("[data-visit-details]", form);
-              if (details) details.setAttribute("hidden", "");
-              qsa(".btn-visit", form).forEach(function (b) {
-                b.classList.remove("btn-visit--active-yes", "btn-visit--active-no");
-              });
-              showFormSuccess(successEl, "Thank you! We will confirm your visit via email soon.");
+            var successMsg = visitScheduled === "yes"
+              ? "We will confirm your visit via email soon."
+              : "We\u2019ll review your request and get back to you within 12 hours.";
+
+            if (type === "quote") {
+              var successPanel = qs("[data-quote-success-panel]");
+              var formCard = qs("[data-quote-form-card]");
+              var msgEl = document.getElementById("quote-success-msg");
+              if (msgEl) msgEl.textContent = successMsg;
+              if (form) form.hidden = true;
+              if (formCard) {
+                var promiseEl = formCard.querySelector(".card__quote-promise");
+                var titleEl = formCard.querySelector(".card__title");
+                if (promiseEl) promiseEl.hidden = true;
+                if (titleEl) titleEl.hidden = true;
+              }
+              if (successPanel) successPanel.removeAttribute("hidden");
             } else {
-              window.location.href = "/thank-you";
+              var contactPanel = qs("[data-contact-success-panel]");
+              var contactMsgEl = document.getElementById("contact-success-msg");
+              if (contactMsgEl) contactMsgEl.textContent = successMsg;
+              form.hidden = true;
+              if (contactPanel) contactPanel.removeAttribute("hidden");
             }
             return;
           }
@@ -681,6 +694,64 @@
       handleMailForm(form);
     });
   });
+
+  /* Contact form success — reset back to form */
+  var contactSuccessReset = qs("[data-contact-success-reset]");
+  if (contactSuccessReset) {
+    contactSuccessReset.addEventListener("click", function () {
+      var contactForm = qs("[data-contact-form]");
+      var contactPanel = qs("[data-contact-success-panel]");
+      if (contactForm) {
+        contactForm.reset();
+        contactForm.hidden = false;
+        var visitDetails = qs("[data-visit-details]", contactForm);
+        if (visitDetails) visitDetails.setAttribute("hidden", "");
+        qsa(".btn-visit", contactForm).forEach(function (b) {
+          b.classList.remove("btn-visit--active-yes", "btn-visit--active-no");
+        });
+        var hiddenVisit = contactForm.querySelector('input[name="visit_scheduled"]');
+        if (hiddenVisit) hiddenVisit.value = "";
+        var submitBtn = contactForm.querySelector('[type="submit"]');
+        if (submitBtn) submitBtn.disabled = false;
+      }
+      if (contactPanel) contactPanel.setAttribute("hidden", "");
+    });
+  }
+
+  /* Quote modal — reset form state when modal is closed so it's fresh next time */
+  if (quoteModal) {
+    var origCloseQuoteModal = closeQuoteModal;
+    closeQuoteModal = function () {
+      origCloseQuoteModal();
+      window.setTimeout(function () {
+        var formQ = document.getElementById("form-quote");
+        var successPanel = qs("[data-quote-success-panel]");
+        var formCard = qs("[data-quote-form-card]");
+        if (successPanel && !successPanel.hasAttribute("hidden")) {
+          successPanel.setAttribute("hidden", "");
+          if (formQ) {
+            formQ.reset();
+            formQ.hidden = false;
+            var visitDetails = qs("[data-visit-details]", formQ);
+            if (visitDetails) visitDetails.setAttribute("hidden", "");
+            qsa(".btn-visit", formQ).forEach(function (b) {
+              b.classList.remove("btn-visit--active-yes", "btn-visit--active-no");
+            });
+            var hiddenVisit = formQ.querySelector('input[name="visit_scheduled"]');
+            if (hiddenVisit) hiddenVisit.value = "";
+            var submitBtn = formQ.querySelector('[type="submit"]');
+            if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = "Get My Free Quote \u2192"; }
+          }
+          if (formCard) {
+            var promiseEl = formCard.querySelector(".card__quote-promise");
+            var titleEl = formCard.querySelector(".card__title");
+            if (promiseEl) promiseEl.hidden = false;
+            if (titleEl) titleEl.hidden = false;
+          }
+        }
+      }, 300);
+    };
+  }
 
   /* Smooth offset for fixed header when hash navigation */
   function scrollWithOffset(hash) {

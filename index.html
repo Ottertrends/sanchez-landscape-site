@@ -980,18 +980,20 @@
         <h2 class="section__title" data-animate id="contact-heading">Get In Touch</h2>
         <div class="contact-grid">
           <div class="contact-grid__form" data-animate>
-            <form class="form form--contact" id="form-contact" action="#" method="post" data-mail-form data-form-type="contact" novalidate>
+            <form class="form form--contact" id="form-contact" action="#" method="post" data-mail-form data-form-type="contact" novalidate data-contact-form>
               <div class="form__row">
                 <label class="form__label" for="contact-name">Name</label>
                 <input class="form__input" type="text" id="contact-name" name="name" required autocomplete="name" aria-required="true">
               </div>
-              <div class="form__row">
-                <label class="form__label" for="contact-phone">Phone</label>
-                <input class="form__input" type="tel" id="contact-phone" name="phone" required autocomplete="tel" inputmode="tel" aria-required="true">
-              </div>
-              <div class="form__row">
-                <label class="form__label" for="contact-email">Email</label>
-                <input class="form__input" type="email" id="contact-email" name="email" required autocomplete="email" aria-required="true">
+              <div class="form__row--2col">
+                <div class="form__row">
+                  <label class="form__label" for="contact-phone">Phone</label>
+                  <input class="form__input" type="tel" id="contact-phone" name="phone" required autocomplete="tel" inputmode="tel" aria-required="true">
+                </div>
+                <div class="form__row">
+                  <label class="form__label" for="contact-email">Email</label>
+                  <input class="form__input" type="email" id="contact-email" name="email" required autocomplete="email" aria-required="true">
+                </div>
               </div>
               <div class="form__row">
                 <label class="form__label" for="contact-service">Service</label>
@@ -1056,10 +1058,15 @@
                 <label class="form__label" for="contact-message">Message</label>
                 <textarea class="form__input form__textarea" id="contact-message" name="message" rows="4" aria-required="true"></textarea>
               </div>
-              <p class="form__success" id="contact-success" hidden></p>
               <p class="form__error" id="contact-error" role="alert" hidden></p>
               <button type="submit" class="btn btn--accent btn--block">Send Message</button>
             </form>
+            <div class="form-success-panel" hidden data-contact-success-panel>
+              <div class="form-success-panel__check" aria-hidden="true">✓</div>
+              <h2 class="form-success-panel__title">Message sent!</h2>
+              <p class="form-success-panel__msg" id="contact-success-msg">We'll get back to you within 12 hours.</p>
+              <button type="button" class="form-success-panel__reset" data-contact-success-reset>Send another message</button>
+            </div>
           </div>
           <div class="contact-cards" data-animate>
             <a class="contact-card" href="tel:5124064698" onclick="return gtag_report_conversion('tel:5124064698');">
@@ -1159,25 +1166,28 @@
     <div class="quote-modal__backdrop" data-quote-modal-dismiss tabindex="-1"></div>
     <div class="quote-modal__dialog" role="dialog" aria-modal="true" aria-labelledby="quote-modal-title">
       <button type="button" class="quote-modal__close" data-quote-modal-dismiss aria-label="Close quote form">&times;</button>
-      <div class="card card--quote" id="hero-form">
+      <div class="card card--quote" id="hero-form" data-quote-form-card>
         <h2 class="card__title" id="quote-modal-title">Request a Free Quote</h2>
         <p class="card__quote-promise"><strong>We quote in less than 12 hours</strong></p>
         <form class="form form--quote" id="form-quote" action="#" method="post" data-mail-form data-form-type="quote" novalidate>
-          <div class="form__row">
-            <label class="form__label" for="quote-name">Full Name</label>
-            <input class="form__input" type="text" id="quote-name" name="name" required autocomplete="name" aria-required="true">
+          <div class="form__row--2col-md">
+            <div class="form__row">
+              <label class="form__label" for="quote-name">Full Name</label>
+              <input class="form__input" type="text" id="quote-name" name="name" required autocomplete="name" aria-required="true">
+            </div>
+            <div class="form__row">
+              <label class="form__label" for="quote-phone">Phone Number</label>
+              <input class="form__input" type="tel" id="quote-phone" name="phone" required autocomplete="tel" inputmode="tel" aria-required="true">
+            </div>
           </div>
-          <div class="form__row">
-            <label class="form__label" for="quote-phone">Phone Number</label>
-            <input class="form__input" type="tel" id="quote-phone" name="phone" required autocomplete="tel" inputmode="tel" aria-required="true">
-          </div>
-          <div class="form__row">
-            <label class="form__label" for="quote-email">Email</label>
-            <input class="form__input" type="email" id="quote-email" name="email" required autocomplete="email" aria-required="true">
-          </div>
-          <div class="form__row">
-            <label class="form__label" for="quote-service">Service Type</label>
-            <select class="form__input form__select" id="quote-service" name="service" required aria-required="true">
+          <div class="form__row--2col-md">
+            <div class="form__row">
+              <label class="form__label" for="quote-email">Email</label>
+              <input class="form__input" type="email" id="quote-email" name="email" required autocomplete="email" aria-required="true">
+            </div>
+            <div class="form__row">
+              <label class="form__label" for="quote-service">Service Type</label>
+              <select class="form__input form__select" id="quote-service" name="service" required aria-required="true">
               <option value="">Select a service</option>
               <option>Lawn Maintenance (Mowing, Edging, Blowing)</option>
               <option>Weed Control &amp; Fertilization</option>
@@ -1193,6 +1203,7 @@
               <option>Yard Cleanups &amp; Seasonal Services</option>
               <option>Other / Not sure</option>
             </select>
+            </div>
           </div>
           <div class="form__visit-panel">
             <p class="form__visit-prompt">
@@ -1238,10 +1249,14 @@
             <label class="form__label" for="quote-message">Message</label>
             <textarea class="form__input form__textarea" id="quote-message" name="message" rows="3" placeholder="Tell us about your project"></textarea>
           </div>
-          <p class="form__success" id="quote-success" hidden></p>
           <p class="form__error" id="quote-error" role="alert" hidden></p>
           <button type="submit" class="btn btn--accent btn--block">Get My Free Quote →</button>
         </form>
+        <div class="form-success-panel" hidden data-quote-success-panel>
+          <div class="form-success-panel__check" aria-hidden="true">✓</div>
+          <h2 class="form-success-panel__title">You're all set!</h2>
+          <p class="form-success-panel__msg" id="quote-success-msg">We'll review your request and get back to you within 12 hours.</p>
+        </div>
       </div>
     </div>
   </div>

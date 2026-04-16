@@ -424,7 +424,7 @@
             "name": "How do I get a free landscaping estimate?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "You can request a free estimate by filling out the quote form on our website, calling us at 512-406-4698, or sending us a message on WhatsApp. We typically respond with a detailed quote within 36 hours."
+              "text": "You can request a free estimate by filling out the quote form on our website, calling us at 512-406-4698, or sending us a message on WhatsApp. We typically respond with a detailed quote within 12 hours."
             }
           },
           {
@@ -515,7 +515,7 @@
             <button type="button" class="btn btn--accent btn--hero-lg" data-open-quote-modal>Get a Free Quote</button>
             <a class="btn btn--outline btn--on-dark btn--hero-lg" href="tel:5124064698" onclick="return gtag_report_conversion('tel:5124064698');">Call Now: (512) 406-4698</a>
           </div>
-          <p class="hero__promise"><strong>We quote in less than 36 hours</strong></p>
+          <p class="hero__promise"><strong>We quote in less than 12 hours</strong></p>
         </div>
       </div>
     </section>
@@ -703,7 +703,7 @@
           <li class="process-step">
             <span class="process-step__num" aria-hidden="true">1</span>
             <h3 class="process-step__title">Request a Quote</h3>
-            <p class="process-step__text">Fill out our form, call, or WhatsApp us. We respond with a detailed estimate within 36 hours.</p>
+            <p class="process-step__text">Fill out our form, call, or WhatsApp us. We respond with a detailed estimate within 12 hours.</p>
           </li>
           <li class="process-step">
             <span class="process-step__num" aria-hidden="true">2</span>
@@ -961,7 +961,7 @@
           </details>
           <details class="faq-item" data-animate>
             <summary class="faq-item__question">How do I get a free landscaping estimate?</summary>
-            <div class="faq-item__answer"><p>Fill out the <a href="#hero-form">quote form</a> on this page, call us at <a href="tel:5124064698" onclick="return gtag_report_conversion('tel:5124064698');">(512) 406-4698</a>, or message us on <a href="https://wa.me/15124064698">WhatsApp</a>. We typically respond with a detailed quote within <strong>36 hours</strong>.</p></div>
+            <div class="faq-item__answer"><p>Fill out the <a href="#hero-form">quote form</a> on this page, call us at <a href="tel:5124064698" onclick="return gtag_report_conversion('tel:5124064698');">(512) 406-4698</a>, or message us on <a href="https://wa.me/15124064698">WhatsApp</a>. We typically respond with a detailed quote within <strong>12 hours</strong>.</p></div>
           </details>
           <details class="faq-item" data-animate>
             <summary class="faq-item__question">Do you provide commercial landscaping services?</summary>
@@ -1012,18 +1012,51 @@
                   <option>Other</option>
                 </select>
               </div>
+              <div class="form__visit-panel">
+                <p class="form__visit-prompt">
+                  <strong>Would you like to schedule a property visit?</strong>
+                  For accurate quotes, we usually need to visit the property first.
+                </p>
+                <div class="form__visit-btns">
+                  <button type="button" class="btn-visit" data-visit-yes>Yes, schedule a visit</button>
+                  <button type="button" class="btn-visit" data-visit-no>No, just contact me</button>
+                </div>
+                <input type="hidden" name="visit_scheduled" value="">
+                <div class="form__visit-details" hidden data-visit-details>
+                  <div class="form__row">
+                    <label class="form__label" for="contact-visit-street">Street Address</label>
+                    <input class="form__input" type="text" id="contact-visit-street" name="visit_street" autocomplete="street-address" placeholder="123 Main St">
+                  </div>
+                  <div class="form__row--2col">
+                    <div class="form__row">
+                      <label class="form__label" for="contact-visit-city">City</label>
+                      <input class="form__input" type="text" id="contact-visit-city" name="visit_city" autocomplete="address-level2" placeholder="Kyle">
+                    </div>
+                    <div class="form__row">
+                      <label class="form__label" for="contact-visit-zip">ZIP Code</label>
+                      <input class="form__input" type="text" id="contact-visit-zip" name="visit_zip" inputmode="numeric" autocomplete="postal-code" maxlength="5" placeholder="78640">
+                    </div>
+                  </div>
+                  <div class="form__row">
+                    <label class="form__label" for="contact-visit-datetime">Preferred Visit Date &amp; Time</label>
+                    <input class="form__input" type="datetime-local" id="contact-visit-datetime" name="visit_datetime">
+                  </div>
+                </div>
+              </div>
               <div class="form__row">
                 <span class="form__label" id="contact-method-label">Preferred contact method</span>
                 <div class="form__radios" role="group" aria-labelledby="contact-method-label">
                   <label class="form__radio-label"><input type="radio" name="contact_method" value="Phone" checked> Phone</label>
+                  <label class="form__radio-label"><input type="radio" name="contact_method" value="SMS"> SMS</label>
                   <label class="form__radio-label"><input type="radio" name="contact_method" value="Email"> Email</label>
                   <label class="form__radio-label"><input type="radio" name="contact_method" value="WhatsApp"> WhatsApp</label>
                 </div>
               </div>
               <div class="form__row">
                 <label class="form__label" for="contact-message">Message</label>
-                <textarea class="form__input form__textarea" id="contact-message" name="message" rows="4" required aria-required="true"></textarea>
+                <textarea class="form__input form__textarea" id="contact-message" name="message" rows="4" aria-required="true"></textarea>
               </div>
+              <p class="form__success" id="contact-success" hidden></p>
               <p class="form__error" id="contact-error" role="alert" hidden></p>
               <button type="submit" class="btn btn--accent btn--block">Send Message</button>
             </form>
@@ -1128,7 +1161,7 @@
       <button type="button" class="quote-modal__close" data-quote-modal-dismiss aria-label="Close quote form">&times;</button>
       <div class="card card--quote" id="hero-form">
         <h2 class="card__title" id="quote-modal-title">Request a Free Quote</h2>
-        <p class="card__quote-promise"><strong>We quote in less than 36 hours</strong></p>
+        <p class="card__quote-promise"><strong>We quote in less than 12 hours</strong></p>
         <form class="form form--quote" id="form-quote" action="#" method="post" data-mail-form data-form-type="quote" novalidate>
           <div class="form__row">
             <label class="form__label" for="quote-name">Full Name</label>
@@ -1161,10 +1194,51 @@
               <option>Other / Not sure</option>
             </select>
           </div>
+          <div class="form__visit-panel">
+            <p class="form__visit-prompt">
+              <strong>Would you like to schedule a property visit?</strong>
+              For accurate quotes, we usually need to visit the property first.
+            </p>
+            <div class="form__visit-btns">
+              <button type="button" class="btn-visit" data-visit-yes>Yes, schedule a visit</button>
+              <button type="button" class="btn-visit" data-visit-no>No, just contact me</button>
+            </div>
+            <input type="hidden" name="visit_scheduled" value="">
+            <div class="form__visit-details" hidden data-visit-details>
+              <div class="form__row">
+                <label class="form__label" for="quote-visit-street">Street Address</label>
+                <input class="form__input" type="text" id="quote-visit-street" name="visit_street" autocomplete="street-address" placeholder="123 Main St">
+              </div>
+              <div class="form__row--2col">
+                <div class="form__row">
+                  <label class="form__label" for="quote-visit-city">City</label>
+                  <input class="form__input" type="text" id="quote-visit-city" name="visit_city" autocomplete="address-level2" placeholder="Kyle">
+                </div>
+                <div class="form__row">
+                  <label class="form__label" for="quote-visit-zip">ZIP Code</label>
+                  <input class="form__input" type="text" id="quote-visit-zip" name="visit_zip" inputmode="numeric" autocomplete="postal-code" maxlength="5" placeholder="78640">
+                </div>
+              </div>
+              <div class="form__row">
+                <label class="form__label" for="quote-visit-datetime">Preferred Visit Date &amp; Time</label>
+                <input class="form__input" type="datetime-local" id="quote-visit-datetime" name="visit_datetime">
+              </div>
+            </div>
+          </div>
+          <div class="form__row">
+            <span class="form__label" id="quote-method-label">Preferred contact method</span>
+            <div class="form__radios" role="group" aria-labelledby="quote-method-label">
+              <label class="form__radio-label"><input type="radio" name="contact_method" value="Phone" checked> Phone</label>
+              <label class="form__radio-label"><input type="radio" name="contact_method" value="SMS"> SMS</label>
+              <label class="form__radio-label"><input type="radio" name="contact_method" value="Email"> Email</label>
+              <label class="form__radio-label"><input type="radio" name="contact_method" value="WhatsApp"> WhatsApp</label>
+            </div>
+          </div>
           <div class="form__row">
             <label class="form__label" for="quote-message">Message</label>
             <textarea class="form__input form__textarea" id="quote-message" name="message" rows="3" placeholder="Tell us about your project"></textarea>
           </div>
+          <p class="form__success" id="quote-success" hidden></p>
           <p class="form__error" id="quote-error" role="alert" hidden></p>
           <button type="submit" class="btn btn--accent btn--block">Get My Free Quote →</button>
         </form>

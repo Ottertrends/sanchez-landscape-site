@@ -318,6 +318,11 @@ module.exports = async function handler(req, res) {
   const service = String(body.service || "").trim();
   const message = String(body.message || "").trim();
   const contactMethod = String(body.contactMethod || "").trim();
+  const visitScheduled = String(body.visitScheduled || "").trim();
+  const visitStreet = String(body.visitStreet || "").trim();
+  const visitCity = String(body.visitCity || "").trim();
+  const visitZip = String(body.visitZip || "").trim();
+  const visitDatetime = String(body.visitDatetime || "").trim();
 
   if (!name) {
     return res.status(400).json({ ok: false, error: "Name is required." });
@@ -331,7 +336,7 @@ module.exports = async function handler(req, res) {
   if (!service) {
     return res.status(400).json({ ok: false, error: "Service is required." });
   }
-  if (formType === "contact" && !message) {
+  if (formType === "contact" && !message && visitScheduled !== "yes") {
     return res.status(400).json({ ok: false, error: "Message is required." });
   }
 
@@ -339,8 +344,21 @@ module.exports = async function handler(req, res) {
   let subject;
   let text;
 
+  const visitBlock =
+    visitScheduled === "yes"
+      ? [
+          "",
+          "--- PROPERTY VISIT REQUESTED ---",
+          "Address: " + [visitStreet, visitCity, "TX", visitZip].filter(Boolean).join(", "),
+          "Preferred date/time: " + (visitDatetime || "—"),
+          "--------------------------------",
+        ].join("\n")
+      : "";
+
   if (formType === "contact") {
-    subject = "Website inquiry — " + name;
+    subject = visitScheduled === "yes"
+      ? "Visit request — " + name
+      : "Website inquiry — " + name;
     text =
       [
         "Name: " + name,
@@ -348,20 +366,23 @@ module.exports = async function handler(req, res) {
         "Email: " + email,
         "Service: " + service,
         "Preferred contact: " + (contactMethod || "—"),
-        "",
-        message,
-      ].join("\n");
+        visitBlock,
+        message ? "\nMessage:\n" + message : "",
+      ].join("\n").trim();
   } else {
-    subject = "Quote request — " + name;
+    subject = visitScheduled === "yes"
+      ? "Quote + Visit request — " + name
+      : "Quote request — " + name;
     text =
       [
         "Name: " + name,
         "Phone: " + phone,
         "Email: " + email,
         "Service: " + service,
-        "",
-        message || "(No additional message)",
-      ].join("\n");
+        "Preferred contact: " + (contactMethod || "—"),
+        visitBlock,
+        message ? "\nMessage:\n" + message : "(No additional message)",
+      ].join("\n").trim();
   }
 
   const resend = new Resend(apiKey);

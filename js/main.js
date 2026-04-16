@@ -320,6 +320,49 @@
     el.hidden = !msg;
   }
 
+  function showFormSuccess(el, msg) {
+    if (!el) return;
+    el.textContent = msg;
+    el.hidden = false;
+  }
+
+  /* Visit scheduling toggle */
+  qsa("[data-mail-form]").forEach(function (form) {
+    var yesBtn = qs("[data-visit-yes]", form);
+    var noBtn = qs("[data-visit-no]", form);
+    var details = qs("[data-visit-details]", form);
+    var hiddenInput = form.querySelector('input[name="visit_scheduled"]');
+    var submitBtn = form.querySelector('[type="submit"]');
+
+    if (!yesBtn || !noBtn || !details) return;
+
+    function setVisit(scheduled) {
+      if (scheduled) {
+        details.removeAttribute("hidden");
+        yesBtn.classList.add("btn-visit--active-yes");
+        yesBtn.classList.remove("btn-visit--active-no");
+        noBtn.classList.remove("btn-visit--active-yes", "btn-visit--active-no");
+        if (hiddenInput) hiddenInput.value = "yes";
+        if (submitBtn) submitBtn.textContent = submitBtn.getAttribute("data-submit-default") || submitBtn.textContent;
+        if (submitBtn && form.getAttribute("data-form-type") === "quote") {
+          submitBtn.textContent = "Request Quote & Schedule Visit →";
+        }
+      } else {
+        details.setAttribute("hidden", "");
+        noBtn.classList.add("btn-visit--active-no");
+        noBtn.classList.remove("btn-visit--active-yes");
+        yesBtn.classList.remove("btn-visit--active-yes", "btn-visit--active-no");
+        if (hiddenInput) hiddenInput.value = "no";
+        if (submitBtn && form.getAttribute("data-form-type") === "quote") {
+          submitBtn.textContent = "Get My Free Quote →";
+        }
+      }
+    }
+
+    yesBtn.addEventListener("click", function () { setVisit(true); });
+    noBtn.addEventListener("click", function () { setVisit(false); });
+  });
+
   var recaptchaLoadState = "loading";
   var recaptchaSiteKey = "";
   var recaptchaMode = "none";
@@ -410,6 +453,10 @@
       type === "contact"
         ? document.getElementById("contact-error")
         : document.getElementById("quote-error");
+    var successEl =
+      type === "contact"
+        ? document.getElementById("contact-success")
+        : document.getElementById("quote-success");
 
     var fd = new FormData(form);
     var name = (fd.get("name") || "").toString().trim();
@@ -417,6 +464,12 @@
     var email = (fd.get("email") || "").toString().trim();
     var service = (fd.get("service") || "").toString().trim();
     var message = (fd.get("message") || "").toString().trim();
+    var contactMethod = (fd.get("contact_method") || "").toString().trim();
+    var visitScheduled = (fd.get("visit_scheduled") || "").toString().trim();
+    var visitStreet = (fd.get("visit_street") || "").toString().trim();
+    var visitCity = (fd.get("visit_city") || "").toString().trim();
+    var visitZip = (fd.get("visit_zip") || "").toString().trim();
+    var visitDatetime = (fd.get("visit_datetime") || "").toString().trim();
 
     if (!name) {
       showFormError(errEl, "Please enter your name.");
@@ -434,14 +487,27 @@
       showFormError(errEl, "Please select a service.");
       return;
     }
-
-    var contactMethod = "";
-    if (type === "contact") {
-      if (!message) {
-        showFormError(errEl, "Please enter a message.");
+    if (visitScheduled === "yes") {
+      if (!visitStreet) {
+        showFormError(errEl, "Please enter your street address for the visit.");
         return;
       }
-      contactMethod = (fd.get("contact_method") || "").toString();
+      if (!visitCity) {
+        showFormError(errEl, "Please enter your city.");
+        return;
+      }
+      if (!visitZip || visitZip.length < 5) {
+        showFormError(errEl, "Please enter a valid 5-digit ZIP code.");
+        return;
+      }
+      if (!visitDatetime) {
+        showFormError(errEl, "Please select a preferred date and time for the visit.");
+        return;
+      }
+    }
+    if (type === "contact" && !message && visitScheduled !== "yes") {
+      showFormError(errEl, "Please enter a message.");
+      return;
     }
 
     showFormError(errEl, "");
@@ -504,6 +570,11 @@
           service: service,
           message: message,
           contactMethod: contactMethod,
+          visitScheduled: visitScheduled,
+          visitStreet: visitStreet,
+          visitCity: visitCity,
+          visitZip: visitZip,
+          visitDatetime: visitDatetime,
           recaptchaToken: recaptchaToken || "",
         }),
       })
@@ -519,7 +590,17 @@
         })
         .then(function (r) {
           if (r.res.ok && r.data && r.data.ok) {
-            window.location.href = "/thank-you";
+            if (visitScheduled === "yes") {
+              form.reset();
+              var details = qs("[data-visit-details]", form);
+              if (details) details.setAttribute("hidden", "");
+              qsa(".btn-visit", form).forEach(function (b) {
+                b.classList.remove("btn-visit--active-yes", "btn-visit--active-no");
+              });
+              showFormSuccess(successEl, "Thank you! We will confirm your visit via email soon.");
+            } else {
+              window.location.href = "/thank-you";
+            }
             return;
           }
           var msg =

@@ -487,6 +487,13 @@
       showFormError(errEl, "Please select a service.");
       return;
     }
+    if (visitScheduled !== "yes" && visitScheduled !== "no") {
+      showFormError(
+        errEl,
+        "Please choose whether you\u2019d like to schedule a property visit (Yes or No)."
+      );
+      return;
+    }
     if (visitScheduled === "yes") {
       if (!visitStreet) {
         showFormError(errEl, "Please enter your street address for the visit.");

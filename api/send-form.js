@@ -318,11 +318,12 @@ module.exports = async function handler(req, res) {
   const service = String(body.service || "").trim();
   const message = String(body.message || "").trim();
   const contactMethod = String(body.contactMethod || "").trim();
-  const visitScheduled = String(body.visitScheduled || "").trim();
+  const visitScheduledRaw = String(body.visitScheduled || "").trim().toLowerCase();
   const visitStreet = String(body.visitStreet || "").trim();
   const visitCity = String(body.visitCity || "").trim();
   const visitZip = String(body.visitZip || "").trim();
   const visitDatetime = String(body.visitDatetime || "").trim();
+  const visitIsYes = visitScheduledRaw === "yes";
 
   if (!name) {
     return res.status(400).json({ ok: false, error: "Name is required." });
@@ -336,7 +337,28 @@ module.exports = async function handler(req, res) {
   if (!service) {
     return res.status(400).json({ ok: false, error: "Service is required." });
   }
-  if (formType === "contact" && !message && visitScheduled !== "yes") {
+  if (visitScheduledRaw !== "yes" && visitScheduledRaw !== "no") {
+    return res.status(400).json({
+      ok: false,
+      error:
+        "Please specify whether you want to schedule a property visit (yes or no).",
+    });
+  }
+  if (visitIsYes) {
+    if (!visitStreet || !visitCity || !visitZip || visitZip.length < 5) {
+      return res.status(400).json({
+        ok: false,
+        error: "Visit requests require a complete street address, city, and ZIP.",
+      });
+    }
+    if (!visitDatetime) {
+      return res.status(400).json({
+        ok: false,
+        error: "Visit requests require a preferred date and time.",
+      });
+    }
+  }
+  if (formType === "contact" && !message && !visitIsYes) {
     return res.status(400).json({ ok: false, error: "Message is required." });
   }
 
@@ -344,41 +366,44 @@ module.exports = async function handler(req, res) {
   let subject;
   let text;
 
-  const visitBlock =
-    visitScheduled === "yes"
-      ? [
-          "",
-          "--- PROPERTY VISIT REQUESTED ---",
-          "Address: " + [visitStreet, visitCity, "TX", visitZip].filter(Boolean).join(", "),
-          "Preferred date/time: " + (visitDatetime || "—"),
-          "--------------------------------",
-        ].join("\n")
-      : "";
+  const visitSummaryLine =
+    "Property visit: " +
+    (visitIsYes
+      ? "Yes — details below"
+      : "No — contact only (no on-site visit scheduled via form)");
+
+  const visitBlock = visitIsYes
+    ? [
+        "",
+        "--- PROPERTY VISIT REQUESTED ---",
+        "Address: " + [visitStreet, visitCity, "TX", visitZip].filter(Boolean).join(", "),
+        "Preferred date/time: " + (visitDatetime || "—"),
+        "--------------------------------",
+      ].join("\n")
+    : "";
 
   if (formType === "contact") {
-    subject = visitScheduled === "yes"
-      ? "Visit request — " + name
-      : "Website inquiry — " + name;
+    subject = visitIsYes ? "Visit request — " + name : "Website inquiry — " + name;
     text =
       [
         "Name: " + name,
         "Phone: " + phone,
         "Email: " + email,
         "Service: " + service,
+        visitSummaryLine,
         "Preferred contact: " + (contactMethod || "—"),
         visitBlock,
         message ? "\nMessage:\n" + message : "",
       ].join("\n").trim();
   } else {
-    subject = visitScheduled === "yes"
-      ? "Quote + Visit request — " + name
-      : "Quote request — " + name;
+    subject = visitIsYes ? "Quote + Visit request — " + name : "Quote request — " + name;
     text =
       [
         "Name: " + name,
         "Phone: " + phone,
         "Email: " + email,
         "Service: " + service,
+        visitSummaryLine,
         "Preferred contact: " + (contactMethod || "—"),
         visitBlock,
         message ? "\nMessage:\n" + message : "(No additional message)",

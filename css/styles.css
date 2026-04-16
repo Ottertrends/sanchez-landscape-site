@@ -1857,6 +1857,10 @@ a:hover {
 }
 
 /* Full success state panel (replaces form on submit) */
+.form-success-panel[hidden] {
+  display: none !important;
+}
+
 .form-success-panel {
   display: flex;
   flex-direction: column;

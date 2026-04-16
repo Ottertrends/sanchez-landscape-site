@@ -982,7 +982,7 @@
           <div class="contact-grid__form" data-animate>
             <form class="form form--contact" id="form-contact" action="#" method="post" data-mail-form data-form-type="contact" novalidate data-contact-form>
               <div class="form__row">
-                <label class="form__label" for="contact-name">Name</label>
+                <label class="form__label" for="contact-name">Name <span class="form__req" aria-hidden="true">*</span></label>
                 <input class="form__input" type="text" id="contact-name" name="name" required autocomplete="name" aria-required="true">
               </div>
               <div class="form__row--2col">
@@ -991,35 +991,35 @@
                   <input class="form__input" type="tel" id="contact-phone" name="phone" required autocomplete="tel" inputmode="tel" aria-required="true">
                 </div>
                 <div class="form__row">
-                  <label class="form__label" for="contact-email">Email</label>
+                  <label class="form__label" for="contact-email">Email <span class="form__req" aria-hidden="true">*</span></label>
                   <input class="form__input" type="email" id="contact-email" name="email" required autocomplete="email" aria-required="true">
                 </div>
               </div>
               <div class="form__row">
-                <label class="form__label" for="contact-service">Service</label>
+                <label class="form__label" for="contact-service">Service <span class="form__req" aria-hidden="true">*</span></label>
                 <select class="form__input form__select" id="contact-service" name="service" required aria-required="true">
                   <option value="">Select a service</option>
-                  <option>Lawn Maintenance (Mowing, Edging, Blowing)</option>
-                  <option>Weed Control &amp; Fertilization</option>
-                  <option>Sod Installation (New Lawns from Scratch)</option>
-                  <option>Irrigation Installation &amp; Repairs</option>
-                  <option>Tree Services (Trim, Pruning, Removal, Stump Grinding)</option>
-                  <option>Landscape Design &amp; Full Installation</option>
-                  <option>Metal &amp; Stone Flowerbeds</option>
+                  <option>Fence Installation (Wood &amp; Metal)</option>
                   <option>Flagstone Walkways &amp; Patios</option>
                   <option>Gravel &amp; Xeriscaping (Low Maintenance Designs)</option>
+                  <option>Irrigation Installation &amp; Repairs</option>
+                  <option>Landscape Design &amp; Full Installation</option>
+                  <option>Lawn Maintenance (Mowing, Edging, Blowing)</option>
+                  <option>Metal &amp; Stone Flowerbeds</option>
                   <option>Outdoor Lighting (Automatic Systems)</option>
-                  <option>Fence Installation (Wood &amp; Metal)</option>
+                  <option>Sod Installation (New Lawns from Scratch)</option>
+                  <option>Tree Services (Trim, Pruning, Removal, Stump Grinding)</option>
+                  <option>Weed Control &amp; Fertilization</option>
                   <option>Yard Cleanups &amp; Seasonal Services</option>
                   <option>Other</option>
                 </select>
               </div>
               <div class="form__visit-panel">
                 <p class="form__visit-prompt">
-                  <strong>Would you like to schedule a property visit?</strong>
+                  <strong>Would you like to schedule a property visit? <span class="form__req" aria-hidden="true">*</span></strong>
                   For accurate quotes, we usually need to visit the property first.
                 </p>
-                <div class="form__visit-btns">
+                <div class="form__visit-btns" role="group" aria-label="Schedule a property visit — required">
                   <button type="button" class="btn-visit" data-visit-yes>Yes, schedule a visit</button>
                   <button type="button" class="btn-visit" data-visit-no>No, just contact me</button>
                 </div>
@@ -1172,7 +1172,7 @@
         <form class="form form--quote" id="form-quote" action="#" method="post" data-mail-form data-form-type="quote" novalidate>
           <div class="form__row--2col-md">
             <div class="form__row">
-              <label class="form__label" for="quote-name">Full Name</label>
+              <label class="form__label" for="quote-name">Full Name <span class="form__req" aria-hidden="true">*</span></label>
               <input class="form__input" type="text" id="quote-name" name="name" required autocomplete="name" aria-required="true">
             </div>
             <div class="form__row">
@@ -1182,24 +1182,24 @@
           </div>
           <div class="form__row--2col-md">
             <div class="form__row">
-              <label class="form__label" for="quote-email">Email</label>
+              <label class="form__label" for="quote-email">Email <span class="form__req" aria-hidden="true">*</span></label>
               <input class="form__input" type="email" id="quote-email" name="email" required autocomplete="email" aria-required="true">
             </div>
             <div class="form__row">
-              <label class="form__label" for="quote-service">Service Type</label>
+              <label class="form__label" for="quote-service">Service Type <span class="form__req" aria-hidden="true">*</span></label>
               <select class="form__input form__select" id="quote-service" name="service" required aria-required="true">
               <option value="">Select a service</option>
-              <option>Lawn Maintenance (Mowing, Edging, Blowing)</option>
-              <option>Weed Control &amp; Fertilization</option>
-              <option>Sod Installation (New Lawns from Scratch)</option>
-              <option>Irrigation Installation &amp; Repairs</option>
-              <option>Tree Services (Trim, Pruning, Removal, Stump Grinding)</option>
-              <option>Landscape Design &amp; Full Installation</option>
-              <option>Metal &amp; Stone Flowerbeds</option>
+              <option>Fence Installation (Wood &amp; Metal)</option>
               <option>Flagstone Walkways &amp; Patios</option>
               <option>Gravel &amp; Xeriscaping (Low Maintenance Designs)</option>
+              <option>Irrigation Installation &amp; Repairs</option>
+              <option>Landscape Design &amp; Full Installation</option>
+              <option>Lawn Maintenance (Mowing, Edging, Blowing)</option>
+              <option>Metal &amp; Stone Flowerbeds</option>
               <option>Outdoor Lighting (Automatic Systems)</option>
-              <option>Fence Installation (Wood &amp; Metal)</option>
+              <option>Sod Installation (New Lawns from Scratch)</option>
+              <option>Tree Services (Trim, Pruning, Removal, Stump Grinding)</option>
+              <option>Weed Control &amp; Fertilization</option>
               <option>Yard Cleanups &amp; Seasonal Services</option>
               <option>Other / Not sure</option>
             </select>
@@ -1207,10 +1207,10 @@
           </div>
           <div class="form__visit-panel">
             <p class="form__visit-prompt">
-              <strong>Would you like to schedule a property visit?</strong>
+              <strong>Would you like to schedule a property visit? <span class="form__req" aria-hidden="true">*</span></strong>
               For accurate quotes, we usually need to visit the property first.
             </p>
-            <div class="form__visit-btns">
+            <div class="form__visit-btns" role="group" aria-label="Schedule a property visit — required">
               <button type="button" class="btn-visit" data-visit-yes>Yes, schedule a visit</button>
               <button type="button" class="btn-visit" data-visit-no>No, just contact me</button>
             </div>

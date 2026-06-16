@@ -326,6 +326,17 @@
     el.hidden = false;
   }
 
+  var FORM_CONVERSION_SEND_TO = "AW-18068703507/Q6hJCLSQkJccEJOS6qdD";
+
+  function trackFormConversion() {
+    if (typeof gtag !== "function") return;
+    gtag("event", "conversion", {
+      send_to: FORM_CONVERSION_SEND_TO,
+      value: 1.0,
+      currency: "USD",
+    });
+  }
+
   /* Visit scheduling toggle */
   qsa("[data-mail-form]").forEach(function (form) {
     var yesBtn = qs("[data-visit-yes]", form);
@@ -606,6 +617,7 @@
               var formCard = qs("[data-quote-form-card]");
               var msgEl = document.getElementById("quote-success-msg");
               if (msgEl) msgEl.textContent = successMsg;
+              trackFormConversion();
               if (form) form.hidden = true;
               if (formCard) {
                 var promiseEl = formCard.querySelector(".card__quote-promise");
@@ -618,6 +630,7 @@
               var contactPanel = qs("[data-contact-success-panel]");
               var contactMsgEl = document.getElementById("contact-success-msg");
               if (contactMsgEl) contactMsgEl.textContent = successMsg;
+              trackFormConversion();
               form.hidden = true;
               if (contactPanel) contactPanel.removeAttribute("hidden");
             }

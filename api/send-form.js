@@ -227,6 +227,56 @@ function validEmail(s) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(s || "").trim());
 }
 
+function cleanText(value) {
+  return String(value || "").replace(/[\r\n]+/g, " ").trim();
+}
+
+function normalizeAttribution(raw) {
+  const input = typeof raw === "object" && raw !== null ? raw : {};
+  const fields = [
+    "gclid",
+    "gbraid",
+    "wbraid",
+    "utm_source",
+    "utm_medium",
+    "utm_campaign",
+    "utm_term",
+    "utm_content",
+    "firstLandingPage",
+    "lastLandingPage",
+    "referrer",
+    "capturedAt",
+  ];
+
+  return fields.reduce(function (out, key) {
+    const value = cleanText(input[key]);
+    if (value) out[key] = value.slice(0, 500);
+    return out;
+  }, {});
+}
+
+function attributionBlock(attribution) {
+  if (!Object.keys(attribution).length) return "";
+
+  return [
+    "",
+    "--- ATTRIBUTION ---",
+    "Google click ID (gclid): " + (attribution.gclid || "-"),
+    "GBRAID: " + (attribution.gbraid || "-"),
+    "WBRAID: " + (attribution.wbraid || "-"),
+    "UTM source: " + (attribution.utm_source || "-"),
+    "UTM medium: " + (attribution.utm_medium || "-"),
+    "UTM campaign: " + (attribution.utm_campaign || "-"),
+    "UTM term: " + (attribution.utm_term || "-"),
+    "UTM content: " + (attribution.utm_content || "-"),
+    "First landing page: " + (attribution.firstLandingPage || "-"),
+    "Last landing page: " + (attribution.lastLandingPage || "-"),
+    "Referrer: " + (attribution.referrer || "-"),
+    "Captured at: " + (attribution.capturedAt || "-"),
+    "-------------------",
+  ].join("\n");
+}
+
 /** One or more addresses: comma/semicolon in CONTACT_TO_EMAIL, or CONTACT_TO_EMAIL_2 for an extra inbox. */
 function resolveRecipients() {
   const out = [];
@@ -324,6 +374,8 @@ module.exports = async function handler(req, res) {
   const visitZip = String(body.visitZip || "").trim();
   const visitDatetime = String(body.visitDatetime || "").trim();
   const visitIsYes = visitScheduledRaw === "yes";
+  const attribution = normalizeAttribution(body.attribution);
+  const sourceBlock = attributionBlock(attribution);
 
   if (!name) {
     return res.status(400).json({ ok: false, error: "Name is required." });
@@ -393,6 +445,7 @@ module.exports = async function handler(req, res) {
         visitSummaryLine,
         "Preferred contact: " + (contactMethod || "—"),
         visitBlock,
+        sourceBlock,
         message ? "\nMessage:\n" + message : "",
       ].join("\n").trim();
   } else {
@@ -406,6 +459,7 @@ module.exports = async function handler(req, res) {
         visitSummaryLine,
         "Preferred contact: " + (contactMethod || "—"),
         visitBlock,
+        sourceBlock,
         message ? "\nMessage:\n" + message : "(No additional message)",
       ].join("\n").trim();
   }

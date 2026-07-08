@@ -327,6 +327,57 @@
   }
 
   var FORM_CONVERSION_SEND_TO = "AW-18068703507/Q6hJCLSQkJccEJOS6qdD";
+  var ATTRIBUTION_STORAGE_KEY = "sl_attribution";
+  var ATTRIBUTION_KEYS = [
+    "gclid",
+    "gbraid",
+    "wbraid",
+    "utm_source",
+    "utm_medium",
+    "utm_campaign",
+    "utm_term",
+    "utm_content",
+  ];
+
+  function getStoredAttribution() {
+    try {
+      return JSON.parse(localStorage.getItem(ATTRIBUTION_STORAGE_KEY) || "{}") || {};
+    } catch (e) {
+      return {};
+    }
+  }
+
+  function saveAttribution() {
+    var params = new URLSearchParams(window.location.search);
+    var existing = getStoredAttribution();
+    var next = Object.assign({}, existing);
+    var hasNewAttribution = false;
+
+    ATTRIBUTION_KEYS.forEach(function (key) {
+      var value = params.get(key);
+      if (value) {
+        next[key] = value;
+        hasNewAttribution = true;
+      }
+    });
+
+    if (!next.firstLandingPage) {
+      next.firstLandingPage = window.location.href;
+    }
+    next.lastLandingPage = window.location.href;
+    if (document.referrer && !next.referrer) {
+      next.referrer = document.referrer;
+    }
+    if (hasNewAttribution || !existing.firstLandingPage) {
+      next.capturedAt = new Date().toISOString();
+    }
+
+    try {
+      localStorage.setItem(ATTRIBUTION_STORAGE_KEY, JSON.stringify(next));
+    } catch (e) {}
+  }
+
+  saveAttribution();
 
   function trackFormConversion() {
     if (typeof gtag !== "function") return;
@@ -593,6 +644,7 @@
           visitCity: visitCity,
           visitZip: visitZip,
           visitDatetime: visitDatetime,
+          attribution: getStoredAttribution(),
           recaptchaToken: recaptchaToken || "",
         }),
       })
